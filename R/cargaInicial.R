@@ -22,4 +22,15 @@
   options(tikzUnicodeMetricPackages = c("\\usetikzlibrary{calc}\n"))
   
   options(tikzDocumentDeclaration= "\\documentclass[10pt,twoside]{book}")
+  
+  pkg.env$temaAnillo <- pkg.env$temaINE
+  pkg.env$temaAnillo <- pkg.env$temaAnillo +ggplot2::theme(
+    plot.margin = grid::unit(c(0,inc2mm(3.19/4),0,-20),"mm"), axis.line.y = ggplot2::element_line(colour=NA),
+    axis.ticks.y = ggplot2::element_line(colour=NA),
+    axis.line.x = ggplot2::element_line(colour = NA),
+    panel.margin = grid::unit(c(0,inc2mm(3.19/4),0,-20),"mm"),
+    axis.text.y = ggplot2::element_text(colour = NA, vjust = -3, hjust = -3),
+    axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = 9, hjust = -10, vjust =-10, angle = 0, lineheight = 0.9)
+  ) 
+  
 }

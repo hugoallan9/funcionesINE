@@ -106,3 +106,78 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5)
   }
   return(grafica)
 }
+
+#' Hace graficas de anillo para dos y tres categorias
+#' 
+#' @param data Data frame con el cual se hace el anillo
+#' @param nombre Ruta en la cual se desea generar el tex
+#' @return No retorna
+#' @export
+graficaAnillo <- function(data, nombre)
+{
+  data$x <- factor(data$x, as.character(data$x))
+  tikzDevice::tikz(nombre, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = 3.19, height= 1.91, sanitize= F)
+  ggplot2::theme_set(pkg.env$temaAnillo)
+  data$ymax = cumsum(data$y)
+  data$ymin = c(0, head(data$ymax, n=-1))
+  y.breaks <- cumsum(data$y)-data$y/2 
+  p1 <- ggplot2::ggplot(data, ggplot2::aes(fill =  x, ymax = ymax, ymin = ymin ,xmax= 10, xmin= 5))+
+    #geom_rect(show_guide=F)+
+    ggplot2::geom_rect(colour= "black", show_guide=F)+
+    ggplot2::labs(x=NULL, y=NULL)+
+    ggplot2::scale_y_continuous(breaks = y.breaks, labels=data$y, expand = c(0,0))+
+    ggplot2::labs(x = NULL, y=NULL)+
+    ggplot2::coord_polar(theta ="y")+
+    ggplot2::xlim(c(0,10 ))+
+    ggplot2::scale_fill_grey(start= 1, end = 0.3)+
+    ggplot2::guides(fill = ggplot2::guide_legend(title = NULL))
+  temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(p1))
+  temp$layout$clip[temp$layout$name=="panel"] <- "off"
+  grid::grid.draw(temp)
+  if(length(data$y) == 2){
+    tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+    tikzDevice::tikzCoord(0,mm2inch(2.5+ 4), name = "desY", units= "inches")
+    tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0+ 4), name = "desX", units = "inches")
+    tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
+    tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(rect) + 0.5*(desX) + 0.5*(desY)$);")
+    tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(rect)+0.5*(mdesX)-0.5*(desY)$);")
+    tikzDevice::tikzAnnotate(c("\\path [fill=red] ($(rect)+(desY)$) rectangle ($(rect)+(desX)$);"))
+    tikzDevice::tikzAnnotate(c("\\node [text width=",
+                    mm2pt(20), 
+                   ",right= 0.3cm of t1,scale = 0.9]{", as.character(data$x[[1]]),"};"))
+    tikzDevice::tikzAnnotate(c("\\path [fill=blue] ($(rect)-(desY)$) rectangle ($(rect)+(mdesX)$);"))
+    tikzDevice::tikzAnnotate(c("\\node [text width=",
+                   mm2pt(20), 
+                   ",right= 0.3cm of t2,scale = 0.9]{",as.character(data$x[[2]]),"};"))  
+  }else{
+    tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+    tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
+    tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0-1.25), name = "desX", units = "inches")
+    tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
+    tikzDevice::tikzCoord(mm2inch(1.25),0, name="tdesX", units = "inches")
+    tikzDevice::tikzCoord(0,mm2inch(6+1.25), name ="tdesY", units = "inches")
+    tikzDevice::tikzCoord(0,mm2inch(6), name = "espacio", units = "inches")
+    tikzDevice::tikzCoord(0, mm2inch(2.5), name = "lonY", units = "inches")
+    tikzDevice::tikzCoord(mm2inch(2.5),0, name = "lonX", units = "inches")
+    tikzDevice::tikzAnnotate("\\definecolor[named]{ct1}{rgb}{0.20,0.20,0.20}")
+    tikzDevice::tikzAnnotate("\\definecolor[named]{ct2}{rgb}{0.60,0.60,0.60}")
+    tikzDevice::tikzAnnotate("\\definecolor[named]{ct3}{rgb}{0.80,0.80,0.80}")
+    tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(rect) +0.5*(lonX)$);")
+    tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(rect)+ 0.5*(lonX) + (lonY) + (espacio) $);")
+    tikzDevice::tikzAnnotate("\\coordinate (t3) at ($(rect) + 0.5*(lonX) - (lonY) - (espacio)$);")
+    tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ($(rect)+1.5*(lonY) + (espacio)$) rectangle ($(rect)+(lonX)+ 0.5*(lonY) + (espacio)$);"))
+    tikzDevice::tikzAnnotate(c("\\node [text width=",
+                   mm2pt(20), 
+                   ",right= 0.3cm of t1,scale = 0.9]{",as.character(data$x[[1]]),"};"))
+    tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(rect)+0.5*(lonY)$) rectangle ($(rect)+(lonX)-0.5*(lonY)$);"))
+    tikzDevice::tikzAnnotate(c("\\node [text width=",
+                   mm2pt(20), 
+                   ",right= 0.3cm of t2,scale = 0.9]{", as.character(data$x[[2]]),"};"))
+    tikzDevice::tikzAnnotate(c("\\path [fill=ct3] ($(rect)-1.5*(lonY) - (espacio)$) rectangle ($(rect)+(lonX)- 0.5*(lonY) - (espacio)$);"))
+    tikzDevice::tikzAnnotate(c("\\node [text width=",
+                   mm2pt(20), 
+                   ",right= 0.3cm of t3,scale = 0.9]{",as.character(data$x[[3]]),"};"))
+      
+  }
+  dev.off()
+}
