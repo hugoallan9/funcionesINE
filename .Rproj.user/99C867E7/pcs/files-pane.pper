@@ -1,6 +1,10 @@
 {
-    "path" : "~/Documents/funcionesINE/R",
+    "path" : "~/Documents/GitHub/funcionesINE/R",
     "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 1
+        },
         {
             "ascending" : true,
             "columnIndex" : 2

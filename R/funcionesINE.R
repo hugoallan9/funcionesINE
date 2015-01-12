@@ -37,6 +37,8 @@ pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
   axis.text.y = ggplot2::element_text(colour = NA)
 )
 
+pkg.env$fEscala <- 0.85039370025172
+
 #' Hace una paleta del color indicado
 #' @param data El data frame con la informacion
 #' @param color1 El color primario con el cual se desea hacer la paleta
@@ -198,76 +200,10 @@ mm2pt <- function(number)
   return(mm2inch(inc2pt(number)))
 }
 
-
-graficaBar <- function(data, color1=color, ancho = 0.6, ordenar = TRUE)
-{
-  theme_set(temaBarras)
-  names(data)<- c("x","y")
-  data <- data[rev(ordenarNiveles(data, ordenar)),]
-  data$x <- factor(data$x, levels = data$x)
-  levels(data$x) <- gsub("\\n", "\n", levels(data$x))
-  grafica <- ggplot(data, aes(x, y))
-  grafica <- grafica + 
-    geom_bar(stat = 'identity',fill = calcularRampa(data, NA), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
-    labs(x=NULL,y=NULL)+
-    scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
-    coord_flip()
-  print(grafica)
-  return(grafica)
-}
-
-graficaLinea <- function(data, color1 = color, inicio = 0, ancho = 1.7)
-{
-  theme_set(temaColumnas)
-  names(data)<- c("x","y")
-  grafica <- ggplot(data, aes(x,y))
-  grafica <- grafica + geom_line( colour = color1, size = ancho)+
-    labs(x=NULL,y=NULL)
-  grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica))
-  minimo <- min(ggplot_build(grafica)$data[[1]]$y)
-  maximo <- max(ggplot_build(grafica)$data[[1]]$y)
-  limite <- minimo - 0.3*(maximo - minimo)
-  if(ggplot_build(grafica)$data[[1]]$y[1] > 3)
-  {
-    grafica <- grafica + scale_y_continuous(limits = c(limite,NA))+
-      theme(plot.margin = unit(c(2.5,3,0,-7), "mm"))
-  }
-  else
-  {
-    grafica <- grafica + scale_y_continuous(limits = c(limite,NA))+
-      theme(plot.margin = unit(c(2.5,3,0,-4), "mm"))
-  }
-  return(grafica)
-}
-
-graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5)
-{
-  theme_set(temaColumnas)
-  names(data)<- c("x","y")
-  nomX <- data$x
-  data$x <- factor(data$x, as.character(data$x))
-  #data$x <- as.numeric(data$x)
-  grafica <- ggplot(data, aes(x,y, group = 1))
-  grafica <- grafica + geom_line( colour = color1, size = ancho)+
-    labs(x=NULL,y=NULL)+
-    theme(axis.text.x = element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
-  grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica))
-  minimo <- min(ggplot_build(grafica)$data[[1]]$y)
-  maximo <- max(ggplot_build(grafica)$data[[1]]$y)
-  limite <- minimo - 0.5*(maximo - minimo)
-  if(ggplot_build(grafica)$data[[1]]$y[1] > 3)
-  {
-    grafica <- grafica + scale_y_continuous(limits = c(limite,NA))+
-      theme(plot.margin = unit(c(2.5,3,0,-7), "mm")) #-9
-  }
-  else
-  {
-    grafica <- grafica + scale_y_continuous(limits = c(limite,NA))+
-      theme(plot.margin = unit(c(2.5,3,0,-3), "mm")) #-4
-  }
-  return(grafica)
-}
-
+#'Funcion que calcula las posiciones para las etiquetas en las graficas de linea
+#'
+#'@param graph Objeto del tipo ggplot2 al cual se le quiere poner las etiquetas
+#'@return Un vector indicando las posiciones de las etiquetas
 
 calcularPosiciones <- function(graph)
 {
@@ -336,7 +272,10 @@ calcularPosiciones <- function(graph)
   return(posiciones)
 }
 
-
+#'Le pone las etiquetas a una grafica de linea
+#'
+#'@param graph Objeto del tipo ggplot2 que desea anotar
+#'@param posiciones Vector de posiciones en que van las etiquetas
 etiquetasLineas <- function(graph, posiciones)
 {
   d <- ggplot_build(graph)$data[[1]]
@@ -344,13 +283,8 @@ etiquetasLineas <- function(graph, posiciones)
   {
     dato <- d$y[[i]]
     cat(c("El dato es jojo : ", dato, "\n"))
-    print(i)
-    print(length(d$etiqueta))
     d$etiqueta <- as.numeric(completarEtiquetas(dato,i,tam = length(d$x)))
-    print("#######################################")
-    print(sonEnteros(d))
-    print("#######################################")
-    if(sonEnteros(d) > 0)
+    if(sonEnteros(d) == 0)
     {
       if(posiciones[[i]] == 1)
       {
@@ -388,121 +322,149 @@ etiquetasLineas <- function(graph, posiciones)
   return(graph)
 }
 
+#'Funcion interna que le pone el relleno al vector de etiquetas
+#'del tipo ("","",etiqueta,"",..)
+#'
+#'@param dato Dato que va en el vector
+#'@param posicion Es la posicion que ocupa el dato dentro del vector
+#'@param tam El tamano del vector de salida
+#'@return El vector completo rellenado de la forma ("", "", dato, "", ...)
 completarEtiquetas <- function(dato,posicion, tam = 5)
 {
-  #cat(c("la posicion es: ", posicion))
-  #cat(c("el dato es: ", dato))
   etiquetas <- NULL
   for(i in 1:tam)
   {
     if(i == posicion)
     {
-      print("Entre al if")
       etiquetas <- c(etiquetas, dato)
     }
     else
     {
-      print("Entre al else")
       etiquetas <- c(etiquetas,"")  
     }
   }
   return(etiquetas)
 }
 
+
+#'Funcion que rota las etiquetas en el eje X para graficas de columnas que poseen
+#'etiquetas horizontales para las columnas 
+#'
+#'@param graph El objeto ggpot2 que se desea modificar
+#'@return Objeto ggplot2 modificado en las etiquetas del eje X
 rotarEtiX <- function(graph)
 {
   
-  longitud <- usep + 2
-  graph <- graph + theme(axis.text.x = element_text(angle = 90, vjust =0.5 , hjust= 1))+
-    theme(plot.margin = unit(c(longitud,0,0,0), "mm"))
+  longitud <- 2.8 + 2
+  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))+
+    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   
 }
 
+#'Funcion que rota las etiquetas en el eje X para graficas de columnas que poseen
+#'etiquetas verticales para las columnas 
+#'
+#'@param graph El objeto ggpot2 que se desea modificar
+#'@return Objeto ggplot2 modificado en las etiquetas del eje X
 rotarEtiX2 <- function(graph)
 {
-  max <-ggplot_build(graph)$panel$ranges[[1]]$y.range[2]
-  longitud <- getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = fEscala) 
-  longitud <- longitud*0.352777778 + wspace
-  graph <- graph + theme(axis.text.x = element_text(angle = 90, vjust =0.5 , hjust= 1))+
-    theme(plot.margin = unit(c(longitud,0,0,0), "mm"))
+  max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2]
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
+  longitud <- longitud*0.352777778 + 1
+  graph <- graph + ggplot2::theme(axis.text.x = element_text(angle = 90, vjust =0.5 , hjust= 1))+
+    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
 }
 
+
+#' Anota las etiquetas para una grafica de barras
+#' 
+#' @param graph Objeto ggplot2 que se desea anotar
+#' @param margenIz Controla el margen izquierdo de la grafica
+#' @return Retorna objeto ggplot2 listo para graficar
 etiquetasBarras <- function(graph, margenIz = izBar  )
 {
-  max <-ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
-  print(max)
-  longitud <- getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = fEscala) 
-  longitud <- longitud*0.352777778 + wBarSpace
-  print(max)
+  max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = fEscala) 
+  longitud <- longitud*0.352777778 + 2.3
   mIz <- izBar + margenIz
-  if(sonEnteros(ggplot_build(graph)$data[[1]]) == 0)
+  if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
-    print("jojo SI son todos enteros")
     graph <- graph +
-      geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1, drop0trailing = T)), size=3, hjust=-0.5, vjust = 0.5)+
-      theme(plot.margin = unit(c(0,longitud,0,0), "mm")) 
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1, drop0trailing = T)), size=3, hjust=-0.5, vjust = 0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,0), "mm")) 
   }
   else
   {
     graph <- graph +
-      geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1)), size=3, hjust=-0.5, vjust = 0.5)+
-      theme(plot.margin = unit(c(0,longitud,0,0), "mm")) 
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1)), size=3, hjust=-0.5, vjust = 0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,0), "mm")) 
   }
   
 }
 
+
+#'Pone etiquetas a las columnas en una grafica de columnas
+#'
+#'@param graph El objeto ggplot2 que se desea anotar
+#'@return Objeto ggplot2 anotado listo para usar
+#'@export
 etiquetasHorizontales <- function(graph)
 {
   longitud <- 4
-  if(sonEnteros(ggplot_build(graph)$data[[1]]) == 0)
+  if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",", drop0trailing = T)),size=3, hjust=0.5, vjust = -0.5)+
-      theme(plot.margin = unit(c(longitud,0,0,0), "mm"))
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",", drop0trailing = T)),size=3, hjust=0.5, vjust = -0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
   else
   {
     graph <- graph +
-      geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",")),size=3, hjust=0.5, vjust = -0.5)+
-      theme(plot.margin = unit(c(longitud,0,0,0), "mm"))
+      ggplot2::geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",")),size=3, hjust=0.5, vjust = -0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
 }
 
+
+
+#'Pone etiquetas verticales a las columnas en una grafica de columnas 
+#'
+#'@param graph El objeto ggplot2 que se desea anotar
+#'@return Objeto ggplot2 anotado listo para usar
+#'@export
 etiquetasVerticales <- function(graph)
 {
-  max <-ggplot_build(graph)$panel$ranges[[1]]$y.range[2] 
-  #max <- nchar(formatC(as.character(max), big.mark = ",", format = "f", digits =1))
-  longitud <- getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = fEscala) 
-  longitud <- longitud*0.352777778 + wspace
-  print(max)
+  max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2] 
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = fEscala) 
+  longitud <- longitud*0.352777778 + 1
   if(sonEnteros(ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1, drop0trailing = T)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
-      theme(plot.margin = unit(c(longitud,0,0,0), "mm"))  
+      ggplot2::eom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1, drop0trailing = T)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))  
   }
   else
   {
     graph <- graph +
-      geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
-      theme(plot.margin = unit(c(longitud,0,0,0), "mm"))
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
 }
 
-exportarLatex <- function(nombre = grafica, graph)
+
+#'Exporta a codigo tikz en LaTeX usando tikzDevice
+#'
+#'@param nombre Ruta del fichero LaTeX
+#'@param graph Objeto ggplot2 que se desea exportar a LaTeX
+exportarLatex <- function(nombre = grafica.tex, graph)
 {
-  #gy = ggplot_build(graph)$panel$ranges[[1]]$y.range[2]
-  #print(gy)
-  #graph = graph + scale_y_continuous(expand=c(0,0),limits=c(0,gy))
-  #print(graph)
-  tikz(nombre, standAlone = FALSE, bareBones = TRUE, bg = "transparent",width = 3.19, height= 1.91, sanitize = F)
-  temp<- ggplot_gtable(ggplot_build(graph))
+  tikzDevice::tikz(nombre, standAlone = TRUE, bareBones = TRUE, bg = "transparent",width = 3.19, height= 1.91, sanitize = F)
+  temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(graph))
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
-  grid.draw(temp)
+  grid::grid.draw(temp)
   dev.off()
-  #shell(cmd=paste("iconv -f ISO-8859-1 -t UTF-8 <", nombre,">", paste(dirname(nombre),"/temp",sep="")), mustWork=TRUE, intern=TRUE, translate=TRUE)
-  #file.copy(from = paste(dirname(nombre), "/temp",sep=""), to=paste(dirname(nombre),"Generacion",basename(nombre),sep="/"), overwrite = TRUE)
 }
+
 
 compilar <- function(ruta = paste(getwd(), "Latex/ENEI.tex",sep="/")){
   shell(cmd=paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)
@@ -520,3 +482,4 @@ preview <- function(graph)
   shell(cmd=paste("xelatex   --synctex=1 --interaction=nonstopmode", "--output-directory",dirname(nombre),paste(nombre,".tex", sep="")))
   shell.exec(paste(nombre,".pdf", sep=""))
 }
+
