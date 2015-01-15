@@ -426,6 +426,37 @@ exportarLatex <- function(nombre = grafica.tex, graph)
 }
 
 
+#'Calcula la rampa de colores para usar en las graficas
+#'de anillo, mandando los ignorados hasta el final y haciendo
+#'la separcion por categorias (blanco para una categoría y negro para la otra)
+#'El gris siempre se usa para ignorado
+#'
+#'@param x El vector de datos en el cual se basa la paleta de colores
+#'@return El vector de la paleta de colores
+#'@return categoria Booleano que indica si se desea categorizar la rampa
+#'@export 
+
+calcularRampaAnillo <- function(x, categoria = TRUE){
+  rampa = NULL
+  if(categoria == TRUE){
+    if("IGNORADO" %in% toupper(x))
+    {
+      #print("IGNORADO")
+      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0), pkg.env$gris)
+    }else{
+      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0))
+    }
+  }else{
+    rampaAux <- grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0)))
+    if("IGNORADO" %in% toupper(x)){
+      rampa <- c(rampaAux(2), pkg.env$gris)
+    }else{
+      rampa <- rampaAux(2)
+    }
+  }
+  return(rampa)
+}
+
 compilar <- function(ruta = paste(getwd(), "Latex/ENEI.tex",sep="/")){
   shell(cmd=paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)
   shell.exec(paste(dirname(ruta), "ENEI.pdf", sep="/"))
