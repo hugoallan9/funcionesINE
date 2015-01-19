@@ -186,3 +186,12 @@ graficaAnillo <- function(data, nombre)
   }
   dev.off()
 }
+
+#' Graficas de columnas por categorias
+#' 
+#' @param data El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...
+
+graficaColCategorias <- function(data){
+  
+  
+}
