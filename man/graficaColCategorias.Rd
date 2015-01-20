@@ -9,6 +9,9 @@ graficaColCategorias(data)
 \arguments{
 \item{data}{El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...}
 }
+\value{
+No regresa ningun valor
+}
 \description{
 Graficas de columnas por categorias
 }

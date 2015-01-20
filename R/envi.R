@@ -1,4 +1,5 @@
 pkg.env <- new.env()
+pkg.env$fEscala <- 0.85039370025172
 pkg.env$color1 <- rgb(0,0,0, maxColorValue = 255)
 pkg.env$color2 <- rgb(0.603921568627451,0.6274509803921569,0.4862745098039216)
 pkg.env$repu <- c("Total República, Total republica, Total república, Total Republica")
@@ -37,4 +38,3 @@ pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
   axis.text.y = ggplot2::element_text(colour = NA)
 )
 
-pkg.env$fEscala <- 0.85039370025172

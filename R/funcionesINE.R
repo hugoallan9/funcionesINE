@@ -395,12 +395,12 @@ etiquetasHorizontales <- function(graph)
 etiquetasVerticales <- function(graph)
 {
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2] 
-  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = fEscala) 
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
   longitud <- longitud*0.352777778 + 1
-  if(sonEnteros(ggplot_build(graph)$data[[1]]) == 0)
+  if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      ggplot2::eom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1, drop0trailing = T)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1, drop0trailing = T)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))  
   }
   else

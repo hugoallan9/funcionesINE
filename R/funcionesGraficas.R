@@ -190,8 +190,19 @@ graficaAnillo <- function(data, nombre)
 #' Graficas de columnas por categorias
 #' 
 #' @param data El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...
+#' @return No regresa ningun valor
 
 graficaColCategorias <- function(data){
-  
-  
+  x <- rep(data$x,length(data)-1)
+  y <- NULL
+  for(i in 2:length(data)){
+    y <- c(y,as.matrix(data)[,i])
+  }
+  categoria <- gl(length(data)-1, length(data$x), labels = names(data))
+  dataLista <- data.frame(x,y,categoria)
+  ggplot2::theme_set(pkg.env$temaColumnas)
+  grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
+    ggplot2::geom_bar(stat = 'identity', position =  "dodge")+
+    ggplot2::labs(x=NULL, y=NULL)
+  return(grafica)
 }
