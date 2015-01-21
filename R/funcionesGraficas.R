@@ -203,6 +203,12 @@ graficaColCategorias <- function(data){
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
     ggplot2::geom_bar(stat = 'identity', position =  "dodge")+
+    ggplot2::theme(
+      plot.background = ggplot2::element_rect(fill = NULL),
+      panel.background = ggplot2::element_rect(fill = NULL),
+      plot.margin = grid::unit(c(0,20,0,-15),"mm")
+      )+
+    ggplot2::guides(fill = F)+
     ggplot2::labs(x=NULL, y=NULL)
   return(grafica)
 }
