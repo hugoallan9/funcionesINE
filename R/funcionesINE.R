@@ -1,4 +1,5 @@
 #' Hace una paleta del color indicado
+#' 
 #' @param data El data frame con la informacion
 #' @param color1 El color primario con el cual se desea hacer la paleta
 #' @param color2 El color secundario que va cuando encuentra palabras clave
@@ -432,8 +433,8 @@ exportarLatex <- function(nombre = grafica.tex, graph)
 #'El gris siempre se usa para ignorado
 #'
 #'@param x El vector de datos en el cual se basa la paleta de colores
+#'@param categoria Booleano que indica si se desea categorizar la rampa
 #'@return El vector de la paleta de colores
-#'@return categoria Booleano que indica si se desea categorizar la rampa
 #'@export 
 
 calcularRampaAnillo <- function(x, categoria = TRUE){
@@ -451,10 +452,29 @@ calcularRampaAnillo <- function(x, categoria = TRUE){
     if("IGNORADO" %in% toupper(x)){
       rampa <- c(rampaAux(2), pkg.env$gris)
     }else{
-      rampa <- rampaAux(2)
+      rampa <- rampaAux(length(x))
     }
   }
   return(rampa)
+}
+
+
+#' Convierte los factores de un data frame a datos numericos
+#' 
+#'@param tabla El data frame que se quiere trabajar
+#'@return Regresa el data frame con valores numéricos en lugar de factores
+#'@export  
+fact2Num <- function(tabla)
+{
+  if(is.factor(tabla$y))
+  {
+    tabla$y<- as.numeric(levels(tabla$y))[tabla$y]    
+  }
+  else
+  {
+    tabla$y<- as.numeric(tabla$y)   
+  }
+  return(tabla)
 }
 
 compilar <- function(ruta = paste(getwd(), "Latex/ENEI.tex",sep="/")){
@@ -472,5 +492,42 @@ preview <- function(graph)
   dev.off()
   shell(cmd=paste("xelatex   --synctex=1 --interaction=nonstopmode", "--output-directory",dirname(nombre),paste(nombre,".tex", sep="")))
   shell.exec(paste(nombre,".pdf", sep=""))
+}
+
+
+#'Calcula la rampa de colores para usar en las graficas
+#'de columnas agrupadas, mandando los ignorados hasta el final y haciendo
+#'la separcion por categorias (blanco para una categoría y negro para la otra)
+#'El gris siempre se usa para ignorado
+#'
+#'@param data  El data frame con el que se harán los calculos
+#'@return El vector de la paleta de colores
+#'@export 
+
+rampaColAgrupadas <- function(data){
+  rampa = NULL
+  
+  
+  
+  
+  
+  
+  if(categoria == TRUE){
+    if("IGNORADO" %in% toupper(x))
+    {
+      #print("IGNORADO")
+      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0), pkg.env$gris)
+    }else{
+      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0))
+    }
+  }else{
+    rampaAux <- grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0)))
+    if("IGNORADO" %in% toupper(x)){
+      rampa <- c(rampaAux(2), pkg.env$gris)
+    }else{
+      rampa <- rampaAux(length(x))
+    }
+  }
+  return(rampa)
 }
 

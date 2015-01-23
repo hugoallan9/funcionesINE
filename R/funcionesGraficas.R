@@ -133,7 +133,6 @@ graficaAnillo <- function(data, nombre)
     ggplot2::labs(x = NULL, y=NULL)+
     ggplot2::coord_polar(theta ="y")+
     ggplot2::xlim(c(0,10 ))+
-    ggplot2::scale_fill_grey(start= 1, end = 0.3)+
     ggplot2::guides(fill = ggplot2::guide_legend(title = NULL))
   temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(p1))
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
@@ -200,15 +199,20 @@ graficaColCategorias <- function(data){
   }
   categoria <- gl(length(data)-1, length(data$x), labels = names(data))
   dataLista <- data.frame(x,y,categoria)
+  dataLista <- fact2Num(dataLista)
+  colores <- calcularRampaAnillo(c("x","y","z"), categoria = F)
+  print(colores)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
-    ggplot2::geom_bar(stat = 'identity', position =  "dodge")+
+    ggplot2::geom_bar(stat = 'identity', position =  "dodge", width = 0.9)+
     ggplot2::theme(
       plot.background = ggplot2::element_rect(fill = NULL),
       panel.background = ggplot2::element_rect(fill = NULL),
       plot.margin = grid::unit(c(0,20,0,-15),"mm")
       )+
+    ggplot2::scale_fill_manual(values=colores)+
     ggplot2::guides(fill = F)+
+    ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=y), position=ggplot2::position_dodge(width=0.9),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
     ggplot2::labs(x=NULL, y=NULL)
   return(grafica)
 }
