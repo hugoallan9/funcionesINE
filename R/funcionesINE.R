@@ -506,27 +506,21 @@ preview <- function(graph)
 
 rampaColAgrupadas <- function(data){
   rampa = NULL
-  
-  
-  
-  
-  
-  
-  if(categoria == TRUE){
-    if("IGNORADO" %in% toupper(x))
-    {
-      #print("IGNORADO")
+  if(nrow(subset(data, y>0)) == 0){
+    print("No hay valores negativos")
+    if(toupper("Ignorado") %in% toupper(data$categoria)){
+      print("Hay ignorados")
       rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0), pkg.env$gris)
     }else{
-      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0))
+      print("No hay ignorados")
+      rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(0.3,0.3,0.3), grDevices::rgb(0.5,0.5,0.5)))
+      rampa = rampaAux(length(levels(dataL)))
     }
-  }else{
-    rampaAux <- grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0)))
-    if("IGNORADO" %in% toupper(x)){
-      rampa <- c(rampaAux(2), pkg.env$gris)
-    }else{
-      rampa <- rampaAux(length(x))
-    }
+  }else {
+    print("Hay valores negativos")
+    rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(0.2,0.2,0.2), grDevices::rgb(0.4,0.4,0.4)))
+    rampa = rampaAux(2)
+    rampa = c(rampa, pkg.env$gris)
   }
   return(rampa)
 }
