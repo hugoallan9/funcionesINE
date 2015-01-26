@@ -548,9 +548,7 @@ cargaMasiva <- function (ruta) {
   All <- lapply(filenames,function(i){
     read.csv(i, sep = ";")
   })
-  filenames <- gsub(dir,"",filenames)
-  filenames <- gsub("/","", filenames)
-  names(All) <- gsub(".csv","",filenames)
+  names(All) <- basename(filenames)
   tablas <- lapply(All,fact2Num)
   return(tablas)
 }
