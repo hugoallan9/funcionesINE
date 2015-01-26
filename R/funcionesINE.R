@@ -466,6 +466,8 @@ calcularRampaAnillo <- function(x, categoria = TRUE){
 #'@export  
 fact2Num <- function(tabla)
 {
+  nombres <- names(tabla)
+  names(tabla) <- c("x","y")
   if(is.factor(tabla$y))
   {
     tabla$y<- as.numeric(levels(tabla$y))[tabla$y]    
@@ -474,6 +476,7 @@ fact2Num <- function(tabla)
   {
     tabla$y<- as.numeric(tabla$y)   
   }
+  names(tabla) <- nombres
   return(tabla)
 }
 
