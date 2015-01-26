@@ -198,7 +198,7 @@ graficaAnillo <- function(data, nombre)
 #' @return No regresa ningun valor
 
 graficaColCategorias <- function(data, etiquetasCategorias = "D", escala = "normal", ruta){
-  tikzDevice::tikz(nombre, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = 3.19, height= 1.91, sanitize= F)
+  tikzDevice::tikz(ruta, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = 3.19, height= 1.91, sanitize= F)
   x <- rep(data$x,length(data)-1)
   y <- NULL
   for(i in 2:length(data)){

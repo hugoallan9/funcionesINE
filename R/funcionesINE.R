@@ -525,3 +525,34 @@ rampaColAgrupadas <- function(data){
   return(rampa)
 }
 
+#' Función para hacer carga masiva 
+#' de archivos CSV para su posterior uso con una lista 
+#' dentro de R.
+#' 
+#' @param ruta Ruta dentro del disco duro en la cual están contenidos los CSV
+#' @return Una lista con los data frame que contiene la información.
+#' @export
+
+cargaMasiva <- function (ruta) {
+  dir.create(path = paste(tempdir(), "CSV", sep = "/") )
+  filenames <- list.files(path = ruta, pattern = ".csv", full.names = TRUE)
+  numfiles <- length(filenames)
+  fn <- list.files(path = paste(tempdir(), "CSV", sep = "/") , full.names = TRUE)
+  file.remove(fn)
+  for (i in 1:numfiles)
+  {
+    shell(cmd=paste("iconv -f ISO-8859-1 -t UTF-8 <\"",filenames[[i]],"\">", paste(tempdir(),"CSV", basename(filenames[[i]]),sep="/"), sep = ""), mustWork=TRUE, intern=F, translate=TRUE)
+  }
+  dir <- paste(tempdir(),"CSV", sep = "/")
+  filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
+  All <- lapply(filenames,function(i){
+    read.csv(i, sep = ";")
+  })
+  filenames <- gsub(dir,"",filenames)
+  filenames <- gsub("/","", filenames)
+  names(All) <- gsub(".csv","",filenames)
+  tablas <- lapply(All,fact2Num)
+  return(tablas)
+}
+
+
