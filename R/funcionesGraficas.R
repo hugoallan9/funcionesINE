@@ -221,6 +221,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "D", escala = "norm
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand = c(0,0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)+
+    ggplot2::scale_x_continuous(breaks = data$x)+
     ggplot2::theme(
       plot.background = ggplot2::element_rect(fill = NULL),
       panel.background = ggplot2::element_rect(fill = NULL),
@@ -268,17 +269,18 @@ graficaColCategorias <- function(data, etiquetasCategorias = "D", escala = "norm
       tikzDevice::tikzAnnotate(c("\\draw [color=ct1] ($(rect)+1.5*(lonY) + (espacio)$) rectangle ($(rect)+(lonX)+ 0.5*(lonY) + (espacio)$);"))
       tikzDevice::tikzAnnotate(c("\\node [text width=",
                                  mm2pt(20), 
-                                 ",right= 0.3cm of t1,scale = 0.9]{",as.character(data$x[[1]]),"};"))
+                                 ",right= 0.3cm of t1,scale = 0.9]{",as.character( (names(data))[2] ),"};"))
       tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(rect)+0.5*(lonY)$) rectangle ($(rect)+(lonX)-0.5*(lonY)$);"))
       tikzDevice::tikzAnnotate(c("\\node [text width=",
                                  mm2pt(20), 
-                                 ",right= 0.3cm of t2,scale = 0.9]{", as.character(data$x[[2]]),"};"))
+                                 ",right= 0.3cm of t2,scale = 0.9]{", as.character( (names(data))[3] ),"};"))
       tikzDevice::tikzAnnotate(c("\\path [fill=ct3] ($(rect)-1.5*(lonY) - (espacio)$) rectangle ($(rect)+(lonX)- 0.5*(lonY) - (espacio)$);"))
       tikzDevice::tikzAnnotate(c("\\node [text width=",
                                  mm2pt(20), 
-                                 ",right= 0.3cm of t3,scale = 0.9]{",as.character(data$x[[3]]),"};"))
+                                 ",right= 0.3cm of t3,scale = 0.9]{",as.character( (names(data))[4] ),"};"))
       
     }
   }
   grDevices::dev.off()
+  print(grafica)
 }
