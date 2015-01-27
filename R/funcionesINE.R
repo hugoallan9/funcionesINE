@@ -477,6 +477,9 @@ fact2Num <- function(tabla)
     tabla$y<- as.numeric(tabla$y)   
   }
   names(tabla) <- gsub("\\.", " ", nombres)
+  print(names(tabla))
+  iconv(names(tabla), from = "iso8859-1", to = "UTF8")
+  print(names(tablas))
   return(tabla)
 }
 

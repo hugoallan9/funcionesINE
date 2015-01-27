@@ -235,7 +235,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   if ( toupper(etiquetas) == "V" ){
     max <-ggplot2::ggplot_build(grafica)$panel$ranges[[1]]$y.range[2] 
     longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
-    longitud <- longitud*0.352777778 + 6
+    longitud <- longitud*0.352777778 + 8
     grafica <- grafica + ggplot2::theme(
       plot.margin = grid::unit(c(longitud,0,0,0),"mm")
     )
@@ -246,7 +246,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   grid::grid.draw(temp)
   if(etiquetasCategorias == "D"){
     if(length(data$y) == 2){
-      tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+      tikzDevice::tikzCoord(2*6/3, 5/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
       tikzDevice::tikzCoord(0,mm2inch(2.5+ 4), name = "desY", units= "inches")
       tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0+ 4), name = "desX", units = "inches")
       tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
@@ -293,7 +293,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }
     }else{
       if(length(levels(dataLista$categoria)) -1 == 2){
-        tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(4), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+        tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(4.5), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(2.5), name = "longitud", units= "inches")
         tikzDevice::tikzCoord(mm2inch(30),mm2inch(0), name = "desX", units = "inches")
         #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
@@ -304,11 +304,11 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         tikzDevice::tikzAnnotate(c("\\path [fill=ct1] (apoyo) rectangle ($(apoyo)+(longitud)$);"))
         tikzDevice::tikzAnnotate(c("\\node [text width=",
                                    mm2pt(20), 
-                                   ",right= 0.2cm of t1,scale = 0.9]{", as.character( names(data)[2] ),"};"))
+                                   ",right= 0.2cm of t1,scale = 0.9, draw]{", as.character( names(data)[2] ),"};"))
         tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitud)$);"))
         tikzDevice::tikzAnnotate(c("\\node [text width=",
                                    mm2pt(20), 
-                                   ",right= 0.1cm of t2,scale = 0.9]{",as.character( names(data)[3] ),"};"))  
+                                   ",right= 0.2cm of t2,scale = 0.9]{",as.character( names(data)[3] ),"};"))  
       }else{
         tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
