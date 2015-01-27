@@ -476,7 +476,7 @@ fact2Num <- function(tabla)
   {
     tabla$y<- as.numeric(tabla$y)   
   }
-  names(tabla) <- nombres
+  names(tabla) <- gsub("\\.", " ", nombres)
   return(tabla)
 }
 
@@ -536,21 +536,26 @@ rampaColAgrupadas <- function(data){
 #' @return Una lista con los data frame que contiene la información.
 #' @export
 
-cargaMasiva <- function (ruta) {
+cargaMasiva <- function (ruta, recodificar = T) {
   dir.create(path = paste(tempdir(), "CSV", sep = "/") )
   filenames <- list.files(path = ruta, pattern = ".csv", full.names = TRUE)
   numfiles <- length(filenames)
   fn <- list.files(path = paste(tempdir(), "CSV", sep = "/") , full.names = TRUE)
   file.remove(fn)
-  for (i in 1:numfiles)
-  {
-    shell(cmd=paste("iconv -f ISO-8859-1 -t UTF-8 <\"",filenames[[i]],"\">", paste(tempdir(),"CSV", basename(filenames[[i]]),sep="/"), sep = ""), mustWork=TRUE, intern=F, translate=TRUE)
+  if ( recodificar ){
+    for (i in 1:numfiles)
+    {
+      shell(cmd=paste("iconv -f ISO-8859-1 -t UTF-8 <\"",filenames[[i]],"\">", paste(tempdir(),"CSV", basename(filenames[[i]]),sep="/"), sep = ""), mustWork=TRUE, intern=F, translate=TRUE)
+    }
+    dir <- paste(tempdir(),"CSV", sep = "/")
+  }else{
+    dir <- ruta
   }
-  dir <- paste(tempdir(),"CSV", sep = "/")
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
-    read.csv(i, sep = ";")
+    read.table(i, sep = ";", header = T, fill = T, col.names = )
   })
+  filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
   tablas <- lapply(All,fact2Num)
   return(tablas)

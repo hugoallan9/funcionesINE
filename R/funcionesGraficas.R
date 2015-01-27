@@ -197,7 +197,7 @@ graficaAnillo <- function(data, nombre)
 #' @param ruta Nombre de la ruta en la que se desea guardar la salida del archivo tex para su compilacion
 #' @return No regresa ningun valor
 
-graficaColCategorias <- function(data, etiquetasCategorias = "D", escala = "normal", ruta){
+graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta){
   tikzDevice::tikz(ruta, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = 3.19, height= 1.91, sanitize= F)
   x <- rep(data$x,length(data)-1)
   y <- NULL
@@ -215,13 +215,14 @@ graficaColCategorias <- function(data, etiquetasCategorias = "D", escala = "norm
   
   colores <-   rampaColAgrupadas(dataLista)
   print(colores)
+  dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
     ggplot2::geom_bar(stat = 'identity', position =  "dodge")+
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand = c(0,0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)+
-    ggplot2::scale_x_continuous(breaks = data$x)+
+    #ggplot2::scale_x_discrete()+
     ggplot2::theme(
       plot.background = ggplot2::element_rect(fill = NULL),
       panel.background = ggplot2::element_rect(fill = NULL),
@@ -279,6 +280,52 @@ graficaColCategorias <- function(data, etiquetasCategorias = "D", escala = "norm
                                  mm2pt(20), 
                                  ",right= 0.3cm of t3,scale = 0.9]{",as.character( (names(data))[4] ),"};"))
       
+    }
+    }else{
+      if(length(levels(dataLista$categoria)) -1 == 2){
+        tikzDevice::tikzCoord(1*3.19/8, 1.91-mm2inch(1), name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+        tikzDevice::tikzCoord(0,mm2inch(2.5+ 4), name = "desY", units= "inches")
+        tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0+ 4), name = "desX", units = "inches")
+        tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
+        tikzDevice::tikzAnnotate("\\definecolor[named]{ct1}{rgb}{0.0,0.0,0.0}")
+        tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(rect) + 0.5*(desX) + 0.5*(desY)$);")
+        tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(rect)+0.5*(mdesX)-0.5*(desY)$);")
+        tikzDevice::tikzAnnotate(c("\\draw [color=ct1] ($(rect)+(desY)$) rectangle ($(rect)+(desX)$);"))
+        tikzDevice::tikzAnnotate(c("\\node [text width=",
+                                   mm2pt(20), 
+                                   ",right= 0.3cm of t1,scale = 0.9]{", as.character( names(data)[2] ),"};"))
+        tikzDevice::tikzAnnotate(c("\\path [fill=blue] ($(rect)-(desY)$) rectangle ($(rect)+(mdesX)$);"))
+        tikzDevice::tikzAnnotate(c("\\node [text width=",
+                                   mm2pt(20), 
+                                   ",right= 0.3cm of t2,scale = 0.9]{",as.character( names(data)[3] ),"};"))  
+      }else{
+        tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+        tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
+        tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0-1.25), name = "desX", units = "inches")
+        tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
+        tikzDevice::tikzCoord(mm2inch(1.25),0, name="tdesX", units = "inches")
+        tikzDevice::tikzCoord(0,mm2inch(6+1.25), name ="tdesY", units = "inches")
+        tikzDevice::tikzCoord(0,mm2inch(6), name = "espacio", units = "inches")
+        tikzDevice::tikzCoord(0, mm2inch(2.5), name = "lonY", units = "inches")
+        tikzDevice::tikzCoord(mm2inch(2.5),0, name = "lonX", units = "inches")
+        tikzDevice::tikzAnnotate("\\definecolor[named]{ct1}{HTML}{000000}")
+        tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
+        tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct3}{HTML}{",substr(colores[3],2,7),"}"))
+        tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(rect) +0.5*(lonX)$);")
+        tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(rect)+ 0.5*(lonX) + (lonY) + (espacio) $);")
+        tikzDevice::tikzAnnotate("\\coordinate (t3) at ($(rect) + 0.5*(lonX) - (lonY) - (espacio)$);")
+        tikzDevice::tikzAnnotate(c("\\draw [color=ct1] ($(rect)+1.5*(lonY) + (espacio)$) rectangle ($(rect)+(lonX)+ 0.5*(lonY) + (espacio)$);"))
+        tikzDevice::tikzAnnotate(c("\\node [text width=",
+                                   mm2pt(20), 
+                                   ",right= 0.3cm of t1,scale = 0.9]{",as.character( (names(data))[2] ),"};"))
+        tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(rect)+0.5*(lonY)$) rectangle ($(rect)+(lonX)-0.5*(lonY)$);"))
+        tikzDevice::tikzAnnotate(c("\\node [text width=",
+                                   mm2pt(20), 
+                                   ",right= 0.3cm of t2,scale = 0.9]{", as.character( (names(data))[3] ),"};"))
+        tikzDevice::tikzAnnotate(c("\\path [fill=ct3] ($(rect)-1.5*(lonY) - (espacio)$) rectangle ($(rect)+(lonX)- 0.5*(lonY) - (espacio)$);"))
+        tikzDevice::tikzAnnotate(c("\\node [text width=",
+                                   mm2pt(20), 
+                                   ",right= 0.3cm of t3,scale = 0.9]{",as.character( (names(data))[4] ),"};"))
     }
   }
   grDevices::dev.off()

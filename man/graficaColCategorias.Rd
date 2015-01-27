@@ -4,7 +4,7 @@
 \alias{graficaColCategorias}
 \title{Graficas de columnas por categorias}
 \usage{
-graficaColCategorias(data, etiquetasCategorias = "D", escala = "normal",
+graficaColCategorias(data, etiquetasCategorias = "A", escala = "normal",
   ruta)
 }
 \arguments{
