@@ -5,7 +5,7 @@
 \title{Graficas de columnas por categorias}
 \usage{
 graficaColCategorias(data, etiquetasCategorias = "A", escala = "normal",
-  ruta)
+  ruta, etiquetas = "v")
 }
 \arguments{
 \item{data}{El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...}
@@ -18,6 +18,8 @@ superior de la grafica se debe indicar con la letra "A"}
 son "miles", "millones" o "milesmillones".}
 
 \item{ruta}{Nombre de la ruta en la que se desea guardar la salida del archivo tex para su compilacion}
+
+\item{etiquetas}{Posición de las etiquetas. Por defecto se ponen verticales, para pasar a horizontales de escribir "h"}
 }
 \value{
 No regresa ningun valor
