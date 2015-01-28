@@ -476,16 +476,34 @@ fact2Num <- function(tabla)
   {
     tabla$y<- as.numeric(tabla$y)   
   }
-  names(tabla) <- gsub("\\.", " ", nombres)
-  print(names(tabla))
-  iconv(names(tabla), from = "iso8859-1", to = "UTF8")
-  print(names(tablas))
+  names(tabla) <- nombres
+  #print(names(tablas))
   return(tabla)
 }
 
-compilar <- function(ruta = paste(getwd(), "Latex/ENEI.tex",sep="/")){
+#'Cambia la codificación en ciertas partes del data frame
+#'@param tabla Es el data frame al cual se le desea cambiar la 
+#'codificacion
+#'@return Data frame recodificado
+#'
+
+cambiarCodificacion <- function(tabla){
+  nombres <- names(tabla)
+  nombres <- gsub("\\.", " ", nombres)
+  nombres <- iconv(nombres, to = "UTF8//TRANSLIT")
+  names(tabla) <- nombres
+  x <- tabla$x
+  x <- iconv(x, to = "UTF8//TRANSLIT")
+  tabla$x <- x
+  return(tabla)
+}
+
+#'Función que comila con xelatex y muestra el resultado
+#'@param ruta Es la ruta de donde se desea guardar el fichero .tex
+#'@export
+compilar <- function(ruta = ""){
   shell(cmd=paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)
-  shell.exec(paste(dirname(ruta), "ENEI.pdf", sep="/"))
+  shell.exec(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"))
 }
 
 preview <- function(graph)
@@ -539,13 +557,14 @@ rampaColAgrupadas <- function(data){
 #' @return Una lista con los data frame que contiene la información.
 #' @export
 
-cargaMasiva <- function (ruta, recodificar = T) {
-  dir.create(path = paste(tempdir(), "CSV", sep = "/") )
+cargaMasiva <- function (ruta, recodificar = F) {
   filenames <- list.files(path = ruta, pattern = ".csv", full.names = TRUE)
   numfiles <- length(filenames)
   fn <- list.files(path = paste(tempdir(), "CSV", sep = "/") , full.names = TRUE)
   file.remove(fn)
   if ( recodificar ){
+    unlink(paste(tempdir(), "CSV", sep = "/"), force = T)
+    dir.create(path = paste(tempdir(), "CSV", sep = "/") )
     for (i in 1:numfiles)
     {
       shell(cmd=paste("iconv -f ISO-8859-1 -t UTF-8 <\"",filenames[[i]],"\">", paste(tempdir(),"CSV", basename(filenames[[i]]),sep="/"), sep = ""), mustWork=TRUE, intern=F, translate=TRUE)
@@ -556,11 +575,12 @@ cargaMasiva <- function (ruta, recodificar = T) {
   }
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
-    read.table(i, sep = ";", header = T, fill = T, col.names = )
+    read.csv(i, sep = ";", encoding = "Latin-1")
   })
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
   tablas <- lapply(All,fact2Num)
+  tablas <- lapply(tablas, cambiarCodificacion)
   return(tablas)
 }
 

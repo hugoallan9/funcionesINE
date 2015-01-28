@@ -6,7 +6,7 @@
 de archivos CSV para su posterior uso con una lista
 dentro de R.}
 \usage{
-cargaMasiva(ruta, recodificar = T)
+cargaMasiva(ruta, recodificar = F)
 }
 \arguments{
 \item{ruta}{Ruta dentro del disco duro en la cual están contenidos los CSV}

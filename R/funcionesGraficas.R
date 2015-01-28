@@ -15,7 +15,8 @@ graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
   grafica <- grafica + 
     ggplot2::geom_bar(stat = 'identity', colour = calcularRampa(data, color1), fill = calcularRampa(data,NA), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))
+    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
+    ggplot2::geom_abline(intercept = 0, slope = 0)
   return(grafica)
 }
 
@@ -302,13 +303,13 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(apoyo) + 0.3*(longitud)$);")
         tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(apoyo)+ (desX) + 0.3*(longitud)$);")
         tikzDevice::tikzAnnotate(c("\\path [fill=ct1] (apoyo) rectangle ($(apoyo)+(longitud)$);"))
-        tikzDevice::tikzAnnotate(c("\\node [text width=",
+        tikzDevice::tikzAnnotate(c("\\node [inner sep=0pt, outer sep=0pt,text width=",
                                    mm2pt(20), 
                                    ",right= 0.2cm of t1,scale = 0.9, draw]{", as.character( names(data)[2] ),"};"))
         tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitud)$);"))
-        tikzDevice::tikzAnnotate(c("\\node [text width=",
+        tikzDevice::tikzAnnotate(c("\\node [inner sep=0pt, outer sep=0pt,text width=",
                                    mm2pt(20), 
-                                   ",right= 0.2cm of t2,scale = 0.9]{",as.character( names(data)[3] ),"};"))  
+                                   ",right= 0.2cm of t2,scale = 0.9,draw]{",as.character( names(data)[3] ),"};"))  
       }else{
         tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
