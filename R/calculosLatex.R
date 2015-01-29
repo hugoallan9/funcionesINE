@@ -23,6 +23,10 @@ calcularAlto <- function( texto, factor = 0.90, largo = 20 ){
   # Escritura del preámbulo para el archivo LaTeX
   writeLines(getOption("tikzDocumentDeclaration"), texIn)
   
+  writeLines("\\usepackage[T1]{fontenc}", texIn)
+  
+  writeLines("\\usepackage{tikz}", texIn)
+  
   writeLines("\\usepackage[active,tightpage,xetex]{preview}", texIn)
   
   writeLines("\\usepackage{fontspec,xunicode}", texIn)
@@ -51,18 +55,39 @@ calcularAlto <- function( texto, factor = 0.90, largo = 20 ){
   writeLines("\\begin{tikzpicture}", texIn)
   
   writeLines(paste("\\node[inner sep=0pt, outer sep=0pt, text width =",as.character(mm2pt(largo)), 
-              ", scale = " ,as.character(factor),"] (TeX){", sep = ""), texIn)
+              ", scale = " ,as.character(factor),"] (TeX){",as.character(texto),"};",sep = ""), texIn)
   
-
+  writeLines(" \\path let \\p1 = ($(TeX.north) - (TeX.south)$),", texIn)
   
+  writeLines("\\n1 = {veclen(\\x1,\\y1)} in (TeX.east) -- (TeX.west)", texIn)
   
-  #\node[inner sep=0pt, outer sep=0pt, ,text width= 56.692913328pt ,scale=0.90] (TeX) {Indígena esto es una pruebita};
-  #\path let \p1 = ($(TeX.north) - (TeX.south)$), 
-  #\n1 = {veclen(\x1,\y1)} in (TeX.east) -- (TeX.west)
-  #node{ \typeout{tikzTeXWidth=\n1} };
-  #\makeatletter
-  #%\@@end
+  writeLines(" node{ \\typeout{tikzTeXWidth=\\n1} };", texIn)
   
+  writeLines("\\makeatletter", texIn)
+  
+  writeLines("\\@@end", texIn)
+    
   close(texIn)
+  
+  ## Compilación con XeLaTeX
+  cadenaCompilacion <-  paste("xelatex", '-interaction=batchmode', '-halt-on-error',
+         '-output-directory', texDir, texFile)
+
+  suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
+  
+  # Abriendo la bitácora.
+  texOut <- file( texLog, 'r' )
+  # Leyendo la bitácora.
+  logContents <- readLines( texOut )
+  close( texOut )
+
+  # Recover width by finding the line containing
+  # tikzTeXWidth in the logfile.
+  match <- logContents[ grep('tikzTeXWidth=', logContents) ]
+  # Remove all parts of the string besides the
+  # number.
+  heigth <- gsub('[=A-Za-z]','',match)
+  
+  return(as.numeric(heigth))
 
 }
