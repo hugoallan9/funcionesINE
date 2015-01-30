@@ -38,3 +38,8 @@ pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
   axis.text.y = ggplot2::element_text(colour = NA)
 )
 
+# Variables para el tamaño de la gráfica
+
+pkg.env$alto <- 3.19
+pkg.env$ancho <- 1.91
+

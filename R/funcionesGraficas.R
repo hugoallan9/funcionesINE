@@ -265,7 +265,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
                                  mm2pt(20), 
                                  ",right= 0.3cm of t2,scale = 0.9]{",as.character(data$x[[2]]),"};"))  
     }else{
-      tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+      tikzDevice::tikzCoord(2*pkg.env$ancho/3, pkg.env$alto/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
       tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
       tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0-1.25), name = "desX", units = "inches")
       tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
@@ -297,12 +297,12 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }else{
       if(length(levels(dataLista$categoria)) -1 == 2){
         tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
-        tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(2.5), name = "longitud", units= "inches")
+        tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(pt2mm(altoRect)), name = "longitud", units= "inches")
         tikzDevice::tikzCoord(mm2inch(30),mm2inch(0), name = "desX", units = "inches")
         #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
-        tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(apoyo) + 0.3*(longitud)$);")
+        tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(apoyo) + 1*(longitud)$);")
         tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(apoyo)+ (desX) + 0.3*(longitud)$);")
         tikzDevice::tikzAnnotate(c("\\path [fill=ct1] (apoyo) rectangle ($(apoyo)+(longitud)$);"))
         tikzDevice::tikzAnnotate(c("\\node [inner sep=0pt, outer sep=0pt,text width=",
