@@ -242,6 +242,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     )
   }
   
+  altoRect <- max(calcularAlto(names(data)[2]), calcularAlto(names(data)[3]))
+  
   temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica))
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
   grid::grid.draw(temp)
@@ -294,23 +296,21 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }
     }else{
       if(length(levels(dataLista$categoria)) -1 == 2){
-<<<<<<< HEAD
+        print(pkg.env$longCuadrado)
         tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
-        tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(pt2mm(altoRect)), name = "longitud", units= "inches")
-=======
-        tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(4.5), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
-        tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(2.5), name = "longitud", units= "inches")
->>>>>>> origin/master
+        tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pt2mm(altoRect)), name = "longitudFicticia", units= "inches")
+        tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pkg.env$longCuadrado), name = "longitud", units= "inches")
         tikzDevice::tikzCoord(mm2inch(30),mm2inch(0), name = "desX", units = "inches")
         #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
         tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(apoyo) + 1*(longitud)$);")
         tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(apoyo)+ (desX) + 0.3*(longitud)$);")
-        tikzDevice::tikzAnnotate(c("\\path [fill=ct1] (apoyo) rectangle ($(apoyo)+(longitud)$);"))
-        tikzDevice::tikzAnnotate(c("\\node [inner sep=0pt, outer sep=0pt,text width=",
+        tikzDevice::tikzAnnotate(c("\\path [fill=white] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
+        tikzDevice::tikzAnnotate(c("node [xshift=0.1cm,inner sep=0pt, outer sep=0pt,text width=",
                                    mm2pt(20), 
-                                   ",right= 0.2cm of t1,scale = 0.9, draw]{", as.character( names(data)[2] ),"};"))
+                                   ",midway,right,scale = 0.9, draw]{", as.character( names(data)[2] ),"};"))
+        tikzDevice::tikzAnnotate(c("\\path [fill=ct1] (apoyo) rectangle ($(apoyo)+(longitud)$);"))
         tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitud)$);"))
         tikzDevice::tikzAnnotate(c("\\node [inner sep=0pt, outer sep=0pt,text width=",
                                    mm2pt(20), 

@@ -32,5 +32,10 @@
     axis.text.y = ggplot2::element_text(colour = NA, vjust = -3, hjust = -3),
     axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = 9, hjust = -10, vjust =-10, angle = 0, lineheight = 0.9)
   ) 
+  # Variables para el tamaño de la gráfica
+  
+  pkg.env$alto <- 3.19
+  pkg.env$ancho <- 1.91
+  pkg.env$longCuadrado <- 2.5 #<--- Esta está en mm
   
 }
