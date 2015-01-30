@@ -215,10 +215,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     dataLista$y <- dataLista$y/1000000
   }
   
-  altoRect1 <- calcularAlto(names(data)[2])
-  altoRect2<- calcularAlto(names(data)[3])
-  altoRect <- max(altoRect1, altoRect2)
   colores <-   rampaColAgrupadas(dataLista)
+  print(colores)
   dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
@@ -238,7 +236,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   if ( toupper(etiquetas) == "V" ){
     max <-ggplot2::ggplot_build(grafica)$panel$ranges[[1]]$y.range[2] 
     longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
-    longitud <- pt2mm(altoRect + longitud) + 2.5 #<- Aca se contempla el espacio en  blanco entre la barra y la etiqueta
+    longitud <- longitud*0.352777778 + 8
     grafica <- grafica + ggplot2::theme(
       plot.margin = grid::unit(c(longitud,0,0,0),"mm")
     )
@@ -296,8 +294,13 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }
     }else{
       if(length(levels(dataLista$categoria)) -1 == 2){
+<<<<<<< HEAD
         tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(pt2mm(altoRect)), name = "longitud", units= "inches")
+=======
+        tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(4.5), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+        tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(2.5), name = "longitud", units= "inches")
+>>>>>>> origin/master
         tikzDevice::tikzCoord(mm2inch(30),mm2inch(0), name = "desX", units = "inches")
         #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
