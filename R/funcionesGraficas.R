@@ -233,16 +233,20 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     ggplot2::scale_fill_manual(values=colores)+
     ggplot2::guides(fill = F)+
     ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.9),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
+  
+  altoRect <- max(calcularAlto(names(data)[2]), calcularAlto(names(data)[3]))
+  print(altoRect)
+  
   if ( toupper(etiquetas) == "V" ){
     max <-ggplot2::ggplot_build(grafica)$panel$ranges[[1]]$y.range[2] 
     longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
-    longitud <- longitud*0.352777778 + 8
+    longitud <- pt2mm(longitud + altoRect) + 1.2 + 2 ## Se contempla la distancia de las barras a las etiquetas y de las etiquetas a la leyenda
+    print(c(" La longitud en mm es: ", longitud))
     grafica <- grafica + ggplot2::theme(
       plot.margin = grid::unit(c(longitud,0,0,0),"mm")
     )
   }
   
-  altoRect <- max(calcularAlto(names(data)[2]), calcularAlto(names(data)[3]))
   
   temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica))
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
@@ -301,21 +305,21 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pt2mm(altoRect)), name = "longitudFicticia", units= "inches")
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pkg.env$longCuadrado), name = "longitud", units= "inches")
         tikzDevice::tikzCoord(mm2inch(30),mm2inch(0), name = "desX", units = "inches")
+        tikzDevice::tikzCoord(mm2inch(0), 0.5* mm2inch(pt2mm(altoRect)) - 0.5*mm2inch(pkg.env$longCuadrado), name = "desY", units = "inches")
         #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
-        tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(apoyo) + 1*(longitud)$);")
-        tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(apoyo)+ (desX) + 0.3*(longitud)$);")
-        tikzDevice::tikzAnnotate(c("\\path [fill=white] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
-        tikzDevice::tikzAnnotate(c("node [xshift=0.1cm,inner sep=0pt, outer sep=0pt,text width=",
+        tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
+        tikzDevice::tikzAnnotate(c("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=",
                                    mm2pt(20), 
                                    ",midway,right,scale = 0.9, draw]{", as.character( names(data)[2] ),"};"))
-        tikzDevice::tikzAnnotate(c("\\path [fill=ct1] (apoyo) rectangle ($(apoyo)+(longitud)$);"))
-        tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitud)$);"))
-        tikzDevice::tikzAnnotate(c("\\node [inner sep=0pt, outer sep=0pt,text width=",
+        tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ( $(apoyo)  + (desY) $) rectangle ($(apoyo)+ (desY) +(longitud)$);"))
+        tikzDevice::tikzAnnotate(c("\\path [fill=none] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitudFicticia)$)"))
+        tikzDevice::tikzAnnotate(c("node [xshift = 0.3cm, inner sep=0pt, outer sep=0pt,text width=",
                                    mm2pt(20), 
-                                   ",right= 0.2cm of t2,scale = 0.9,draw]{",as.character( names(data)[3] ),"};"))  
-      }else{
+                                   ",midway,right,scale = 0.9,draw]{",as.character( names(data)[3] ),"};"))  
+        tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
+        }else{
         tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
         tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0-1.25), name = "desX", units = "inches")
