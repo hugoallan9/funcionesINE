@@ -34,8 +34,11 @@
   ) 
   # Variables para el tamaño de la gráfica
   
-  pkg.env$alto <- 3.19
-  pkg.env$ancho <- 1.91
+  pkg.env$alto <- 1.91 
+  pkg.env$ancho <- 3.19
+  
+  # Variables para las legendas
   pkg.env$longCuadrado <- 2.5 #<--- Esta está en mm
+  pkg.env$tol <- pkg.env$ancho/20
   
 }

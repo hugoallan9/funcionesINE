@@ -200,7 +200,7 @@ graficaAnillo <- function(data, nombre)
 #' @return No regresa ningun valor
 
 graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v"){
-  tikzDevice::tikz(ruta, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = 3.19, height= 1.91, sanitize= F)
+  tikzDevice::tikz(ruta, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
   x <- rep(data$x,length(data)-1)
   y <- NULL
   for(i in 2:length(data)){
@@ -300,23 +300,46 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }
     }else{
       if(length(levels(dataLista$categoria)) -1 == 2){
-        print(pkg.env$longCuadrado)
-        tikzDevice::tikzCoord(1*3.19/5, 1.91-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+        ## Caluculando las posiciones de las etiquetas para que quede centrado
+        lonEtiqueta1 <- pt2mm(mm2inch(tikzDevice::getLatexStrWidth(names(data)[2], cex = 0.9)))
+        lonEtiqueta2 <- pt2mm(mm2inch(tikzDevice::getLatexStrWidth(names(data)[3], cex = 0.9)))
+        print(names(data)[3])
+        apoyoX <- 0
+        separacion <- 0
+        print(lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado))
+        print(lonEtiqueta2 + mm2inch(3) + mm2inch(pkg.env$longCuadrado))
+        if( lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado) < 0.5 * pkg.env$ancho - pkg.env$tol && 
+              lonEtiqueta2 + mm2inch(3) + mm2inch(pkg.env$longCuadrado)  < 0.5 * pkg.env$ancho - pkg.env$tol  )
+        {
+          print("CASO 1")
+           print(paste("El punto medio para la primera etiqueta es: ", 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ), sep = " "))
+           apoyoX  <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) -  0.5 * ( lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+           finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * ( lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+           print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
+           separacion <- ( 0.5 * pkg.env$ancho - finEtiqueta1 ) + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - ( lonEtiqueta2 + mm2inch(3) + mm2inch(pkg.env$longCuadrado) ) )  
+        }
+        
+        
+        print(paste("El valor de apoyo es:" , apoyoX, sep = " "))
+        print(paste("La separción es:" , separacion, sep = " "))
+        print(paste("La tolerancia es:" , pkg.env$tol, sep = " "))
+        print(paste("La distancia de un cuadro a otro es:" ,separacion + lonEtiqueta1, sep = " "))
+        tikzDevice::tikzCoord(apoyoX, 1.91-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pt2mm(altoRect)), name = "longitudFicticia", units= "inches")
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pkg.env$longCuadrado), name = "longitud", units= "inches")
-        tikzDevice::tikzCoord(mm2inch(30),mm2inch(0), name = "desX", units = "inches")
+        tikzDevice::tikzCoord(separacion + lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado),mm2inch(0), name = "desX", units = "inches")
         tikzDevice::tikzCoord(mm2inch(0), 0.5* mm2inch(pt2mm(altoRect)) - 0.5*mm2inch(pkg.env$longCuadrado), name = "desY", units = "inches")
         #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
         tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
         tikzDevice::tikzAnnotate(c("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=",
-                                   mm2pt(20), 
+                                   inc2pt(0.5 * pkg.env$ancho - pkg.env$tol), 
                                    ",midway,right,scale = 0.9, draw]{", as.character( names(data)[2] ),"};"))
         tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ( $(apoyo)  + (desY) $) rectangle ($(apoyo)+ (desY) +(longitud)$);"))
         tikzDevice::tikzAnnotate(c("\\path [fill=none] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitudFicticia)$)"))
         tikzDevice::tikzAnnotate(c("node [xshift = 0.3cm, inner sep=0pt, outer sep=0pt,text width=",
-                                   mm2pt(20), 
+                                   inc2pt(0.5 * pkg.env$ancho - pkg.env$tol), 
                                    ",midway,right,scale = 0.9,draw]{",as.character( names(data)[3] ),"};"))  
         tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
         }else{
