@@ -301,26 +301,26 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }else{
       if(length(levels(dataLista$categoria)) -1 == 2){
         ## Caluculando las posiciones de las etiquetas para que quede centrado
-        lonEtiqueta1 <- pt2mm(mm2inch(tikzDevice::getLatexStrWidth(names(data)[2], cex = 0.9)))
-        lonEtiqueta2 <- pt2mm(mm2inch(tikzDevice::getLatexStrWidth(names(data)[3], cex = 0.9)))
-        print(names(data)[3])
+        lonEtiqueta1 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[2], cex = 0.9)))
+        lonEtiqueta2 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[3], cex = 0.9)))
         apoyoX <- 0
         separacion <- 0
-        print(lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado))
-        print(lonEtiqueta2 + mm2inch(3) + mm2inch(pkg.env$longCuadrado))
-        if( mm2inch(lonEtiqueta1) + mm2inch(3) + mm2inch(pkg.env$longCuadrado) < 0.5 * pkg.env$ancho - pkg.env$tol && 
-              mm2inch(lonEtiqueta2) + mm2inch(3) + mm2inch(pkg.env$longCuadrado)  < 0.5 * pkg.env$ancho - pkg.env$tol  )
+        print(paste("La longitud de la etiqueta 1 en in es: ", lonEtiqueta1, sep = " "))
+        print( lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado))
+        print( lonEtiqueta2 + mm2inch(3) + mm2inch(pkg.env$longCuadrado))
+        if( lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado) < 0.5 * pkg.env$ancho - pkg.env$tol && 
+              lonEtiqueta2 + mm2inch(3) + mm2inch(pkg.env$longCuadrado)  < 0.5 * pkg.env$ancho - pkg.env$tol  )
         {
           print("CASO 1")
            print(paste("El punto medio para la primera etiqueta es: ", 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ), sep = " "))
-           apoyoX  <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) -  0.5 * ( mm2inch( lonEtiqueta1 ) + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
-           finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * ( mm2inch( lonEtiqueta1 ) + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+           apoyoX  <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+           finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * (  lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
            print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
-           separacion <- ( 0.5 * pkg.env$ancho - finEtiqueta1 ) + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - ( mm2inch( lonEtiqueta2 ) + mm2inch(3) + mm2inch(pkg.env$longCuadrado) ) )  
-        }else if( 1.10 * ( mm2inch( lonEtiqueta1 ) + 2 * mm2inch(3) + 2 * mm2inch(pkg.env$longCuadrado) + mm2inch(lonEtiqueta2) ) <  pkg.env$ancho - 2 * pkg.env$tol){
+           separacion <- finEtiqueta1  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )  )  
+        }else if( 1.10 * (  lonEtiqueta1  + 2 * mm2inch(3) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) <  pkg.env$ancho - 2 * pkg.env$tol){
           print("CASO 2")
           apoyoX <- ( 0.5 * pkg.env$ancho  + pkg.env$tol ) - 0.5 * 1.10 * ( lonEtiqueta1 + 2 * mm2inch(3) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 )
-          separacion <-  mm2inch(pkg.env$longCuadrado) + mm2inch(3)  + mm2inch( lonEtiqueta1 )  + 0.10 * ( mm2inch(lonEtiqueta1) + 2 * mm2inch(3) + 2 * mm2inch(pkg.env$longCuadrado) + mm2inch(lonEtiqueta2) ) 
+          separacion <-  mm2inch(pkg.env$longCuadrado) + mm2inch(3)  + lonEtiqueta1   + 0.10 * ( lonEtiqueta1 + 2 * mm2inch(3) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) 
         }
         
         
@@ -331,7 +331,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         tikzDevice::tikzCoord(apoyoX, 1.91-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pt2mm(altoRect)), name = "longitudFicticia", units= "inches")
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pkg.env$longCuadrado), name = "longitud", units= "inches")
-        tikzDevice::tikzCoord(separacion + lonEtiqueta1 + mm2inch(3) + mm2inch(pkg.env$longCuadrado),mm2inch(0), name = "desX", units = "inches")
+        tikzDevice::tikzCoord(separacion,mm2inch(0), name = "desX", units = "inches")
         tikzDevice::tikzCoord(mm2inch(0), 0.5* mm2inch(pt2mm(altoRect)) - 0.5*mm2inch(pkg.env$longCuadrado), name = "desY", units = "inches")
         #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
