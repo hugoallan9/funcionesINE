@@ -249,18 +249,18 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         lonEtiqueta2 + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado)  < 0.5 * pkg.env$ancho - pkg.env$tol  )
   {
     print("CASO 1")
-    altoRect <- max(calcularAlto(names(data)[2], largo = inc2mm(lonEtiqueta1) ), calcularAlto(names(data)[3]), largo = inc2mm(lonEtiqueta2) )
+    altoRect <- max(calcularAlto(names(data)[2], largo = inc2mm( pkg.env$ancho ) ), calcularAlto(names(data)[3], largo = inc2mm(pkg.env$ancho) ) )
     print(altoRect)
     caso <- 1
   }else if( 1.10 * (  lonEtiqueta1  + 2 * mm2inch(3 - 0.5 * pkg.env$longCuadrado) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) <  pkg.env$ancho - 2 * pkg.env$tol){
     print("CASO 2")
-    altoRect <- max(calcularAlto(names(data)[2], largo = inc2mm(lonEtiqueta1) ), calcularAlto(names(data)[3]), largo = inc2mm(lonEtiqueta1) )
+    altoRect <- max(calcularAlto(names(data)[2], largo = inc2mm( pkg.env$ancho)/0.9 ), calcularAlto(names(data)[3], largo  = inc2mm(pkg.env$ancho)/0.9 ) )
     print(altoRect)
     caso <- 2
   }else {
     print(paste("No se cumple ninguna de las anteriores: ",  1.10 * (  lonEtiqueta1  + 2 * mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) , sep = " " ))
     print("CASO 3")
-    altoRect <- max(calcularAlto(names(data)[2], largo = 0.5 * pkg.env$ancho - pkg.env$tol - mm2inch(3 - 0.5 * pkg.env$longCuadrado) - mm2inch( pkg.env$longCuadrado ) ), calcularAlto(names(data)[3]), largo = 0.5 * pkg.env$ancho - pkg.env$tol - mm2inch(3 - 0.5 * pkg.env$longCuadrado) - mm2inch( pkg.env$longCuadrado ) )
+    altoRect <- max(calcularAlto(names(data)[2], largo = 0.5 * pkg.env$ancho - pkg.env$tol - mm2inch(3 - 0.5 * pkg.env$longCuadrado) - mm2inch( pkg.env$longCuadrado ) ), calcularAlto(names(data)[3], largo = 0.5 * pkg.env$ancho - pkg.env$tol - mm2inch(3 - 0.5 * pkg.env$longCuadrado) - mm2inch( pkg.env$longCuadrado ) ) )
     print(altoRect)
     caso <- 3  
     }
@@ -331,7 +331,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }else{
       if(length(levels(dataLista$categoria)) -1 == 2){
         ## Caluculando las posiciones de las etiquetas para que quede centrado
-        
+        cadenaEtiqueta1 <- ""
+        cadenaEtiqueta2 <- ""
         if( caso == 1  )
         {
           print("CASO 1")
@@ -340,10 +341,14 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
            finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * (  lonEtiqueta1  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )
            print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
            separacion <-  ( mm2inch(pkg.env$longCuadrado) + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + lonEtiqueta1 )  + ( 0.5 * pkg.env$ancho - finEtiqueta1 )  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )  )  
+          cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=,midway,right,scale = 0.9, draw]{", as.character( names(data)[2] ),"};", sep = "")
+          cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,midway,right,scale = 0.9, draw]{", as.character( names(data)[3] ),"};", sep = "")
         }else if( caso == 2 ){
           print("CASO 2")
           apoyoX <- ( 0.5 * pkg.env$ancho  + pkg.env$tol ) - 0.5 * 1.10 * ( lonEtiqueta1 + 2 * mm2inch(3 - 0.5 * pkg.env$longCuadrado ) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 )
           separacion <-  mm2inch(pkg.env$longCuadrado) + mm2inch( 3 - 0.5 * pkg.env$longCuadrado )  + lonEtiqueta1   + 0.10 * ( lonEtiqueta1 + 2 * mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) 
+          cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=,midway,right,scale = 0.9, draw]{", as.character( names(data)[2] ),"};", sep = "")
+          cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,midway,right,scale = 0.9, draw]{", as.character( names(data)[3] ),"};", sep = "")
         }else {
           print("CASO 3")
           print(paste("El punto medio para la primera etiqueta es: ", 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ), sep = " "))
@@ -367,14 +372,10 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
         tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
         tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
-        tikzDevice::tikzAnnotate(c("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=",
-                                   inc2pt(0.5 * pkg.env$ancho  ) , 
-                                   ",midway,right,scale = 0.9, draw]{", as.character( names(data)[2] ),"};"))
+        tikzDevice::tikzAnnotate(cadenaEtiqueta1)
         tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ( $(apoyo)  + (desY) $) rectangle ($(apoyo)+ (desY) +(longitud)$);"))
         tikzDevice::tikzAnnotate(c("\\path [fill=none] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitudFicticia)$)"))
-        tikzDevice::tikzAnnotate(c("node [xshift = 0.3cm, inner sep=0pt, outer sep=0pt,text width=",
-                                   inc2pt(0.5 * pkg.env$ancho) , 
-                                   ",midway,right,scale = 0.9,draw]{",as.character( names(data)[3] ),"};"))  
+        tikzDevice::tikzAnnotate(cadenaEtiqueta2)  
         tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
         }else{
         tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
