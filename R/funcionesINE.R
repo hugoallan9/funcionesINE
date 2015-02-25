@@ -109,9 +109,8 @@ function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
 sonEnteros <- function(data)
 {
   contador = 0
-  res <- 0
+  res <- FALSE
   for(i in (1:length(data$y))){
-    print(data$y[[i]])
     if(is.wholenumber(data$y[[i]]) == FALSE){
       break
     }
@@ -173,7 +172,7 @@ calcularPosiciones <- function(graph)
   #-1 HACIA ABAJO
   #0.5 A LA DERECHA
   #-0.5 A LA IZQUIERDA
-  data <- ggplot_build(graph)$data[[1]]
+  data <- ggplot2::ggplot_build(graph)$data[[1]]
   print(data)
   posiciones <- NULL
   if(data$y[[1]] < data$y[[2]])
@@ -239,43 +238,42 @@ calcularPosiciones <- function(graph)
 #'@param posiciones Vector de posiciones en que van las etiquetas
 etiquetasLineas <- function(graph, posiciones)
 {
-  d <- ggplot_build(graph)$data[[1]]
+  d <- ggplot2::ggplot_build(graph)$data[[1]]
   for(i in 1:length(posiciones))
   {
     dato <- d$y[[i]]
-    cat(c("El dato es jojo : ", dato, "\n"))
     d$etiqueta <- as.numeric(completarEtiquetas(dato,i,tam = length(d$x)))
     if(sonEnteros(d) == 0)
     {
       if(posiciones[[i]] == 1)
       {
-        graph <- graph + geom_text(data = d, aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
+        graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
       }else if(posiciones[[i]] == -1)
       {
-        graph <- graph + geom_text(data = d,aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
+        graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
       }else if(posiciones[[i]] == 0.5)
       {
-        graph <- graph + geom_text(data =d,aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
+        graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
       }
       else
       {
-        graph <- graph + geom_text(data = d,aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
+        graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
       }      
     }
     else
     {if(posiciones[[i]] == 1)
     {
-      graph <- graph + geom_text(data = d, aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + geom_text(data = d,aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
     }else if(posiciones[[i]] == 0.5)
     {
-      graph <- graph + geom_text(data =d,aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
     }
     else
     {
-      graph <- graph + geom_text(data = d,aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
     }
     }
     
@@ -332,7 +330,7 @@ rotarEtiX2 <- function(graph)
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2]
   longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
   longitud <- longitud*0.352777778 + 1
-  graph <- graph + ggplot2::theme(axis.text.x = element_text(angle = 90, vjust =0.5 , hjust= 1))+
+  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))+
     ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
 }
 
@@ -342,12 +340,12 @@ rotarEtiX2 <- function(graph)
 #' @param graph Objeto ggplot2 que se desea anotar
 #' @param margenIz Controla el margen izquierdo de la grafica
 #' @return Retorna objeto ggplot2 listo para graficar
-etiquetasBarras <- function(graph, margenIz = izBar  )
+etiquetasBarras <- function(graph, margenIz = 0  )
 {
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
-  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = fEscala) 
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
   longitud <- longitud*0.352777778 + 2.3
-  mIz <- izBar + margenIz
+  mIz <- 0 + margenIz
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
@@ -381,7 +379,7 @@ etiquetasHorizontales <- function(graph)
   else
   {
     graph <- graph +
-      ggplot2::geom_text(aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",")),size=3, hjust=0.5, vjust = -0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 0,big.mark = ",")),size=3, hjust=0.5, vjust = -0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
 }
@@ -407,7 +405,7 @@ etiquetasVerticales <- function(graph)
   else
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =0)), angle = 90, size=3, hjust=-0.1, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
 }
@@ -419,7 +417,7 @@ etiquetasVerticales <- function(graph)
 #'@param graph Objeto ggplot2 que se desea exportar a LaTeX
 exportarLatex <- function(nombre = grafica.tex, graph)
 {
-  tikzDevice::tikz(nombre, standAlone = TRUE, bareBones = TRUE, bg = "transparent",width = pkg.env$ancho, height= pkg.env$alto, sanitize = F)
+  tikzDevice::tikz(nombre, standAlone = F, bareBones = TRUE, bg = "transparent",width = pkg.env$ancho, height= pkg.env$alto, sanitize = F)
   temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(graph))
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
   grid::grid.draw(temp)
@@ -500,11 +498,17 @@ cambiarCodificacion <- function(tabla){
 
 #'Función que comila con xelatex y muestra el resultado
 #'@param ruta Es la ruta de donde se desea guardar el fichero .tex
+#'@param mostrar Booleano, cuando es verdadero muestra el pdf compilado.
 #'@export
-compilar <- function(ruta = ""){
+compilar <- function(ruta = "", mostrar = T){
   shell(cmd=paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)
-  shell.exec(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"))
+  if( mostrar == T){
+    shell.exec(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"))  
+  }
+  
 }
+
+
 
 preview <- function(graph)
 {
@@ -582,6 +586,17 @@ cargaMasiva <- function (ruta, recodificar = F) {
   tablas <- lapply(All,fact2Num)
   tablas <- lapply(tablas, cambiarCodificacion)
   return(tablas)
+}
+
+#'Función que calcula el cambio interanual para un data frame dado
+#'
+#'@param data El data frame sobre el cual se desea hacer el calculo
+#'@param paso El paso de retroceso para el calculo
+#'@return Cambio interanual
+#'
+cambioInterAnual <- function(data, paso = 4){
+    cambio <- ( data$y[length(data$y)] / data$y[length(data$y) - paso] ) *100
+    return(abs(100-cambio))
 }
 
 

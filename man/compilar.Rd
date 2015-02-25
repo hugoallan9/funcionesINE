@@ -4,10 +4,12 @@
 \alias{compilar}
 \title{Función que comila con xelatex y muestra el resultado}
 \usage{
-compilar(ruta = "")
+compilar(ruta = "", mostrar = T)
 }
 \arguments{
 \item{ruta}{Es la ruta de donde se desea guardar el fichero .tex}
+
+\item{mostrar}{Booleano, cuando es verdadero muestra el pdf compilado.}
 }
 \description{
 Función que comila con xelatex y muestra el resultado

@@ -4,12 +4,15 @@
 \alias{graficaAnillo}
 \title{Hace graficas de anillo para dos y tres categorias}
 \usage{
-graficaAnillo(data, nombre)
+graficaAnillo(data, nombre, preambulo = T)
 }
 \arguments{
 \item{data}{Data frame con el cual se hace el anillo}
 
 \item{nombre}{Ruta en la cual se desea generar el tex}
+
+\item{preambulo}{Booleano que cuando se le indica verdadero le pone todo el preambulo para compilar la gráfica como un documento
+por sí mismo y con falso deja el código para ser incluido en un documento más grande.}
 }
 \value{
 No retorna

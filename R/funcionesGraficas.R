@@ -88,9 +88,9 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5)
   nomX <- data$x
   data$x <- factor(data$x, as.character(data$x))
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group = 1))
-  grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
+  grafica <- grafica + ggplot2::geom_line( colour = pkg.env$color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::theme(axis.text.x = ggplto2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
+    ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
   grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica))
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
@@ -112,20 +112,23 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5)
 #' 
 #' @param data Data frame con el cual se hace el anillo
 #' @param nombre Ruta en la cual se desea generar el tex
+#' @param preambulo Booleano que cuando se le indica verdadero le pone todo el preambulo para compilar la gráfica como un documento
+#' por sí mismo y con falso deja el código para ser incluido en un documento más grande.
 #' @return No retorna
 #' @export
-graficaAnillo <- function(data, nombre)
+graficaAnillo <- function(data, nombre, preambulo = T)
 {
   names(data)<- c("x","y")
   data <- data[ordenarNiveles(data),]
   data$x <- factor(data$x, levels = data$x)
   data$x <- factor(data$x, as.character(data$x))
-  tikzDevice::tikz(nombre, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = 3.19, height= 1.91, sanitize= F)
+  tikzDevice::tikz(nombre, standAlone = preambulo, bg = "transparent",bareBones = !preambulo , width = 3.19, height= 1.91, sanitize= F)
   ggplot2::theme_set(pkg.env$temaAnillo)
   data$ymax = cumsum(data$y)
   data$ymin = c(0, head(data$ymax, n=-1))
   y.breaks <- cumsum(data$y)-data$y/2
   colores <- calcularRampaAnillo(data$x, categoria = F)
+  data$y <- round(data$y,1)
   p1 <- ggplot2::ggplot(data, ggplot2::aes(fill =  x, ymax = ymax, ymin = ymin ,xmax= 10, xmin= 5))+
     #geom_rect(show_guide=F)+
     ggplot2::geom_rect(fill = colores ,colour= "black", show_guide=F)+
@@ -147,10 +150,11 @@ graficaAnillo <- function(data, nombre)
     tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(rect) + 0.5*(desX) + 0.5*(desY)$);")
     tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(rect)+0.5*(mdesX)-0.5*(desY)$);")
     tikzDevice::tikzAnnotate(c("\\draw [color=ct1] ($(rect)+(desY)$) rectangle ($(rect)+(desX)$);"))
+    tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
     tikzDevice::tikzAnnotate(c("\\node [text width=",
                     mm2pt(20), 
                    ",right= 0.3cm of t1,scale = 0.9]{", as.character(data$x[[1]]),"};"))
-    tikzDevice::tikzAnnotate(c("\\path [fill=blue] ($(rect)-(desY)$) rectangle ($(rect)+(mdesX)$);"))
+    tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ($(rect)-(desY)$) rectangle ($(rect)+(mdesX)$);"))
     tikzDevice::tikzAnnotate(c("\\node [text width=",
                    mm2pt(20), 
                    ",right= 0.3cm of t2,scale = 0.9]{",as.character(data$x[[2]]),"};"))  
@@ -216,7 +220,6 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   }
   
   colores <-   rampaColAgrupadas(dataLista)
-  print(colores)
   dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
