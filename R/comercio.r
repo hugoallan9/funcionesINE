@@ -82,7 +82,9 @@ comercio <- function(lista, ruta){
   exportarLatex(paste(ruta,"2_01.tex", sep=""),g15)
   
   
-  g16<- graficaLineaTrim(lista$"2_02")
+  g16<- graficaCol(lista$"2_02")
+  g16 <- etiquetasHorizontales(g16)
+  g16 <- rotarEtiX(g16)
   exportarLatex(paste(ruta,"2_02.tex", sep=""),g16)
   
   
@@ -90,9 +92,11 @@ comercio <- function(lista, ruta){
   exportarLatex(paste(ruta,"2_03.tex", sep=""),g17)
   
   
-  g18<- graficaLineaTrim(lista$"2_04")
-  g18 <- g18 + ggplot2::geom_abline(intercept = 0, slope = 0) 
+  g18<- graficaCol(lista$"2_04")
+  g18 <- etiquetasHorizontales(g18)
+  g18 <- rotarEtiX(g18)
   exportarLatex(paste(ruta,"2_04.tex", sep=""),g18)
+  
   
   g20<- graficaLineaTrim(lista$"2_06")
   exportarLatex(paste(ruta,"2_06.tex", sep=""),g20)
