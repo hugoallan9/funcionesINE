@@ -98,7 +98,9 @@ comercio <- function(lista, ruta){
   exportarLatex(paste(ruta,"2_04.tex", sep=""),g18)
   
   
-  g20<- graficaLineaTrim(lista$"2_06")
+  g20<- graficaCol(lista$"2_06")
+  g20 <- etiquetasHorizontales(g20)
+  g20 <- rotarEtiX(g20)
   exportarLatex(paste(ruta,"2_06.tex", sep=""),g20)
   
   g23<- graficaBar(lista$"2_09")
@@ -137,14 +139,20 @@ comercio <- function(lista, ruta){
   exportarLatex(paste(ruta,"3_02.tex", sep=""),g30)
   
   
-  g31<- graficaLineaTrim(lista$"3_03")
+  g31<- graficaCol(lista$"3_03")
+  g31 <- etiquetasHorizontales(g31)
+  g31 <- rotarEtiX(g31)
   exportarLatex(paste(ruta,"3_03.tex", sep=""),g31)
   
   
-  g32<- graficaLineaTrim(lista$"3_04")
+  g32<- graficaCol(lista$"3_04")
+  g32 <- etiquetasHorizontales(g32)
+  g32 <- rotarEtiX(g32)
   exportarLatex(paste(ruta,"3_04.tex", sep=""),g32)
   
-  g40<- graficaLineaTrim(lista$"3_06")
+  g40<- graficaCol(lista$"3_06")
+  g40 <- etiquetasHorizontales(g40)
+  g40 <- rotarEtiX(g40)
   exportarLatex(paste(ruta,"3_06.tex", sep=""),g40)
   
   g43<- graficaBar(lista$"3_09")
@@ -180,7 +188,9 @@ comercio <- function(lista, ruta){
   exportarLatex(paste(ruta,"4_01.tex", sep=""),g50)
   
   
-  g51<- graficaLineaTrim(lista$"4_02")
+  g51<- graficaCol(lista$"4_02")
+  g51 <- etiquetasHorizontales(g51)
+  g51 <- rotarEtiX(g51)
   exportarLatex(paste(ruta,"4_02.tex", sep=""),g51)
   
   
@@ -188,10 +198,14 @@ comercio <- function(lista, ruta){
   exportarLatex(paste(ruta,"4_03.tex", sep=""),g52)
   
   
-  g53<- graficaLineaTrim(lista$"4_04")
+  g53<- graficaCol(lista$"4_04")
+  g53 <- etiquetasHorizontales(g53)
+  g53 <- rotarEtiX(g53)
   exportarLatex(paste(ruta,"4_04.tex", sep=""),g53)
   
-  g60<- graficaLineaTrim(lista$"4_06")
+  g60<- graficaCol(lista$"4_06")
+  g60 <- etiquetasHorizontales(g60)
+  g60 <- rotarEtiX(g60)
   exportarLatex(paste(ruta,"4_06.tex", sep=""),g60)
   
   g63<- graficaBar(lista$"4_09")
