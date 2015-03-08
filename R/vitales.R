@@ -31,7 +31,7 @@ graficasVitales<- function(lista, ruta){
   exportarLatex(paste(ruta,"1_06.tex", sep=""), t6)
   
   t7 <- graficaAnillo(lista$"1_07", paste(ruta,"1_07.tex", sep=""))
- 
+  compilar(ruta)
   
   t8 <- graficaBar(lista$"1_08")
   t8 <- etiquetasBarras(t8)
