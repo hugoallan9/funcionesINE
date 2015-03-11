@@ -64,9 +64,7 @@ graficasVitales<- function(lista, ruta){
   exportarLatex(paste(ruta,"2_03.tex", sep=""), t13)
   
   
-  #t14 <- graficaBar(lista$"2_04")
-  #t14 <- etiquetasBarras(t14)
-  #exportarLatex("VT1//2_04.tex", t14)
+  t14 <- graficaColCategorias(listas$'2_04', ruta = paste(ruta,"2_04.tex", sep=""))
   
   
   t15 <- graficaLineaTrim(lista$"2_05")
