@@ -31,7 +31,7 @@ graficasVitales<- function(lista, ruta){
   exportarLatex(paste(ruta,"1_06.tex", sep=""), t6)
   
   t7 <- graficaAnillo(lista$"1_07", paste(ruta,"1_07.tex", sep=""))
-  compilar(ruta)
+  compilar(paste(ruta,"1_07.tex", sep=""),F)
   
   t8 <- graficaBar(lista$"1_08")
   t8 <- etiquetasBarras(t8)
@@ -64,7 +64,8 @@ graficasVitales<- function(lista, ruta){
   exportarLatex(paste(ruta,"2_03.tex", sep=""), t13)
   
   
-  t14 <- graficaColCategorias(listas$'2_04', ruta = paste(ruta,"2_04.tex", sep=""))
+  t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""))
+  compilar(paste(ruta,"2_04.tex", sep=""), F)
   
   
   t15 <- graficaLineaTrim(lista$"2_05")

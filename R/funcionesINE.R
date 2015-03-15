@@ -35,7 +35,6 @@ ordenarNiveles <- function(data, ordenar = TRUE)
   ignNombre <- NULL
   ign = 0
   orden <- NULL
-  print(ordenar)
   if(ordenar)
   {
     orden <- order(data$y, decreasing = T)
@@ -57,14 +56,39 @@ ordenarNiveles <- function(data, ordenar = TRUE)
       nuevoOrden <- c(nuevoOrden, elemento)
     }
   }
+  
   if(ign == 1)
   {
     nuevoOrden <- c(nuevoOrden, pos)
   }
-  print(nuevoOrden)
+  
   return(nuevoOrden)
 }
 
+
+#'Función para ordenar los niveles de un data frame 
+#'excluyendo ciertas palabras claves, como ignorado y otros. 
+#'Se puede hacer personalizable eligiendo los identificadores de los
+#'niveles que se desean excluir.
+#'@param data El data frame con el que se desea trabajar
+#'@param palabras Vector de palabras claves que se desean excluir,
+#'@return Data frame ordenado y con las exclusiones de los niveles
+
+excluirNiveles <- function(data, palabras = pkg.env$exclusion){
+  temp <- NULL
+  orden <- NULL
+  orden <- order(data$y, decreasing = T)
+  nuevoOrden <- NULL
+  for(elemento in orden)
+  {
+    if( !(tolower(data[elemento,]$x) %in% palabras) )
+    {
+      nuevoOrden <- c(nuevoOrden, elemento)
+    }
+  }  
+  
+  return(data[nuevoOrden,])
+}
 
 
 #'Funcion en fase que beta, en teoria mide el ancho de una palabra y determina si existe el espacio
@@ -487,6 +511,12 @@ fact2Num <- function(tabla)
 
 cambiarCodificacion <- function(tabla){
   nombres <- names(tabla)
+  if(nombres[1] == "X")
+    nombres[1] <- "x"
+  if(nombres[2] == "Y")
+    nombres[2] <- "y"
+  names(tabla) <- nombres
+  
   nombres <- gsub("\\.", " ", nombres)
   nombres <- iconv(nombres, to = "UTF8//TRANSLIT")
   names(tabla) <- nombres
@@ -588,7 +618,7 @@ cargaMasiva <- function (ruta, recodificar = F) {
   return(tablas)
 }
 
-#'Función que calcula el cambio interanual para un data frame dado
+#'Función que calcula el cambio interanual en porcentaje para un data frame dado
 #'
 #'@param data El data frame sobre el cual se desea hacer el calculo
 #'@param paso El paso de retroceso para el calculo
@@ -598,5 +628,19 @@ cambioInterAnual <- function(data, paso = 4){
     cambio <- ( data$y[length(data$y)] / data$y[length(data$y) - paso] ) *100
     return(abs(100-cambio))
 }
+
+
+#'Función que calcula el cambio interanual neto para un data frame dado
+#'
+#'@param data El data frame sobre el cual se desea hacer el calculo
+#'@param paso El paso de retroceso para el calculo
+#'@return Cambio interanual
+#'
+cambioInterAnualNeto <- function(data, paso = 4){
+  cambio <- ( data$y[length(data$y)] - data$y[length(data$y) - paso] )
+  return(abs(cambio))
+}
+
+
 
 
