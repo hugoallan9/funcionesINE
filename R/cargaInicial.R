@@ -21,8 +21,6 @@
   
   options(tikzUnicodeMetricPackages = c("\\usetikzlibrary{calc}\n"))
   
-  options(tikzDocumentDeclaration= "\\documentclass[10pt,twoside]{book}")
-  
   pkg.env$temaAnillo <- pkg.env$temaINE
   pkg.env$temaAnillo <- pkg.env$temaAnillo +ggplot2::theme(
     plot.margin = grid::unit(c(0,inc2mm(3.19/4),0,-20),"mm"), axis.line.y = ggplot2::element_line(colour=NA),

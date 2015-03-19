@@ -26,7 +26,7 @@ graficasVitales<- function(lista, ruta){
   t5 <- etiquetasBarras(t5)
   exportarLatex(paste(ruta,"1_05.tex", sep=""), t5)
   
-  t6 <- graficaCol(lista$"1_06")
+  t6 <- graficaCol(lista$"1_06", ancho = 0.4)
   t6 <- etiquetasHorizontales(t6)
   exportarLatex(paste(ruta,"1_06.tex", sep=""), t6)
   

@@ -13,7 +13,7 @@ graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
   levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x, y))
   grafica <- grafica + 
-    ggplot2::geom_bar(stat = 'identity', colour = calcularRampa(data, color1), fill = calcularRampa(data,NA), width = ancho, position =  "dodge")+
+    ggplot2::geom_bar(stat = 'identity', colour = calcularRampa(data, color1), fill = calcularRampa(data,pkg.env$colorRelleno), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)
@@ -34,7 +34,7 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
   levels(data$x) <- gsub("\\n", "\n", levels(data$x))
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x, y))
   grafica <- grafica + 
-    ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, NA), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
+    ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::coord_flip()
@@ -49,11 +49,11 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
 #'@param ancho El grosor de la linea
 #'@export
 
-graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.7)
+graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5)
 {
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y")
-  grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y))
+  grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group=1))
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)
   grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica))
@@ -113,7 +113,7 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5)
 #' @param data Data frame con el cual se hace el anillo
 #' @param nombre Ruta en la cual se desea generar el tex
 #' @param preambulo Booleano que cuando se le indica verdadero le pone todo el preambulo para compilar la gráfica como un documento
-#' por sí mismo y con falso deja el código para ser incluido en un documento más grande.
+#' por sí mismo y con falso deja el código para ser incluido en un documento más grande. 
 #' @return No retorna
 #' @export
 graficaAnillo <- function(data, nombre, preambulo = T)
@@ -122,7 +122,7 @@ graficaAnillo <- function(data, nombre, preambulo = T)
   data <- data[ordenarNiveles(data),]
   data$x <- factor(data$x, levels = data$x)
   data$x <- factor(data$x, as.character(data$x))
-  tikzDevice::tikz(nombre, standAlone = preambulo, bg = "transparent",bareBones = !preambulo , width = 3.19, height= 1.91, sanitize= F)
+  tikzDevice::tikz(nombre, standAlone = preambulo, bg = "transparent",bareBones = !preambulo , width = pkg.env$ancho , height= pkg.env$alto, sanitize= F)
   ggplot2::theme_set(pkg.env$temaAnillo)
   data$ymax = cumsum(data$y)
   data$ymin = c(0, head(data$ymax, n=-1))
@@ -142,7 +142,7 @@ graficaAnillo <- function(data, nombre, preambulo = T)
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
   grid::grid.draw(temp)
   if(length(data$y) == 2){
-    tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+    tikzDevice::tikzCoord(2*pkg.env$ancho/3, pkg.env$alto/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
     tikzDevice::tikzCoord(0,mm2inch(2.5+ 4), name = "desY", units= "inches")
     tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0+ 4), name = "desX", units = "inches")
     tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
@@ -159,7 +159,7 @@ graficaAnillo <- function(data, nombre, preambulo = T)
                    mm2pt(20), 
                    ",right= 0.3cm of t2,scale = 0.9]{",as.character(data$x[[2]]),"};"))  
   }else{
-    tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+    tikzDevice::tikzCoord(2*pkg.env$ancho/3, pkg.env$alto/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
     tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
     tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0-1.25), name = "desX", units = "inches")
     tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
@@ -201,9 +201,10 @@ graficaAnillo <- function(data, nombre, preambulo = T)
 #' son "miles", "millones" o "milesmillones".
 #' @param ruta Nombre de la ruta en la que se desea guardar la salida del archivo tex para su compilacion
 #' @param etiquetas Posición de las etiquetas. Por defecto se ponen verticales, para pasar a horizontales de escribir "h"
+#' @param preambulo Etiqueta boolean que indica si se desea que la gráfica tenga preámbulo o no. Por defecto se tiene Falso. 
 #' @return No regresa ningun valor
 
-graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v"){
+graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.5, preambulo = F){
   tikzDevice::tikz(ruta, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
   x <- rep(data$x,length(data)-1)
   y <- NULL
@@ -223,7 +224,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
-    ggplot2::geom_bar(stat = 'identity', position =  "dodge")+
+    ggplot2::geom_bar(stat = 'identity', position =  "dodge", width=ancho)+
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand = c(0,0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)+

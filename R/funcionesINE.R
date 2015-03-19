@@ -641,6 +641,28 @@ cambioInterAnualNeto <- function(data, paso = 4){
   return(abs(cambio))
 }
 
+#'Función para poner parametrización del formato de trimestrales
+trimestral <- function(){
+  pkg.env$alto <- 1.91 
+  pkg.env$ancho <- 3.19
+  options(tikzDocumentDeclaration= "\\documentclass[10pt,twoside]{book}")
+}
+
+#'Función para poner parametrización del formato anual
+#'@param color1 Color primario para graficar, definido por el usuario. Este debe ser definido 
+#'con el formato rgb(v1,v2,v3, maxColorValue = 255), si maxColorValue no está definido
+#'se usa por defecto 1. 
+#'@param color2 Color secundario para graficar, definido por el usuario con el formato 
+#'rgb(v1,v2,v3, maxColorValue = 255), si maxColorValue no está definido
+#'se usa por defecto 1. 
+anual <- function(color1, color2){
+  pkg.env$alto <- 2.75
+  pkg.env$ancho <- 4
+  options(tikzDocumentDeclaration= "\\documentclass[11pt,twoside]{book}")
+  pkg.env$color1 <- color1
+  pkg.env$color2 <- color2
+  pkg.env$colorRelleno <- color1
+}
 
 
 

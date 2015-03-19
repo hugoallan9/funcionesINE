@@ -5,7 +5,7 @@
 \title{Graficas de columnas por categorias}
 \usage{
 graficaColCategorias(data, etiquetasCategorias = "A", escala = "normal",
-  ruta, etiquetas = "v")
+  ruta, etiquetas = "v", ancho = 0.5, preambulo = F)
 }
 \arguments{
 \item{data}{El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...}
@@ -20,6 +20,8 @@ son "miles", "millones" o "milesmillones".}
 \item{ruta}{Nombre de la ruta en la que se desea guardar la salida del archivo tex para su compilacion}
 
 \item{etiquetas}{Posición de las etiquetas. Por defecto se ponen verticales, para pasar a horizontales de escribir "h"}
+
+\item{preambulo}{Etiqueta boolean que indica si se desea que la gráfica tenga preámbulo o no. Por defecto se tiene Falso.}
 }
 \value{
 No regresa ningun valor

@@ -4,7 +4,7 @@
 \alias{graficaLinea}
 \title{Hace una grafica de linea, util para series historicas}
 \usage{
-graficaLinea(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.7)
+graficaLinea(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5)
 }
 \arguments{
 \item{data}{El data frame para hacer la gráfica}
