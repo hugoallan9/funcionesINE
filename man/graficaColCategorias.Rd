@@ -5,7 +5,7 @@
 \title{Graficas de columnas por categorias}
 \usage{
 graficaColCategorias(data, etiquetasCategorias = "A", escala = "normal",
-  ruta, etiquetas = "v", ancho = 0.5, preambulo = F)
+  ruta, etiquetas = "v", ancho = 0.7, preambulo = F)
 }
 \arguments{
 \item{data}{El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...}

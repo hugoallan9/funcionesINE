@@ -47,16 +47,18 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
 #'@param color1 El color en el que se desea la linea
 #'@param inicio El dato desde donde se quiere que se visualice la gráfica
 #'@param ancho El grosor de la linea
+#'@param precision Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa
+#'un decimal.
 #'@export
 
-graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5)
+graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1)
 {
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y")
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group=1))
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)
-  grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica))
+  grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica), precision = precision)
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   limite <- minimo - 0.3*(maximo - minimo)
@@ -68,7 +70,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5)
   else
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
-      ggplot2::theme(plot.margin = unit(c(2.5,3,0,-4), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-4), "mm"))
   }
   return(grafica)
 }
@@ -204,7 +206,7 @@ graficaAnillo <- function(data, nombre, preambulo = T)
 #' @param preambulo Etiqueta boolean que indica si se desea que la gráfica tenga preámbulo o no. Por defecto se tiene Falso. 
 #' @return No regresa ningun valor
 
-graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.5, preambulo = F){
+graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.7, preambulo = F){
   tikzDevice::tikz(ruta, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
   x <- rep(data$x,length(data)-1)
   y <- NULL
@@ -219,7 +221,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   }else if(toupper(escala) == "MILLONES"){
     dataLista$y <- dataLista$y/1000000
   }
-  
+  print('ACA VIENE SI ES FACTOR O NO:')
+  print(is.factor(dataLista$x))
   colores <-   rampaColAgrupadas(dataLista)
   dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
@@ -236,7 +239,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       )+
     ggplot2::scale_fill_manual(values=colores)+
     ggplot2::guides(fill = F)+
-    ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.9),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
+    ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.7),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
   
   
   
@@ -287,7 +290,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   grid::grid.draw(temp)
   if(etiquetasCategorias == "D"){
     if(length(data$y) == 2){
-      tikzDevice::tikzCoord(2*6/3, 5/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+      tikzDevice::tikzCoord(2*pkg.env$ancho/3,altoRect, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
       tikzDevice::tikzCoord(0,mm2inch(2.5+ 4), name = "desY", units= "inches")
       tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0+ 4), name = "desX", units = "inches")
       tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
@@ -367,7 +370,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         print(paste("La separción es:" , separacion, sep = " "))
         print(paste("La tolerancia es:" , pkg.env$tol, sep = " "))
         print(paste("La distancia de un cuadro a otro es:" ,separacion + lonEtiqueta1, sep = " "))
-        tikzDevice::tikzCoord(apoyoX, 1.91-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+        tikzDevice::tikzCoord(apoyoX, pkg.env$alto-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pt2mm(altoRect)), name = "longitudFicticia", units= "inches")
         tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pkg.env$longCuadrado), name = "longitud", units= "inches")
         tikzDevice::tikzCoord(separacion,mm2inch(0), name = "desX", units = "inches")
@@ -412,5 +415,5 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }
   }
   grDevices::dev.off()
-  return(grafica)
+  return(dataLista)
 }
