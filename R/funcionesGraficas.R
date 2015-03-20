@@ -62,15 +62,17 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   limite <- minimo - 0.3*(maximo - minimo)
+  print(c('El límite es: ', limite))
+  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
-      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-7), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-5), "mm"))
   }
   else
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
-      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-4), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-2), "mm"))
   }
   return(grafica)
 }
@@ -197,8 +199,8 @@ graficaAnillo <- function(data, nombre, preambulo = T)
 #' 
 #' @param data El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...
 #' @param etiquetasCategorias Indica la posición en las que se desea poner las etiquetas para las categorias.
-#' Por defecto la posición es a la derecha, lo que se denota con la letra "I", cuando las etiquetas se desean en la parte
-#' superior de la grafica se debe indicar con la letra "A"
+#' Por defecto la posición es hacia Arriba, lo que se denota con la letra "A", cuando las etiquetas se desean en la parte
+#' derecha de la grafica se debe indicar con la letra "D"
 #' @param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 #' son "miles", "millones" o "milesmillones".
 #' @param ruta Nombre de la ruta en la que se desea guardar la salida del archivo tex para su compilacion
@@ -206,8 +208,8 @@ graficaAnillo <- function(data, nombre, preambulo = T)
 #' @param preambulo Etiqueta boolean que indica si se desea que la gráfica tenga preámbulo o no. Por defecto se tiene Falso. 
 #' @return No regresa ningun valor
 
-graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.7, preambulo = F){
-  tikzDevice::tikz(ruta, standAlone = TRUE, bg = "transparent",bareBones = FALSE, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
+graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.9, preambulo = F){
+  tikzDevice::tikz(ruta, standAlone = preambulo, bg = "transparent",bareBones = !preambulo, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
   x <- rep(data$x,length(data)-1)
   y <- NULL
   for(i in 2:length(data)){
@@ -220,6 +222,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     dataLista$y <- dataLista$y/1000
   }else if(toupper(escala) == "MILLONES"){
     dataLista$y <- dataLista$y/1000000
+  }else if(toupper(escala) == "MILESMILLONES"){
+    dataLista$y <- dataLista$y/1000000000
   }
   print('ACA VIENE SI ES FACTOR O NO:')
   print(is.factor(dataLista$x))
@@ -385,7 +389,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         tikzDevice::tikzAnnotate(cadenaEtiqueta2)  
         tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
         }else{
-        tikzDevice::tikzCoord(2*3.19/3, 1.91/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+        tikzDevice::tikzCoord(2*pkg.env$ancho/3, pkg.env$alto/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
         tikzDevice::tikzCoord(0,mm2inch(1.25 + 0), name = "desY", units= "inches")
         tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0-1.25), name = "desX", units = "inches")
         tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")

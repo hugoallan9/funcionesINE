@@ -5,14 +5,14 @@
 \title{Graficas de columnas por categorias}
 \usage{
 graficaColCategorias(data, etiquetasCategorias = "A", escala = "normal",
-  ruta, etiquetas = "v", ancho = 0.7, preambulo = F)
+  ruta, etiquetas = "v", ancho = 0.9, preambulo = F)
 }
 \arguments{
 \item{data}{El data frame para hacer la grafica, con el formato de tres o mas columnas de la forma y,z,w,...}
 
 \item{etiquetasCategorias}{Indica la posición en las que se desea poner las etiquetas para las categorias.
-Por defecto la posición es a la derecha, lo que se denota con la letra "I", cuando las etiquetas se desean en la parte
-superior de la grafica se debe indicar con la letra "A"}
+Por defecto la posición es hacia Arriba, lo que se denota con la letra "A", cuando las etiquetas se desean en la parte
+derecha de la grafica se debe indicar con la letra "D"}
 
 \item{escala}{Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 son "miles", "millones" o "milesmillones".}
