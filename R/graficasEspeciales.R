@@ -218,10 +218,11 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }else{
       ##Definiendo los nodos necesarios:
       
-      
-      apoyoX  <- 1/3 * ( pkg.env$ancho + pkg.env$tol ) -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
-      finEtiqueta1 <- 0.5 * ( pkg.env$ancho + 2/3 * pkg.env$tol ) +  0.5 * (  lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+      print(paste('La mitad de la etiqueta 1 vale: ' , 0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )))
+      apoyoX  <- 1/6* pkg.env$ancho + 2/3 * pkg.env$tol -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+      finEtiqueta1 <- 1/6* pkg.env$ancho + 2/3 * pkg.env$tol +  0.5 * (  lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
       finEtiqueta2 <- 
+      print(paste("El valor de apoyo es :" , apoyoX, sep = " "))
       print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
       separacion <- finEtiqueta1  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch(3) + mm2inch( pkg.env$longCuadrado) )  )
       
