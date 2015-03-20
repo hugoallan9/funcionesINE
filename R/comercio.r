@@ -23,7 +23,7 @@ comercio <- function(lista, ruta){
 #   exportarLatex(paste(ruta,"1_04.tex", sep=""),g4)
   
   
-  g5 <- graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex'), escala = 'milesmillones',etiquetasCategorias = 'A')
+  g5 <- graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex'), escala = 'milesmillones')
   
   
   g6 <- graficaCol(lista$"1_06", ordenar =  F)# cambiar a col
