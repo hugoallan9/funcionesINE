@@ -4,12 +4,15 @@
 \alias{etiquetasLineas}
 \title{Le pone las etiquetas a una grafica de linea}
 \usage{
-etiquetasLineas(graph, posiciones)
+etiquetasLineas(graph, posiciones, precision = 1)
 }
 \arguments{
 \item{graph}{Objeto del tipo ggplot2 que desea anotar}
 
 \item{posiciones}{Vector de posiciones en que van las etiquetas}
+
+\item{precision}{Numero de decimales con el que se desea el vector respuesta.
+Por defecto se usa un decimal}
 }
 \description{
 Le pone las etiquetas a una grafica de linea

@@ -4,7 +4,8 @@
 \alias{graficaLinea}
 \title{Hace una grafica de linea, util para series historicas}
 \usage{
-graficaLinea(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5)
+graficaLinea(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
+  precision = 1)
 }
 \arguments{
 \item{data}{El data frame para hacer la gráfica}
@@ -14,6 +15,9 @@ graficaLinea(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5)
 \item{inicio}{El dato desde donde se quiere que se visualice la gráfica}
 
 \item{ancho}{El grosor de la linea}
+
+\item{precision}{Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa
+un decimal.}
 }
 \description{
 Hace una grafica de linea, util para series historicas

@@ -4,29 +4,27 @@
 #'@param ruta Es el path de salida para los tex con las graficas
 #'
 comercio <- function(lista, ruta){
-  g1<- graficaLineaTrim(lista$'1_01')
-  exportarLatex(paste(ruta,"1_01.tex", sep=""),g1)
+#   g1<- graficaLineaTrim(lista$'1_01')
+#   exportarLatex(paste(ruta,"1_01.tex", sep=""),g1)
+#   
+#   g2 <- graficaCol(lista$"1_02", ordenar = F)
+#   g2 <- etiquetasHorizontales(g2)
+#   g2 <- rotarEtiX(g2)
+#   g2 <- g2+ ggplot2::geom_abline(intercept = 0, slope = 0)  
+#   exportarLatex(paste(ruta,"1_02.tex", sep=""),g2)
+#   
+#   g3 <- graficaLineaTrim(lista$"1_03")
+#   exportarLatex(paste(ruta,"1_03.tex", sep=""),g3)
+#   
+#   g4<- graficaCol(lista$"1_04", ordenar = F)#cambiar a col
+#   g4 <- etiquetasHorizontales(g4)
+#   g4 <- rotarEtiX(g4)
+#   g4 <- g4+ ggplot2::geom_abline(intercept = 0, slope = 0) 
+#   exportarLatex(paste(ruta,"1_04.tex", sep=""),g4)
   
-  g2 <- graficaCol(lista$"1_02", ordenar = F)
-  g2 <- etiquetasHorizontales(g2)
-  g2 <- rotarEtiX(g2)
-  g2 <- g2+ ggplot2::geom_abline(intercept = 0, slope = 0)  
-  exportarLatex(paste(ruta,"1_02.tex", sep=""),g2)
   
-  g3 <- graficaLineaTrim(lista$"1_03")
-  exportarLatex(paste(ruta,"1_03.tex", sep=""),g3)
+  g5 <- graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex'), escala = 'milesmillones',etiquetasCategorias = 'A')
   
-  g4<- graficaCol(lista$"1_04", ordenar = F)#cambiar a col
-  g4 <- etiquetasHorizontales(g4)
-  g4 <- rotarEtiX(g4)
-  g4 <- g4+ ggplot2::geom_abline(intercept = 0, slope = 0) 
-  exportarLatex(paste(ruta,"1_04.tex", sep=""),g4)
-  
-  
-  #g5 <- graficaCol(lista$"1_05", ordenar = F)
-  #g5 <- etiquetasHorizontales(g5)
-  #g5 <- rotarEtiX(g5)
-  #exportarLatex("CET1//1_05.tex",g5)
   
   g6 <- graficaCol(lista$"1_06", ordenar =  F)# cambiar a col
   g6 <- etiquetasHorizontales(g6)

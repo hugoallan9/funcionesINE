@@ -260,46 +260,48 @@ calcularPosiciones <- function(graph)
 #'
 #'@param graph Objeto del tipo ggplot2 que desea anotar
 #'@param posiciones Vector de posiciones en que van las etiquetas
-etiquetasLineas <- function(graph, posiciones)
+#'@param precision Numero de decimales con el que se desea el vector respuesta.
+#'Por defecto se usa un decimal
+etiquetasLineas <- function(graph, posiciones, precision=1)
 {
+  print(c('La precision es: ', precision ))
+  pre <- precision
+  print(pre)
   d <- ggplot2::ggplot_build(graph)$data[[1]]
+  enteros <- sonEnteros(d)
+  
+  
+  
   for(i in 1:length(posiciones))
   {
-    dato <- d$y[[i]]
-    d$etiqueta <- as.numeric(completarEtiquetas(dato,i,tam = length(d$x)))
-    if(sonEnteros(d) == 0)
+    dato <- d$y[[i]] 
+    
+    if(enteros == 0)
     {
-      if(posiciones[[i]] == 1)
-      {
-        graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
-      }else if(posiciones[[i]] == -1)
-      {
-        graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
-      }else if(posiciones[[i]] == 0.5)
-      {
-        graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
-      }
-      else
-      {
-        graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1)),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
-      }      
+      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pre)
     }
     else
-    {if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
+      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pre, drop0trailing = T)
+    }
+    
+    
+    if(posiciones[[i]] == 1)
+    {
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
     }else if(posiciones[[i]] == 0.5)
     {
-      graph <- graph + ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
+      graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"", etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
     }
     else
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(etiqueta),"",formatC(etiqueta,format = "f",big.mark = ",", digits = 1, drop0trailing = T)),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
     }
-    }
+    
+    
     
   }
   return(graph)
