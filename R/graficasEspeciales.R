@@ -219,38 +219,38 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       ##Definiendo los nodos necesarios:
       
       print(paste('La mitad de la etiqueta 1 vale: ' , 0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )))
-      apoyoX  <- 1/6* pkg.env$ancho + 2/3 * pkg.env$tol -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
-      finEtiqueta1 <- 1/6* pkg.env$ancho + 2/3 * pkg.env$tol +  0.5 * (  lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
-      finEtiqueta2 <- 
+      apoyoX1  <-  pkg.env$tol + 1/6 * ( pkg.env$ancho - 2 * pkg.env$tol)  -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+      apoyoX2 <- pkg.env$tol + 1/2 * ( pkg.env$ancho - 2 * pkg.env$tol ) - 0.5 * ( lonEtiqueta2  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+      apoyoX3 <- pkg.env$tol + 5/6 * ( pkg.env$ancho - 2 * pkg.env$tol ) - 0.5 * ( lonEtiqueta3  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
       print(paste("El valor de apoyo es :" , apoyoX, sep = " "))
-      print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
-      separacion <- finEtiqueta1  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch(3) + mm2inch( pkg.env$longCuadrado) )  )
-      
+        
       ##Formateando el texto a mostrar
       cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta1,",midway,right,scale = 0.9]{", as.character( names(data)[2] ),"};", sep = "")
       cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta2, ",midway,right,scale = 0.9]{", as.character( names(data)[3] ),"};", sep = "")
-      cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta3, ",midway,right,scale = 0.9]{", as.character( names(data)[3] ),"};", sep = "")
+      cadenaEtiqueta3 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta3, ",midway,right,scale = 0.9]{", as.character( names(data)[4] ),"};", sep = "")
       
       
       
       ##Escribiendo en el fichero TEX
       print(paste('El valor en Y de apoyoX es: ',mm2inch(pt2mm(altoRect)), sep = ' '))
-      tikzDevice::tikzCoord(apoyoX, pkg.env$alto-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+      tikzDevice::tikzCoord(apoyoX1, pkg.env$alto-mm2inch(pt2mm(altoRect)), name= "apoyo1", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+      tikzDevice::tikzCoord(apoyoX2, pkg.env$alto-mm2inch(pt2mm(altoRect)), name= "apoyo2", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+      tikzDevice::tikzCoord(apoyoX3, pkg.env$alto-mm2inch(pt2mm(altoRect)), name= "apoyo3", units = "inches") ## ESTA ES LA QUE FUNCIONA 
       tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pt2mm(altoRect)), name = "longitudFicticia", units= "inches")
       tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pkg.env$longCuadrado), name = "longitud", units= "inches")
-      tikzDevice::tikzCoord(separacion,mm2inch(0), name = "desX", units = "inches")
       tikzDevice::tikzCoord(mm2inch(0), 0.5* mm2inch(pt2mm(altoRect)) - 0.5*mm2inch(pkg.env$longCuadrado), name = "desY", units = "inches")
-      #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
       tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
       tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
       tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct3}{HTML}{",substr(colores[3],2,7),"}"))
-      tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
+      tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo1) rectangle ($(apoyo1)+(longitudFicticia)$)"))
       tikzDevice::tikzAnnotate(cadenaEtiqueta1)
-      tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ( $(apoyo)  + (desY) $) rectangle ($(apoyo)+ (desY) +(longitud)$);"))
-      tikzDevice::tikzAnnotate(c("\\path [fill=none] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitudFicticia)$)"))
-      tikzDevice::tikzAnnotate(cadenaEtiqueta2)  
-      tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
-      
+      tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ( $(apoyo1)  + (desY) $) rectangle ($(apoyo1)+ (desY) +(longitud)$);"))
+      tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo2) rectangle ($(apoyo2)+(longitudFicticia)$)"))
+      tikzDevice::tikzAnnotate(cadenaEtiqueta2)
+      tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo2)  + (desY) $) rectangle ($(apoyo2)+ (desY) +(longitud)$);"))
+      tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo3) rectangle ($(apoyo3)+(longitudFicticia)$)"))
+      tikzDevice::tikzAnnotate(cadenaEtiqueta3)
+      tikzDevice::tikzAnnotate(c("\\path [fill=ct3] ( $(apoyo3)  + (desY) $) rectangle ($(apoyo3)+ (desY) +(longitud)$);"))
       
     }
   }
