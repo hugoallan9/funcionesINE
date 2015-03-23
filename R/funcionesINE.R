@@ -288,17 +288,17 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
     }else if(posiciones[[i]] == 0.5)
     {
-      graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"", etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
+      graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"", etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
     }
     else
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(is.na(as.numeric(etiqueta)),"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
     }
     
     

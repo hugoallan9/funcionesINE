@@ -11,7 +11,7 @@
 #' @param preambulo Etiqueta boolean que indica si se desea que la gráfica tenga preámbulo o no. Por defecto se tiene Falso. 
 #' @return No regresa ningun valor
 
-graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.8, preambulo = F){
+graficaBalanza <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.8, preambulo = F){
   ##ALGUNAS VARIABLES UTILES
   lonEtiqueta1 <- 0
   lonEtiqueta2 <- 0
@@ -39,7 +39,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     dataLista$y <- dataLista$y/1000000000
   }
   
-
+  
   colores <-   rampaColAgrupadas(dataLista)
   dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
@@ -56,7 +56,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     )+
     ggplot2::scale_fill_manual(values=colores)+
     ggplot2::guides(fill = F)+
-    ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.7),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
+    ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.5),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
   
   
   
@@ -219,11 +219,11 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       ##Definiendo los nodos necesarios:
       
       print(paste('La mitad de la etiqueta 1 vale: ' , 0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )))
-      apoyoX1  <-  pkg.env$tol + 1/6 * ( pkg.env$ancho - 2 * pkg.env$tol)  -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
-      apoyoX2 <- pkg.env$tol + 1/2 * ( pkg.env$ancho - 2 * pkg.env$tol ) - 0.5 * ( lonEtiqueta2  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
-      apoyoX3 <- pkg.env$tol + 5/6 * ( pkg.env$ancho - 2 * pkg.env$tol ) - 0.5 * ( lonEtiqueta3  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+      apoyoX1  <-  pkg.env$tol + 1/6 * ( pkg.env$ancho - 2 * pkg.env$tol)  -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) ) + 0.1
+      apoyoX2 <- pkg.env$tol + 1/2 * ( pkg.env$ancho - 2 * pkg.env$tol ) - 0.5 * ( lonEtiqueta2  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) ) + 0.1
+      apoyoX3 <- pkg.env$tol + 5/6 * ( pkg.env$ancho - 2 * pkg.env$tol ) - 0.5 * ( lonEtiqueta3  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) ) + 0.1
       print(paste("El valor de apoyo es :" , apoyoX, sep = " "))
-        
+      
       ##Formateando el texto a mostrar
       cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta1,",midway,right,scale = 0.9]{", as.character( names(data)[2] ),"};", sep = "")
       cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta2, ",midway,right,scale = 0.9]{", as.character( names(data)[3] ),"};", sep = "")
