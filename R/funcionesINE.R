@@ -405,7 +405,7 @@ etiquetasHorizontales <- function(graph)
   else
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 0,big.mark = ",")),size=3, hjust=0.5, vjust = -0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",")),size=3, hjust=0.5, vjust = -0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
 }
@@ -467,12 +467,12 @@ calcularRampaAnillo <- function(x, categoria = TRUE){
     if("IGNORADO" %in% toupper(x))
     {
       #print("IGNORADO")
-      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0.8,0.8,0.8), pkg.env$gris)
+      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0.6,0.6,0.6), pkg.env$gris)
     }else{
-      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0.8,0.8,0.8))
+      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0.6,0.6,0.6))
     }
   }else{
-    rampaAux <- grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0.8,0.8,0.8)))
+    rampaAux <- grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0.6,0.6,0.6)))
     if("IGNORADO" %in% toupper(x)){
       rampa <- c(rampaAux(2), pkg.env$gris)
     }else{
