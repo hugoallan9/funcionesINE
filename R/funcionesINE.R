@@ -342,7 +342,7 @@ rotarEtiX <- function(graph)
   
   longitud <- 2.8 + 2
   graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))+
-    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
+    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
   
 }
 
@@ -357,7 +357,7 @@ rotarEtiX2 <- function(graph)
   longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
   longitud <- longitud*0.352777778 + 1
   graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))+
-    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
+    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
 }
 
 
@@ -400,13 +400,13 @@ etiquetasHorizontales <- function(graph)
   {
     graph <- graph +
       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",", drop0trailing = F)),size=3, hjust=0.5, vjust = -0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
   }
   else
   {
     graph <- graph +
       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",", drop0trailing = T)),size=3, hjust=0.5, vjust = -0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
   }
 }
 
