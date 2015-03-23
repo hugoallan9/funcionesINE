@@ -83,9 +83,10 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
 #'@param color1 El color en el que se desea la linea
 #'@param inicio El punto en el eje y a partir del cual se desea mostrar la grafica
 #'@param El ancho de la linea
+#'@param precision Indica el número de decimales con el que se desea ver la etiqueta. Por defecto es uno. 
 #'@return El objeto ggplot2 listo para grafica
 #'@export
-graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5)
+graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, precision=1)
 {
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y")
@@ -95,7 +96,7 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5)
   grafica <- grafica + ggplot2::geom_line( colour = pkg.env$color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
-  grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica))
+  grafica <-  etiquetasLineas(grafica, calcularPosiciones(grafica), precision = precision)
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   limite <- minimo - 0.5*(maximo - minimo)
