@@ -44,7 +44,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
-    ggplot2::geom_bar(stat = 'identity', position =  "dodge", width=ancho)+
+    ggplot2::geom_bar(stat = 'identity', position =  ggplot2::position_dodge(width = 0.9), width=ancho)+
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand = c(0,0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)+
@@ -179,7 +179,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
         finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * (  lonEtiqueta1  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )
         print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
         separacion <-  ( mm2inch(pkg.env$longCuadrado) + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + lonEtiqueta1 )  + ( 0.5 * pkg.env$ancho - finEtiqueta1 )  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )  )  
-        cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=",longEtiqueta1,",midway,right,scale = 0.9]{", as.character( names(data)[2] ),"};", sep = "")
+        cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=",lonEtiqueta1,",midway,right,scale = 0.9]{", as.character( names(data)[2] ),"};", sep = "")
         cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,midway,right,scale = 0.9]{", as.character( names(data)[3] ),"};", sep = "")
       }else if( caso == 2 ){
         print("CASO 2")

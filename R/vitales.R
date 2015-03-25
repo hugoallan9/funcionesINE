@@ -64,7 +64,7 @@ graficasVitales<- function(lista, ruta){
   exportarLatex(paste(ruta,"2_03.tex", sep=""), t13)
   
   
-  t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""))
+  t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""), preambulo = T)
   compilar(paste(ruta,"2_04.tex", sep=""), F)
   
   
