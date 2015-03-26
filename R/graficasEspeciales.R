@@ -45,12 +45,13 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   }
   
 
-  colores <-   rampaColAgrupadas(dataLista)
+  col <-   rampaColAgrupadas(dataLista)
+  colores <- col[[1]]
+  coloresBorde <- col[[2]]
   print(colores)
-  #dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
-    ggplot2::geom_bar(stat = 'identity', position =  ggplot2::position_dodge(width = 0.9), width=ancho)+
+    ggplot2::geom_bar(stat = 'identity', position =  ggplot2::position_dodge(width = 0.9), width=ancho, colour = rep(coloresBorde, length(data$x))  )+
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand = c(0,0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)+
@@ -61,6 +62,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       plot.margin = grid::unit(c(0,0,0,0),"mm")
     )+
     ggplot2::scale_fill_manual(values=colores)+
+    #ggplot2::scale_colour_manual(values = colores)+
     ggplot2::guides(fill = F)
   
   

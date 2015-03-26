@@ -566,6 +566,7 @@ preview <- function(graph)
 
 rampaColAgrupadas <- function(data){
   rampa = NULL
+  rampaS = NULL
   if(nrow(subset(data, y>0)) > 0){
     print("No hay valores negativos")
     if(toupper("Ignorado") %in% toupper(data$categoria)){
@@ -573,8 +574,10 @@ rampaColAgrupadas <- function(data){
       rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0), pkg.env$gris)
     }else{
       print("No hay ignorados")
-      rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(0.3,0.3,0.3), grDevices::rgb(0.5,0.5,0.5)))
+      rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0.5,0.5,0.5)))
+      rampaAux1 <- grDevices::colorRampPalette(c(grDevices::rgb(0,0,0), grDevices::rgb(0.5,0.5,0.5)))
       rampa = rampaAux(length(levels(data$categoria)))
+      rampa1 = rampaAux1(length(levels(data$categoria)))
     }
   }else {
     print("Hay valores negativos")
@@ -582,7 +585,7 @@ rampaColAgrupadas <- function(data){
     rampa = rampaAux(2)
     rampa = c(rampa, pkg.env$gris)
   }
-  return(rampa)
+  return(list(rampa,rampa1))
 }
 
 #' Función para hacer carga masiva 
