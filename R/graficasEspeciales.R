@@ -23,14 +23,19 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   
   
   tikzDevice::tikz(ruta, standAlone = preambulo, bg = "transparent",bareBones = !preambulo, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
+  
   x <- rep(data$x,length(data)-1)
   y <- NULL
   for(i in 2:length(data)){
     y <- c(y,as.matrix(data)[,i])
   }
-  categoria <- gl(length(data)-1, length(data$x), labels = names(data))
+  categoria <- gl(length(data)-1, length(data$x), labels = names(data)[c(2, ncol(data))])
+  print(categoria)
   dataLista <- data.frame(x,y,categoria)
   dataLista <- fact2Num(dataLista)
+  dataLista$x <- factor(dataLista$x, levels = data$x)
+  levels(dataLista$x) <- gsub("\\\\n", "\n", levels(dataLista$x))
+  print(length(levels(dataLista$categoria)))
   if(toupper(escala) == "MILES"){
     dataLista$y <- dataLista$y/1000
   }else if(toupper(escala) == "MILLONES"){
@@ -41,27 +46,26 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   
 
   colores <-   rampaColAgrupadas(dataLista)
-  dataLista$x <- as.character(dataLista$x)
+  print(colores)
+  #dataLista$x <- as.character(dataLista$x)
   ggplot2::theme_set(pkg.env$temaColumnas)
   grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y, fill = categoria))+
     ggplot2::geom_bar(stat = 'identity', position =  ggplot2::position_dodge(width = 0.9), width=ancho)+
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand = c(0,0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)+
-    #ggplot2::scale_x_discrete()+
+    ggplot2::scale_x_discrete(breaks =  unique(dataLista$x), labels = dataLista$x)+
     ggplot2::theme(
       plot.background = ggplot2::element_rect(fill = NULL),
       panel.background = ggplot2::element_rect(fill = NULL),
       plot.margin = grid::unit(c(0,0,0,0),"mm")
     )+
     ggplot2::scale_fill_manual(values=colores)+
-    ggplot2::guides(fill = F)+
-    ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.7),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
-  
+    ggplot2::guides(fill = F)
   
   
   ##Clasificando el caso.
-  if( length(levels(dataLista$categoria)) -1 == 2 ){
+  if( length(levels(dataLista$categoria))  == 2 ){
     lonEtiqueta1 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[2], cex = 0.9)))
     lonEtiqueta2 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[3], cex = 0.9)))
     apoyoX <- 0
@@ -105,8 +109,19 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     longitud <- pt2mm(longitud + altoRect) + 1.2 + 2 ## Se contempla la distancia de las barras a las etiquetas y de las etiquetas a la leyenda
     print(c(" La longitud en mm es: ", longitud))
     grafica <- grafica + ggplot2::theme(
-      plot.margin = grid::unit(c(longitud,0,0,0),"mm")
-    )
+      plot.margin = grid::unit(c(longitud,0,2,0),"mm")
+    )++
+      ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.9),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
+  }else if( toupper(etiquetas) == "H"){
+    max <-ggplot2::ggplot_build(grafica)$panel$ranges[[1]]$y.range[2]
+    longitud <- calcularAlto(15.2)
+    longitud <- pt2mm(longitud + altoRect) + 1.2 + 2 ## Se contempla la distancia de las barras a las etiquetas y de las etiquetas a la leyenda
+    print(c(" La longitud en mm es: ", longitud))
+    grafica <- grafica + ggplot2::theme(
+      plot.margin = grid::unit(c(longitud,0,2,0),"mm")
+    )+
+      ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.9),size=3.2, hjust=0.5, vjust = -0.5)
+    
   }
   
   
@@ -164,7 +179,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       
     }
   }else{
-    if(length(levels(dataLista$categoria)) -1 == 2){
+    if(length(levels(dataLista$categoria))  == 2){
       
       
       
@@ -255,4 +270,5 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }
   }
   grDevices::dev.off()
+  return(dataLista)
 }

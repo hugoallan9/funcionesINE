@@ -566,7 +566,7 @@ preview <- function(graph)
 
 rampaColAgrupadas <- function(data){
   rampa = NULL
-  if(nrow(subset(data, y>0)) == 0){
+  if(nrow(subset(data, y>0)) > 0){
     print("No hay valores negativos")
     if(toupper("Ignorado") %in% toupper(data$categoria)){
       print("Hay ignorados")
@@ -574,7 +574,7 @@ rampaColAgrupadas <- function(data){
     }else{
       print("No hay ignorados")
       rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(0.3,0.3,0.3), grDevices::rgb(0.5,0.5,0.5)))
-      rampa = rampaAux(length(levels(dataL)))
+      rampa = rampaAux(length(levels(data$categoria)))
     }
   }else {
     print("Hay valores negativos")
