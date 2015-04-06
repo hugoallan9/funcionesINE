@@ -570,13 +570,25 @@ rampaColAgrupadas <- function(data){
     print("No hay valores negativos")
     if(toupper("Ignorado") %in% toupper(data$categoria)){
       print("Hay ignorados")
-      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0,0,0), pkg.env$gris)
+      if( pkg.env$modalidad == "trimestral"){
+        rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0.5,0.5,0.5), pkg.env$gris)
+        rampa1 = c(grDevices::rgb(0,0,0), grDevices::rgb(0.5,0.5,0.5), pkg.env$gris)
+      }
+      
     }else{
       print("No hay ignorados")
-      rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0.5,0.5,0.5)))
-      rampaAux1 <- grDevices::colorRampPalette(c(grDevices::rgb(0,0,0), grDevices::rgb(0.5,0.5,0.5)))
-      rampa = rampaAux(length(levels(data$categoria)))
-      rampa1 = rampaAux1(length(levels(data$categoria)))
+      if( pkg.env$modalidad == "trimestral"){
+        rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0.5,0.5,0.5)))
+        rampaAux1 <- grDevices::colorRampPalette(c(grDevices::rgb(0,0,0), grDevices::rgb(0.5,0.5,0.5)))
+        rampa = rampaAux(length(levels(data$categoria)))
+        rampa1 = rampaAux1(length(levels(data$categoria)))  
+      }else if(pkg.env$modalidad == "anual"){
+        rampaAux = grDevices::colorRampPalette( c(pkg.env$color1, pkg.env$color2 ) )
+        rampaAux1 <- rampaAux
+        rampa = rampaAux(length(levels(data$categoria)))
+        rampa1 = rampaAux1(length(levels(data$categoria)))
+      }
+      
     }
   }else {
     print("Hay valores negativos")
