@@ -512,14 +512,14 @@ fact2Num <- function(tabla)
 #'
 
 cambiarCodificacion <- function(tabla){
+  print(names(tabla))
   nombres <- names(tabla)
-  if(nombres[1] == "X")
+  if(toupper(nombres[1]) == "X")
     nombres[1] <- "x"
-  if(nombres[2] == "Y")
+  if(toupper(nombres[2]) == "Y")
     nombres[2] <- "y"
   names(tabla) <- nombres
-  
-  nombres <- gsub("\\.", " ", nombres)
+  ##nombres <- gsub("\\.", " ", nombres)
   nombres <- iconv(nombres, to = "UTF8//TRANSLIT")
   names(tabla) <- nombres
   x <- tabla$x
@@ -605,7 +605,6 @@ rampaColAgrupadas <- function(data){
 #' 
 #' @param ruta Ruta dentro del disco duro en la cual están contenidos los CSV
 #' @return Una lista con los data frame que contiene la información.
-#' @export
 
 cargaMasiva <- function (ruta, recodificar = F) {
   filenames <- list.files(path = ruta, pattern = ".csv", full.names = TRUE)
@@ -623,9 +622,11 @@ cargaMasiva <- function (ruta, recodificar = F) {
   }else{
     dir <- ruta
   }
+  
+  
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
-    read.csv(i, sep = ";", encoding = "Latin-1")
+    read.csv(i,header = TRUE, sep = ";",  fileEncoding="iso-8859-1", check.names = F)
   })
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
