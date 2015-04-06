@@ -562,11 +562,10 @@ preview <- function(graph)
 #'
 #'@param data  El data frame con el que se harán los calculos
 #'@return El vector de la paleta de colores
-#'@export 
 
 rampaColAgrupadas <- function(data){
   rampa = NULL
-  rampaS = NULL
+  rampa1 = NULL
   if(nrow(subset(data, y>0)) > 0){
     print("No hay valores negativos")
     if(toupper("Ignorado") %in% toupper(data$categoria)){
@@ -667,6 +666,7 @@ anual <- function(color1, color2){
   pkg.env$color1 <- color1
   pkg.env$color2 <- color2
   pkg.env$colorRelleno <- color1
+  pkg.env$modalidad <- "anual"
 }
 
 

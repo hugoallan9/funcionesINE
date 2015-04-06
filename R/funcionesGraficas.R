@@ -49,21 +49,37 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
 #'@param color1 El color en el que se desea la linea
 #'@param inicio El dato desde donde se quiere que se visualice la gráfica
 #'@param ancho El grosor de la linea
+#' @param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+#' son "miles", "millones" o "milesmillones".
 #'@param precision Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa
 #'un decimal.
 #'@export
 
-graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1)
+graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1, escala = "normal")
 {
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y")
+  
+  ##Poniendo la escala correspondiente
+  if(toupper(escala) == "MILES"){
+    data$y <- data$y/1000
+  }else if(toupper(escala) == "MILLONES"){
+    data$y <- data$y/1000000
+  }else if(toupper(escala) == "MILESMILLONES"){
+    data$y <- data$y/1000000000
+  }
+  
+  ##Fijando los niveles para que R no los cambie
+  data$x <- factor(data$x, levels = data$x)
+  
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group=1))
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)
   grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica), precision = precision)
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
-  limite <- minimo - 0.3*(maximo - minimo)
+  limite <- minimo - 
+    60.3*(maximo - minimo)
   print(c('El límite es: ', limite))
   grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)

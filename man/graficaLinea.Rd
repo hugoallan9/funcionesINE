@@ -5,7 +5,7 @@
 \title{Hace una grafica de linea, util para series historicas}
 \usage{
 graficaLinea(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
-  precision = 1)
+  precision = 1, escala = "normal")
 }
 \arguments{
 \item{data}{El data frame para hacer la gráfica}
@@ -18,6 +18,9 @@ graficaLinea(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
 
 \item{precision}{Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa
 un decimal.}
+
+\item{escala}{Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+son "miles", "millones" o "milesmillones".}
 }
 \description{
 Hace una grafica de linea, util para series historicas
