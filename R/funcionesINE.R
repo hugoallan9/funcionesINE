@@ -514,9 +514,9 @@ fact2Num <- function(tabla)
 cambiarCodificacion <- function(tabla){
   print(names(tabla))
   nombres <- names(tabla)
-  if(toupper(nombres[1]) == "X")
+  if(nombres[1] == "X")
     nombres[1] <- "x"
-  if(toupper(nombres[2]) == "Y")
+  if(nombres[2] == "Y")
     nombres[2] <- "y"
   names(tabla) <- nombres
   ##nombres <- gsub("\\.", " ", nombres)
