@@ -107,6 +107,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
 #'@param data El data frame para hacer la gráfica
 #'@param color1 El color en el que se desea la linea
 #'@param inicio El dato desde donde se quiere que se visualice la gráfica
+#'@param fin El dato hasta donde se desea visualizar la gráfica
 #'@param ancho El grosor de la linea
 #' @param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 #' son "miles", "millones" o "milesmillones".
@@ -114,7 +115,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
 #'un decimal.
 #'@export
 
-graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$color2, inicio = 0, ancho = 1.5, precision=1, escala = "normal")
+graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$color2, ancho = 1.5, precision=1, escala = "normal", inicio = 0, fin = 0)
 {
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y","z")
@@ -140,19 +141,32 @@ graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$co
   ggplot2::geom_line( ggplot2::aes(y = z), size = ancho, colour = color2 )+
     ggplot2::labs(x=NULL,y=NULL)
   grafica <- etiquetasLineasDobles(grafica, calcularPosicionesDobles(grafica), precision = precision)
-  minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
-  maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
-  limite <- minimo - 
-    0.3*(maximo - minimo)
+  
+  
+  ##Estableciendo los límites para las gráficas
+  if ( inicio == 0 && fin == 0){
+    minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
+    maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
+    limite <- minimo - 
+      0.3*(maximo - minimo)
+    limiteFin <- NA
+    print("El límite es: ")
+    print(limite)
+  }else{
+    limite <- inicio
+    limiteFin <- fin
+  }
+  
+  
   grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
-    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
+    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,limiteFin))+
       ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-5), "mm"))
   }
   else
   {
-    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
+    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,limiteFin))+
       ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-2), "mm"))
   }
   

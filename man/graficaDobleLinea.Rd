@@ -5,14 +5,12 @@
 \title{Genera graficas de dobles lineas en un mismo panel.}
 \usage{
 graficaDobleLinea(data, color1 = pkg.env$color1, color2 = pkg.env$color2,
-  inicio = 0, ancho = 1.5, precision = 1, escala = "normal")
+  ancho = 1.5, precision = 1, escala = "normal", inicio = 0, fin = 0)
 }
 \arguments{
 \item{data}{El data frame para hacer la gráfica}
 
 \item{color1}{El color en el que se desea la linea}
-
-\item{inicio}{El dato desde donde se quiere que se visualice la gráfica}
 
 \item{ancho}{El grosor de la linea}
 
@@ -21,6 +19,10 @@ un decimal.}
 
 \item{escala}{Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 son "miles", "millones" o "milesmillones".}
+
+\item{inicio}{El dato desde donde se quiere que se visualice la gráfica}
+
+\item{fin}{El dato hasta donde se desea visualizar la gráfica}
 }
 \description{
 Genera graficas de dobles lineas en un mismo panel.
