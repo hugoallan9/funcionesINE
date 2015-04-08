@@ -252,8 +252,147 @@ calcularPosiciones <- function(graph)
   {
     posiciones <- c(posiciones, 1)
   }
-  print(posiciones)
+  print("Las etiquetas son: ")
+  print( posiciones )
   return(posiciones)
+}
+
+
+#'Funcion que calcula las posiciones para las etiquetas en las graficas de linea Doble
+#'
+#'@param graph Objeto del tipo ggplot2 al cual se le quiere poner las etiquetas
+#'@return Un vector indicando las posiciones de las etiquetas
+
+calcularPosicionesDobles <- function(graph)
+{
+  #SIMBOLOGIA
+  # 1 HACIA ARRIBA
+  #-1 HACIA ABAJO
+  #0.5 A LA DERECHA
+  #-0.5 A LA IZQUIERDA
+  data <- ggplot2::ggplot_build(graph)$data[[1]]
+  data2 <- ggplot2::ggplot_build(graph)$data[[2]]
+  posiciones <- NULL
+  posiciones2 <- NULL
+  
+  
+  ##Etiquetado para la primera linea
+  if(data$y[[1]] < data$y[[2]])
+  {
+    posiciones <- c(posiciones, -1)
+  }
+  else{
+    posiciones <- c(posiciones, 1)  
+  }
+  
+  
+  for(i in 2:(length(data$y)-1))
+  {
+    if(data$y[[i-1]] == data$y[[i]])
+    {
+      if(data$y[[i+1]] > data$y[[i]])
+      {
+        posiciones <- c(posiciones, -1)
+      }else if(data$y[[i+1]] == data$y[[i]])
+      {
+        posiciones <- c(posiciones, 1)
+      }else if(data$y[[i+1]] < data$y[[i]]){
+        posiciones <- c(posiciones, 1)
+      }
+    }else if(data$y[[i-1]] > data$y[[i]])
+    {
+      if(data$y[[i]] > data$y[[i+1]])
+      {
+        posiciones <- c(posiciones, 0.5)
+      }
+      else{
+        posiciones <- c(posiciones, -1)
+      }
+    }else
+    {
+      if(data$y[[i]] < data$y[[i+1]])
+      {
+        posiciones <- c(posiciones, -0.5)
+      }
+      else
+      {
+        posiciones <- c(posiciones, 1)
+      }
+    }
+  }
+  if(data$y[[length(data$y)]] == data$y[[length(data$y)-1]])
+  {
+    posiciones <- c(posiciones, 1)
+  }else if(data$y[[length(data$y)]] < data$y[[length(data$y)-1]])
+  {
+    posiciones <- c(posiciones, -1)
+  }else
+  {
+    posiciones <- c(posiciones, 1)
+  }
+  
+  
+  ##Etiquetado para la segunda linea
+  if(data2$y[[1]] < data2$y[[2]])
+  {
+    posiciones2 <- c(posiciones2, -1)
+  }
+  else{
+    posiciones2 <- c(posiciones2, 1)  
+  }
+  
+  
+  for(i in 2:(length(data2$y)-1))
+  {
+    if(data2$y[[i-1]] == data2$y[[i]])
+    {
+      if(data2$y[[i+1]] > data2$y[[i]])
+      {
+        posiciones2 <- c(posiciones2, -1)
+      }else if(data2$y[[i+1]] == data2$y[[i]])
+      {
+        posiciones2 <- c(posiciones2, 1)
+      }else if(data2$y[[i+1]] < data2$y[[i]]){
+        posiciones2 <- c(posiciones2, 1)
+      }
+    }else if(data2$y[[i-1]] > data2$y[[i]])
+    {
+      if(data2$y[[i]] > data2$y[[i+1]])
+      {
+        posiciones2 <- c(posiciones2, 0.5)
+      }
+      else{
+        posiciones2 <- c(posiciones2, -1)
+      }
+    }else
+    {
+      if(data2$y[[i]] < data2$y[[i+1]])
+      {
+        posiciones2 <- c(posiciones2, -0.5)
+      }
+      else
+      {
+        posiciones2 <- c(posiciones2, 1)
+      }
+    }
+  }
+  if(data2$y[[length(data2$y)]] == data2$y[[length(data2$y)-1]])
+  {
+    posiciones2 <- c(posiciones2, 1)
+  }else if(data2$y[[length(data2$y)]] < data2$y[[length(data2$y)-1]])
+  {
+    posiciones2 <- c(posiciones2, -1)
+  }else
+  {
+    posiciones2 <- c(posiciones2, 1)
+  }
+  
+  
+  
+  
+  print("Las etiquetas son: ")
+  print( list(posiciones, posiciones2)  )
+  return( list(posiciones, posiciones2) )
 }
 
 #'Le pone las etiquetas a una grafica de linea
@@ -269,7 +408,6 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
   print(pre)
   d <- ggplot2::ggplot_build(graph)$data[[1]]
   enteros <- sonEnteros(d)
-  
   
   
   for(i in 1:length(posiciones))
@@ -306,6 +444,96 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
   }
   return(graph)
 }
+
+
+
+#'Le pone las etiquetas a una grafica de linea
+#'
+#'@param graph Objeto del tipo ggplot2 que desea anotar
+#'@param posiciones Vector de posiciones en que van las etiquetas
+#'@param precision Numero de decimales con el que se desea el vector respuesta.
+#'Por defecto se usa un decimal
+#'@return Gráfica con las etiquetas puestasw
+#'@export
+etiquetasLineasDobles <- function(graph, pos, precision=1)
+{
+  print(c('La precision es: ', precision ))
+  pre <- precision
+  d1 <- ggplot2::ggplot_build(graph)$data[[1]]
+  d2 <- ggplot2::ggplot_build(graph)$data[[2]]
+  enteros1 <- sonEnteros(d1)
+  enteros2 <- sonEnteros(d2)
+  posiciones <- pos[[1]]
+  posiciones2 <- pos[[2]]
+  
+  
+  for(i in 1:length(posiciones))
+  {
+    dato <- d1$y[[i]] 
+    
+    if(enteros1 == 0)
+    {
+      d1$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d1$x))), format = 'f', big.mark = ',', digits = pre)
+    }
+    else
+    {
+      d1$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d1$x))), format = 'f', big.mark = ',', digits = pre, drop0trailing = T)
+    }
+    
+    
+    if(posiciones[[i]] == 1)
+    {
+      graph <- graph + ggplot2::geom_text(data = d1, ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
+    }else if(posiciones[[i]] == -1)
+    {
+      graph <- graph + ggplot2::geom_text(data = d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
+    }else if(posiciones[[i]] == 0.5)
+    {
+      graph <- graph +ggplot2::geom_text(data =d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"", etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
+    }
+    else
+    {
+      graph <- graph + ggplot2::geom_text(data = d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
+    }
+    
+  }
+  
+  
+  for(i in 1:length(posiciones2))
+  {
+    dato <- d2$y[[i]] 
+    
+    if(enteros1 == 0)
+    {
+      d2$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d2$x))), format = 'f', big.mark = ',', digits = pre)
+    }
+    else
+    {
+      d2$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d2$x))), format = 'f', big.mark = ',', digits = pre, drop0trailing = T)
+    }
+    
+    
+    if(posiciones2[[i]] == 1)
+    {
+      graph <- graph + ggplot2::geom_text(data = d2, ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = -0.5)
+    }else if(posiciones2[[i]] == -1)
+    {
+      graph <- graph + ggplot2::geom_text(data = d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0.5, vjust = 1.5)
+    }else if(posiciones2[[i]] == 0.5)
+    {
+      graph <- graph +ggplot2::geom_text(data =d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"", etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 0, vjust = -0.5)
+    }
+    else
+    {
+      graph <- graph + ggplot2::geom_text(data = d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=3.2,hjust = 1.2, vjust = 0)
+    }
+    
+  }
+  
+  return(graph)
+}
+
+
 
 #'Funcion interna que le pone el relleno al vector de etiquetas
 #'del tipo ("","",etiqueta,"",..)
@@ -663,6 +891,7 @@ trimestral <- function(){
   pkg.env$alto <- 1.91 
   pkg.env$ancho <- 3.19
   options(tikzDocumentDeclaration= "\\documentclass[10pt,twoside]{book}")
+  pkg.env$modalidad <- "trimestral"
 }
 
 #'Función para poner parametrización del formato anual

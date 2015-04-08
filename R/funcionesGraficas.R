@@ -76,10 +76,17 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)
   grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica), precision = precision)
+  
+  ## Rotanto las etiquetas del eje x cuando la modalidad es trimestral
+  
+  if(pkg.env$modalidad == "trimestral"){
+    grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
+  }
+  
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   limite <- minimo - 
-    60.3*(maximo - minimo)
+    0.3*(maximo - minimo)
   print(c('El límite es: ', limite))
   grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
@@ -95,6 +102,66 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   return(grafica)
 }
 
+#'Genera graficas de dobles lineas en un mismo panel.
+#'
+#'@param data El data frame para hacer la gráfica
+#'@param color1 El color en el que se desea la linea
+#'@param inicio El dato desde donde se quiere que se visualice la gráfica
+#'@param ancho El grosor de la linea
+#' @param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+#' son "miles", "millones" o "milesmillones".
+#'@param precision Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa
+#'un decimal.
+#'@export
+
+graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$color2, inicio = 0, ancho = 1.5, precision=1, escala = "normal")
+{
+  ggplot2::theme_set(pkg.env$temaColumnas)
+  names(data)<- c("x","y","z")
+  
+  
+  ##Poniendo la escala correspondiente
+  if(toupper(escala) == "MILES"){
+    data$y <- data$y/1000
+    data$z <- data$z/1000
+  }else if(toupper(escala) == "MILLONES"){
+    data$y <- data$y/1000000
+    data$z <- data$z/1000000
+  }else if(toupper(escala) == "MILESMILLONES"){
+    data$y <- data$y/1000000000
+    data$z <- data$z/1000000000
+  }
+  
+  ##Fijando los niveles para que R no los cambie
+  data$x <- factor(data$x, levels = data$x)
+  
+  grafica <- ggplot2::ggplot(data, ggplot2::aes(x,group=1))
+  grafica <- grafica + ggplot2::geom_line( ggplot2::aes(y = y), size = ancho, colour = color1)+
+  ggplot2::geom_line( ggplot2::aes(y = z), size = ancho, colour = color2 )+
+    ggplot2::labs(x=NULL,y=NULL)
+  grafica <- etiquetasLineasDobles(grafica, calcularPosicionesDobles(grafica), precision = precision)
+  minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
+  maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
+  limite <- minimo - 
+    0.3*(maximo - minimo)
+  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
+  if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
+  {
+    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
+      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-5), "mm"))
+  }
+  else
+  {
+    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
+      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-2), "mm"))
+  }
+  
+  return(grafica)
+  
+}
+
+#'Esta función desaparecerá en futuras versiones, deberá hacer uso 
+#'de la función graficaLinea en la modalidad trimestral. 
 #'Genera graficas de lineas para series historicas de los trimestrales
 #'
 #'@param data El data frame con el que se hará la grafica

@@ -2,7 +2,9 @@
 % Please edit documentation in R/funcionesGraficas.R
 \name{graficaLineaTrim}
 \alias{graficaLineaTrim}
-\title{Genera graficas de lineas para series historicas de los trimestrales}
+\title{Esta función desaparecerá en futuras versiones, deberá hacer uso
+de la función graficaLinea en la modalidad trimestral.
+Genera graficas de lineas para series historicas de los trimestrales}
 \usage{
 graficaLineaTrim(data, color1 = color, inicio = 0, ancho = 0.5,
   precision = 1)
@@ -22,6 +24,8 @@ graficaLineaTrim(data, color1 = color, inicio = 0, ancho = 0.5,
 El objeto ggplot2 listo para grafica
 }
 \description{
+Esta función desaparecerá en futuras versiones, deberá hacer uso
+de la función graficaLinea en la modalidad trimestral.
 Genera graficas de lineas para series historicas de los trimestrales
 }
 
