@@ -4,7 +4,8 @@
 \alias{graficaBar}
 \title{Hace graficas de Barras}
 \usage{
-graficaBar(data, color1 = pkg.env$color1, ancho = 0.6, ordenar = TRUE)
+graficaBar(data, color1 = pkg.env$color1, ancho = 0.6, ordenar = TRUE,
+  escala = "normal")
 }
 \arguments{
 \item{data}{Data frame con el cual se hace la grafica}
@@ -14,6 +15,9 @@ graficaBar(data, color1 = pkg.env$color1, ancho = 0.6, ordenar = TRUE)
 \item{ancho}{Ancho de las barras en porcentaje, segun ggplot2}
 
 \item{ordenar}{Booelano que indica si los datos deben ser ordenados o no}
+
+\item{escala}{Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+son "miles", "millones" o "milesmillones".}
 }
 \description{
 Hace graficas de Barras

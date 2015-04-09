@@ -192,7 +192,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       {
         print("CASO 1")
         print(paste("El punto medio para la primera etiqueta es: ", 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ), sep = " "))
-        apoyoX  <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) -  0.5 * ( lonEtiqueta1  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )
+        apoyoX  <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) -  0.5 * ( lonEtiqueta1  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado ) )
         finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * (  lonEtiqueta1  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )
         print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
         separacion <-  ( mm2inch(pkg.env$longCuadrado) + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + lonEtiqueta1 )  + ( 0.5 * pkg.env$ancho - finEtiqueta1 )  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )  )  
@@ -225,13 +225,15 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       tikzDevice::tikzCoord(mm2inch(0), 0.5* mm2inch(pt2mm(altoRect)) - 0.5*mm2inch(pkg.env$longCuadrado), name = "desY", units = "inches")
       #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
       tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
-      tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
+      tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))      
+      tikzDevice::tikzAnnotate(c("\\definecolor[named]{ctb1}{HTML}{",substr(coloresBorde[1],2,7),"}"))
+      tikzDevice::tikzAnnotate(c("\\definecolor[named]{ctb2}{HTML}{",substr(coloresBorde[2],2,7),"}"))
       tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
       tikzDevice::tikzAnnotate(cadenaEtiqueta1)
-      tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ( $(apoyo)  + (desY) $) rectangle ($(apoyo)+ (desY) +(longitud)$);"))
+      tikzDevice::tikzAnnotate(c("\\draw [color = ctb1,fill=ct1] ( $(apoyo)  + (desY) $) rectangle ($(apoyo)+ (desY) +(longitud)$);"))
       tikzDevice::tikzAnnotate(c("\\path [fill=none] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitudFicticia)$)"))
       tikzDevice::tikzAnnotate(cadenaEtiqueta2)  
-      tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
+      tikzDevice::tikzAnnotate(c("\\draw [color = ctb2 ,fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
     }else{
       ##Definiendo los nodos necesarios:
       
@@ -259,15 +261,18 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
       tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
       tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct3}{HTML}{",substr(colores[3],2,7),"}"))
+      tikzDevice::tikzAnnotate(c("\\definecolor[named]{ctb1}{HTML}{",substr(coloresBorde[1],2,7),"}"))
+      tikzDevice::tikzAnnotate(c("\\definecolor[named]{ctb2}{HTML}{",substr(coloresBorde[2],2,7),"}"))
+      tikzDevice::tikzAnnotate(c("\\definecolor[named]{ctb3}{HTML}{",substr(coloresBorde[3],2,7),"}"))
       tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo1) rectangle ($(apoyo1)+(longitudFicticia)$)"))
       tikzDevice::tikzAnnotate(cadenaEtiqueta1)
-      tikzDevice::tikzAnnotate(c("\\path [fill=ct1] ( $(apoyo1)  + (desY) $) rectangle ($(apoyo1)+ (desY) +(longitud)$);"))
+      tikzDevice::tikzAnnotate(c("\\draw [color= ctb1, fill=ct1] ( $(apoyo1)  + (desY) $) rectangle ($(apoyo1)+ (desY) +(longitud)$);"))
       tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo2) rectangle ($(apoyo2)+(longitudFicticia)$)"))
       tikzDevice::tikzAnnotate(cadenaEtiqueta2)
-      tikzDevice::tikzAnnotate(c("\\path [fill=ct2] ( $(apoyo2)  + (desY) $) rectangle ($(apoyo2)+ (desY) +(longitud)$);"))
+      tikzDevice::tikzAnnotate(c("\\draw [color = ctb2, fill=ct2] ( $(apoyo2)  + (desY) $) rectangle ($(apoyo2)+ (desY) +(longitud)$);"))
       tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo3) rectangle ($(apoyo3)+(longitudFicticia)$)"))
       tikzDevice::tikzAnnotate(cadenaEtiqueta3)
-      tikzDevice::tikzAnnotate(c("\\path [fill=ct3] ( $(apoyo3)  + (desY) $) rectangle ($(apoyo3)+ (desY) +(longitud)$);"))
+      tikzDevice::tikzAnnotate(c("\\path [color = ctb3, fill=ct3] ( $(apoyo3)  + (desY) $) rectangle ($(apoyo3)+ (desY) +(longitud)$);"))
       
     }
   }

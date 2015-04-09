@@ -4,7 +4,8 @@
 \alias{graficaCol}
 \title{Funcion basica para graficar Columnas}
 \usage{
-graficaCol(data, color1 = pkg.env$color1, ancho = 0.6, ordenar = TRUE)
+graficaCol(data, color1 = pkg.env$color1, ancho = 0.6, ordenar = TRUE,
+  escala = "normal")
 }
 \arguments{
 \item{data}{Data frame para elaborar la grafica}
@@ -15,7 +16,13 @@ graficaCol(data, color1 = pkg.env$color1, ancho = 0.6, ordenar = TRUE)
 
 \item{ordenar}{Booleano que indica si los datos deben ser ordenados}
 
+\item{escala}{Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+son "miles", "millones" o "milesmillones".}
+
 \item{color2}{Color secundario para las graficas}
+}
+\value{
+La gráfica lista para agregarle etiquetas y toques finales
 }
 \description{
 Funcion basica para graficar Columnas

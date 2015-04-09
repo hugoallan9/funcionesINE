@@ -4,14 +4,34 @@
 #' @param color2 Color secundario para las graficas
 #' @param ancho Porcentaje que ocupan las columnas, segun paquete ggplot2
 #' @param ordenar Booleano que indica si los datos deben ser ordenados
-graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
+#' @param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+#' son "miles", "millones" o "milesmillones".
+#' @return La gráfica lista para agregarle etiquetas y toques finales 
+#' @export
+graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE, escala = "normal")
 {
+  
+  
+  
+  
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y")
   data <- data[ordenarNiveles(data, ordenar),]
   data$x <- factor(data$x, levels = data$x)
   levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
   print(levels(data$x))
+  
+  
+  ##Poniendo la escala correspondiente
+  if(toupper(escala) == "MILES"){
+    data$y <- data$y/1000
+  }else if(toupper(escala) == "MILLONES"){
+    data$y <- data$y/1000000
+  }else if(toupper(escala) == "MILESMILLONES"){
+    data$y <- data$y/1000000000
+  }
+  
+  
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x, y))
   grafica <- grafica + 
     ggplot2::geom_bar(stat = 'identity', colour = calcularRampa(data, color1), fill = calcularRampa(data,pkg.env$colorRelleno), width = ancho, position =  "dodge")+
@@ -27,13 +47,25 @@ graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
 #'@param color1 El color principal para la grafica
 #'@param ancho Ancho de las barras en porcentaje, segun ggplot2
 #'@param ordenar Booelano que indica si los datos deben ser ordenados o no
-graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE)
+#'@param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+#' son "miles", "millones" o "milesmillones".
+graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE, escala = "normal")
 {
   ggplot2::theme_set(pkg.env$temaBarras)
   names(data)<- c("x","y")
   data <- data[rev(ordenarNiveles(data, ordenar)),]
   data$x <- factor(data$x, levels = data$x)
   levels(data$x) <- gsub("\\n", "\n", levels(data$x))
+  
+  ##Poniendo la escala correspondiente
+  if(toupper(escala) == "MILES"){
+    data$y <- data$y/1000
+  }else if(toupper(escala) == "MILLONES"){
+    data$y <- data$y/1000000
+  }else if(toupper(escala) == "MILESMILLONES"){
+    data$y <- data$y/1000000000
+  }
+  
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x, y))
   grafica <- grafica + 
     ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
@@ -71,6 +103,12 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   
   ##Fijando los niveles para que R no los cambie
   data$x <- factor(data$x, levels = data$x)
+  
+  
+  ## Cambiando el ancho cuando es trimestral
+  if (pkg.env$modalidad == "trimestral" ){
+    ancho <- 0.5
+  }
   
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group=1))
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
