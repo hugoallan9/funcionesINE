@@ -4,7 +4,7 @@
 \alias{cambioInterAnual}
 \title{Función que calcula el cambio interanual en porcentaje para un data frame dado}
 \usage{
-cambioInterAnual(data, paso = 4)
+cambioInterAnual(data, primeraPos = 5, ultimaPos = 9)
 }
 \arguments{
 \item{data}{El data frame sobre el cual se desea hacer el calculo}

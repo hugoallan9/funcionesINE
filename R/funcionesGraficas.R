@@ -149,11 +149,12 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
 #'@param ancho El grosor de la linea
 #' @param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 #' son "miles", "millones" o "milesmillones".
-#'@param precision Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa
-#'un decimal.
+#'@param precision Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa un decimal.
+#'@param ejeX Parámetro de tipo cadena que determina la orientación de las etiquetas para el eje X. Las opciones son "h" para horizontal y
+#'"v" para vertical. Por defecto se usa horizontal.
 #'@export
 
-graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$color2, ancho = 1.5, precision=1, escala = "normal", inicio = 0, fin = 0)
+graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$color2, ancho = 1.5, precision=1, escala = "normal", inicio = 0, fin = 0, ejeX = "h")
 {
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y","z")
@@ -180,6 +181,12 @@ graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$co
     ggplot2::labs(x=NULL,y=NULL)
   grafica <- etiquetasLineasDobles(grafica, calcularPosicionesDobles(grafica), precision = precision)
   
+  
+  ## Rotando el eje X si fuera necesario
+  
+  if ( ejeX == "v"){
+    grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
+  }
   
   ##Estableciendo los límites para las gráficas
   if ( inicio == 0 && fin == 0){

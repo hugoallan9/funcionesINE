@@ -869,8 +869,8 @@ cargaMasiva <- function (ruta, recodificar = F) {
 #'@param paso El paso de retroceso para el calculo
 #'@return Cambio interanual
 #'
-cambioInterAnual <- function(data, paso = 4){
-    cambio <- ( data$y[length(data$y)] / data$y[length(data$y) - paso] ) *100
+cambioInterAnual <- function(data, primeraPos = 5, ultimaPos = 9){
+    cambio <- ( data$y[ultimaPos] / data$y[primeraPos] ) *100
     return(abs(100-cambio))
 }
 

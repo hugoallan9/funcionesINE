@@ -8,16 +8,16 @@
 #'
 calcularRespuestaPor <- function(data, cota = 1, primeraPos = 5, ultimaPos = 9){
   respuesta = ''
-  if(data$y[ultimaPos] - data$y[primeraPos] > 0 && abs(cambioInterAnual(data)) > cota ){
-    respuesta = paste('un aumento del ', round(cambioInterAnual(data), 1), '\\%  respecto a lo registrado en ', sep = '')
+  if(data$y[ultimaPos] - data$y[primeraPos] > 0 && abs(cambioInterAnual(data, primeraPos, ultimaPos)) > cota ){
+    respuesta = paste('un aumento del ', round(cambioInterAnual(data), primeraPos, ultimaPos), '\\%  respecto a lo registrado en ', sep = '')
   }else if(data$y[ultimaPos] - data$y[primeraPos] < 0 && abs(cambioInterAnual(data)) > cota){
-    respuesta = paste(' una reducción del  ', round(cambioInterAnual(data), 1), '\\% respecto a lo registrado en ', sep = '')  
+    respuesta = paste(' una reducción del  ', round(cambioInterAnual(data, primeraPos, ultimaPos), 1), '\\% respecto a lo registrado en ', sep = '')  
   }else if(data$y[ultimaPos] - data$y[primeraPos] == 0){
     respuesta = 'lo mismo que se registró en'
   }else if(data$y[ultimaPos] - data$y[primeraPos] > 0){
-    respuesta = paste('apenas un aumento del ', round(cambioInterAnual(data), 3), '\\%  respecto a lo registrado en ', sep = '')
+    respuesta = paste('apenas un aumento del ', round(cambioInterAnual(data, primeraPos, ultimaPos), 3), '\\%  respecto a lo registrado en ', sep = '')
   }else if(data$y[ultimaPos] - data$y[primeraPos] < 0){
-    respuesta = paste('apenas una reducción del ',round(cambioInterAnual(data), 3) , '\\%  respecto a lo registrado en ', sep = '')
+    respuesta = paste('apenas una reducción del ',round(cambioInterAnual(data, primeraPos, ultimaPos), 3) , '\\%  respecto a lo registrado en ', sep = '')
   }
   #return(iconv(respuesta, to = 'utf8'))
   return(respuesta)

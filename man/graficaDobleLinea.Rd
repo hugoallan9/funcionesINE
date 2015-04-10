@@ -5,7 +5,8 @@
 \title{Genera graficas de dobles lineas en un mismo panel.}
 \usage{
 graficaDobleLinea(data, color1 = pkg.env$color1, color2 = pkg.env$color2,
-  ancho = 1.5, precision = 1, escala = "normal", inicio = 0, fin = 0)
+  ancho = 1.5, precision = 1, escala = "normal", inicio = 0, fin = 0,
+  ejeX = "h")
 }
 \arguments{
 \item{data}{El data frame para hacer la gráfica}
@@ -14,8 +15,7 @@ graficaDobleLinea(data, color1 = pkg.env$color1, color2 = pkg.env$color2,
 
 \item{ancho}{El grosor de la linea}
 
-\item{precision}{Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa
-un decimal.}
+\item{precision}{Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa un decimal.}
 
 \item{escala}{Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 son "miles", "millones" o "milesmillones".}
@@ -23,6 +23,9 @@ son "miles", "millones" o "milesmillones".}
 \item{inicio}{El dato desde donde se quiere que se visualice la gráfica}
 
 \item{fin}{El dato hasta donde se desea visualizar la gráfica}
+
+\item{ejeX}{Parámetro de tipo cadena que determina la orientación de las etiquetas para el eje X. Las opciones son "h" para horizontal y
+"v" para vertical. Por defecto se usa horizontal.}
 }
 \description{
 Genera graficas de dobles lineas en un mismo panel.
