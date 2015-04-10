@@ -11,7 +11,7 @@
 #' @param preambulo Etiqueta boolean que indica si se desea que la gráfica tenga preámbulo o no. Por defecto se tiene Falso. 
 #' @return No regresa ningun valor
 
-graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.8, preambulo = F){
+graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.8, preambulo = F, ejeX = "h"){
   ##ALGUNAS VARIABLES UTILES
   lonEtiqueta1 <- 0
   lonEtiqueta2 <- 0
@@ -65,6 +65,11 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     #ggplot2::scale_colour_manual(values = colores)+
     ggplot2::guides(fill = F)
   
+  
+  ## Rotando el eje X si fuera necesario
+  if ( toupper(ejeX) == "V"){
+    grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
+  }
   
   ##Clasificando el caso.
   if( length(levels(dataLista$categoria))  == 2 ){
