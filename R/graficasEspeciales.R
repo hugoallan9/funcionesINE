@@ -112,7 +112,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     print(c(" La longitud en mm es: ", longitud))
     grafica <- grafica + ggplot2::theme(
       plot.margin = grid::unit(c(longitud,0,2,0),"mm")
-    )++
+    )+
       ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.9),size=3.2, angle = 90, hjust=-0.2, vjust = 0.5)
   }else if( toupper(etiquetas) == "H"){
     max <-ggplot2::ggplot_build(grafica)$panel$ranges[[1]]$y.range[2]
@@ -121,8 +121,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     print(c(" La longitud en mm es: ", longitud))
     grafica <- grafica + ggplot2::theme(
       plot.margin = grid::unit(c(longitud,0,2,0),"mm")
-    )+
-      ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.9),size=3.2, hjust=0.5, vjust = -0.5)
+    )
+    +ggplot2::geom_text(ggplot2::aes(familly = "Open Sans Condensed Light",label=formatC(y,format = "f",big.mark = ",", digits = 1)), position=ggplot2::position_dodge(width=0.9),size=3.2, hjust=0.5, vjust = -0.5)
     
   }
   

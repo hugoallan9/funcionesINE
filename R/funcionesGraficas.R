@@ -183,10 +183,11 @@ graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$co
   
   
   ## Rotando el eje X si fuera necesario
-  
   if ( ejeX == "v"){
     grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
   }
+  
+  
   
   ##Estableciendo los límites para las gráficas
   if ( inicio == 0 && fin == 0){
