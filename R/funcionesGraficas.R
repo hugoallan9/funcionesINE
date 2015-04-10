@@ -199,7 +199,12 @@ graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$co
     print(limite)
   }else{
     limite <- inicio
-    limiteFin <- fin
+    if ( fin == 0){
+      limiteFin <- NA
+    }else{
+      limiteFin <- fin
+    }
+      
   }
   
   
