@@ -29,7 +29,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   for(i in 2:length(data)){
     y <- c(y,as.matrix(data)[,i])
   }
-  categoria <- gl(length(data)-1, length(data$x), labels = names(data)[c(2, ncol(data))])
+  categoria <- gl(length(data)-1, length(data$x), labels = names(data)[c(2:ncol(data))])
   print(categoria)
   dataLista <- data.frame(x,y,categoria)
   dataLista <- fact2Num(dataLista)
@@ -43,6 +43,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   }else if(toupper(escala) == "MILESMILLONES"){
     dataLista$y <- dataLista$y/1000000000
   }
+
   
 
   col <-   rampaColAgrupadas(dataLista)
@@ -72,6 +73,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   }
   
   ##Clasificando el caso.
+  print("El numero de categorías es: ")
+  print(levels(dataLista$categoria) )
   if( length(levels(dataLista$categoria))  == 2 ){
     lonEtiqueta1 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[2], cex = 0.9)))
     lonEtiqueta2 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[3], cex = 0.9)))
