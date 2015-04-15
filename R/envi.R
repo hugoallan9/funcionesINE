@@ -8,11 +8,11 @@ pkg.env$ignorado <- c("Ignorado", "ignorado", "IGNORADO", "Ignorada", "ignorada"
 pkg.env$exclusion <- c(pkg.env$ignorado, "otro", "otros", "otra", "otras")
 pkg.env$gris <- rgb(200,200,200, maxColorValue = 255)
 pkg.env$grisBase <- rgb(152,152,152, maxColorValue = 255)
-pkg.env$fontSize = 10
+pkg.env$fontSize <-10
 pkg.env$temaINE <- ggplot2::theme_gray(base_size = pkg.env$fontSize, base_family = "Open Sans Condensed Light")+ ggplot2::theme(
   text= ggplot2::element_text(family = "Open Sans Condensed Light", face = "plain", colour='black', size = pkg.env$fontSize),
-  axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = 10, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9),
-  axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = 10, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9),
+  axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9),
+  axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9),
   panel.background = ggplot2::element_rect(fill = NA),
   panel.grid = ggplot2::element_line(colour = NA),
   panel.grid.major = ggplot2::element_line(colour = NA),
@@ -41,7 +41,7 @@ pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
 )
 
 pkg.env$modalidad = "trimestral"
-
+pkg.env$tamEti <- 3.2
 
 
 

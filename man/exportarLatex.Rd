@@ -4,7 +4,7 @@
 \alias{exportarLatex}
 \title{Exporta a codigo tikz en LaTeX usando tikzDevice}
 \usage{
-exportarLatex(nombre = grafica.tex, graph)
+exportarLatex(nombre = grafica.tex, graph, preambulo = F)
 }
 \arguments{
 \item{nombre}{Ruta del fichero LaTeX}

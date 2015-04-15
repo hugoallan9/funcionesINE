@@ -4,6 +4,7 @@
 #'@param ruta Ruta de salida para los archivos de las gráficas
 #'
 graficasVitales<- function(lista, ruta){
+  trimestral()
   t1 <- graficaLineaTrim(lista$"1_01")
   exportarLatex(paste(ruta,"1_01.tex", sep=""), t1)
   
@@ -64,7 +65,7 @@ graficasVitales<- function(lista, ruta){
   exportarLatex(paste(ruta,"2_03.tex", sep=""), t13)
   
   
-  t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""), preambulo = T)
+  t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""), preambulo = T, etiquetas = "h", ancho = 0.5)
   compilar(paste(ruta,"2_04.tex", sep=""), F)
   
   
@@ -94,7 +95,7 @@ graficasVitales<- function(lista, ruta){
   t20 <- etiquetasHorizontales(t20)
   exportarLatex(paste(ruta,"3_03.tex", sep=""), t20)
   
-  t21 <- graficaCol(lista$"3_04", ordenar = F)
+  t21 <- graficaCol(lista$"3_04", ordenar = F, rotarEtiX = T)
   t21 <- etiquetasHorizontales(t21)
   exportarLatex(paste(ruta,"3_04.tex", sep=""), t21)
   

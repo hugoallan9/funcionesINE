@@ -28,7 +28,7 @@
     axis.line.x = ggplot2::element_line(colour = NA),
     panel.margin = grid::unit(c(0,inc2mm(3.19/4),0,-20),"mm"),
     axis.text.y = ggplot2::element_text(colour = NA, vjust = -3, hjust = -3),
-    axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = 9, hjust = -10, vjust =-10, angle = 0, lineheight = 0.9)
+    axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = -10, vjust =-10, angle = 0, lineheight = 0.9)
   ) 
   # Variables para el tamaño de la gráfica
   

@@ -89,6 +89,8 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
 
 graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1, escala = "normal")
 {
+  print("El tamaño de la fuente es: ")
+  print(pkg.env$fontSize)
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y")
   
@@ -114,7 +116,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)
   grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica), precision = precision)
-  
+  margenArriba <- pt2mm(calcularAlto(10))
   ## Rotanto las etiquetas del eje x cuando la modalidad es trimestral
   
   if(pkg.env$modalidad == "trimestral"){
@@ -130,12 +132,12 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
-      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-5), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,0,-5), "mm"))
   }
   else
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
-      ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-2), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,0,-2), "mm"))
   }
   return(grafica)
 }
