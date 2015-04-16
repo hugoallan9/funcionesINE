@@ -252,9 +252,9 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
       print(paste("El valor de apoyo es :" , apoyoX, sep = " "))
         
       ##Formateando el texto a mostrar
-      cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta1,",midway,right,scale = 0.9]{", as.character( names(data)[2] ),"};", sep = "")
-      cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta2, ",midway,right,scale = 0.9]{", as.character( names(data)[3] ),"};", sep = "")
-      cadenaEtiqueta3 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", lonEtiqueta3, ",midway,right,scale = 0.9]{", as.character( names(data)[4] ),"};", sep = "")
+      cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", pkg.env$ancho/3,"in,midway,right,scale = 0.9]{", as.character( names(data)[2] ),"};", sep = "")
+      cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", pkg.env$ancho/3, "in,midway,right,scale = 0.9]{", as.character( names(data)[3] ),"};", sep = "")
+      cadenaEtiqueta3 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,text width=", pkg.env$ancho/3, "in,midway,right,scale = 0.9]{", as.character( names(data)[4] ),"};", sep = "")
       
       
       

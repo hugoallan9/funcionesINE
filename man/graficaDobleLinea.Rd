@@ -4,12 +4,16 @@
 \alias{graficaDobleLinea}
 \title{Genera graficas de dobles lineas en un mismo panel.}
 \usage{
-graficaDobleLinea(data, color1 = pkg.env$color1, color2 = pkg.env$color2,
-  ancho = 1.5, precision = 1, escala = "normal", inicio = 0, fin = 0,
-  ejeX = "h")
+graficaDobleLinea(data, ruta, preambulo = F, color1 = pkg.env$color1,
+  color2 = pkg.env$color2, ancho = 1.5, precision = 1,
+  escala = "normal", inicio = 0, fin = 0, ejeX = "h")
 }
 \arguments{
 \item{data}{El data frame para hacer la gráfica}
+
+\item{ruta}{Es la ruta en disco donde se desea almacenar la grafica}
+
+\item{preambulo}{Booleano que indica si una grafica debe llevar preambulo o no.}
 
 \item{color1}{El color en el que se desea la linea}
 

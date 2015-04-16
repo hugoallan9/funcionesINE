@@ -5,12 +5,15 @@
 \title{Función encargada de fabricar las graficas para
 las estadísticas vitales.}
 \usage{
-graficasVitales(lista, ruta)
+graficasVitales(lista, ruta, modalidad = "trimestral")
 }
 \arguments{
 \item{lista}{Listado de R que contiene los data frame de vitales}
 
 \item{ruta}{Ruta de salida para los archivos de las gráficas}
+
+\item{modalidad}{String que puede ser, trimestral o anual. Por defecto
+se toma como trimestral.}
 }
 \description{
 Función encargada de fabricar las graficas para

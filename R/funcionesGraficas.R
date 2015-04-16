@@ -151,14 +151,29 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
 #'@param ancho El grosor de la linea
 #' @param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 #' son "miles", "millones" o "milesmillones".
+#' @param ruta Es la ruta en disco donde se desea almacenar la grafica
+#' @param preambulo Booleano que indica si una grafica debe llevar preambulo o no. 
 #'@param precision Se refiere al número de decimales que se desean mostrar en la gráfica. Por defecto se usa un decimal.
 #'@param ejeX Parámetro de tipo cadena que determina la orientación de las etiquetas para el eje X. Las opciones son "h" para horizontal y
 #'"v" para vertical. Por defecto se usa horizontal.
 #'@export
 
-graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$color2, ancho = 1.5, precision=1, escala = "normal", inicio = 0, fin = 0, ejeX = "h")
+graficaDobleLinea <- function(data, ruta, preambulo = F, color1 = pkg.env$color1, color2 = pkg.env$color2, ancho = 1.5, precision=1, escala = "normal", inicio = 0, fin = 0, ejeX = "h")
 {
+  ##ALGUNAS VARIABLES UTILES
+  lonEtiqueta1 <- 0
+  lonEtiqueta2 <- 0
+  lonEtiqueta3 <- 0
+  apoyoX <- 0
+  separacion <- 0
+  caso <- 0
+  altoRect <- 0
+  
+  
+  tikzDevice::tikz(ruta, standAlone = preambulo, bg = "transparent",bareBones = !preambulo, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
+  
   ggplot2::theme_set(pkg.env$temaColumnas)
+  nombres <- names(data)
   names(data)<- c("x","y","z")
   
   
@@ -223,7 +238,101 @@ graficaDobleLinea <- function(data, color1 = pkg.env$color1, color2 = pkg.env$co
       ggplot2::theme(plot.margin = grid::unit(c(2.5,3,0,-2), "mm"))
   }
   
-  return(grafica)
+  temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica))
+  temp$layout$clip[temp$layout$name=="panel"] <- "off"
+  grid::grid.draw(temp)
+  
+  ## Eligiendo los colores
+  rampaAux = grDevices::colorRampPalette( c(pkg.env$color1, pkg.env$color2 ) )
+  col <- list(rampaAux(2),rampaAux(2))
+  colores <- col[[1]]
+  coloresBorde <- col[[2]]
+  
+  
+  ## Haciendo el etiquetado
+  names(data) <- nombres
+  
+  lonEtiqueta1 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[2], cex = 1)))
+  lonEtiqueta2 <- mm2inch(pt2mm(tikzDevice::getLatexStrWidth(names(data)[3], cex = 1)))
+  apoyoX <- 0
+  separacion <- 0
+  caso <- 0
+  print(paste("La longitud de la etiqueta 1 en in es: ", lonEtiqueta1, sep = " "))
+  print(paste("La longitud de la etiqueta 2 en in es: ", lonEtiqueta2, sep = " "))
+  print( paste("La longitud 1 es: ", lonEtiqueta1 + mm2inch(3 - 0.5 * pkg.env$longCuadrado) + mm2inch(pkg.env$longCuadrado), sep = " ")  )
+  print( paste("La longitud 2 es:", lonEtiqueta2 + mm2inch(3 - 0.5 * pkg.env$longCuadrado) + mm2inch(pkg.env$longCuadrado), sep = " ") )
+  if( lonEtiqueta1 + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) < 0.5 * pkg.env$ancho - pkg.env$tol && 
+        lonEtiqueta2 + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado)  < 0.5 * pkg.env$ancho - pkg.env$tol  )
+  {
+    print("CASO 1")
+    altoRect <- max(calcularAlto(names(data)[2], largo = inc2mm( pkg.env$ancho ) ), calcularAlto(names(data)[3], largo = inc2mm(pkg.env$ancho) ) )
+    print(altoRect)
+    caso <- 1
+  }else if( 1.10 * (  lonEtiqueta1  + 2 * mm2inch(3 - 0.5 * pkg.env$longCuadrado) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) <  pkg.env$ancho - 2 * pkg.env$tol){
+    print("CASO 2")
+    altoRect <- max(calcularAlto(names(data)[2], largo = inc2mm( pkg.env$ancho)/0.9 ), calcularAlto(names(data)[3], largo  = inc2mm(pkg.env$ancho)/0.9 ) )
+    print(altoRect)
+    caso <- 2
+  }else {
+    print(paste("No se cumple ninguna de las anteriores: ",  1.10 * (  lonEtiqueta1  + 2 * mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) , sep = " " ))
+    print("CASO 3")
+    altoRect <- max(calcularAlto(names(data)[2], largo = 0.5 * pkg.env$ancho - pkg.env$tol - mm2inch(3 - 0.5 * pkg.env$longCuadrado) - mm2inch( pkg.env$longCuadrado ) ), calcularAlto(names(data)[3], largo = 0.5 * pkg.env$ancho - pkg.env$tol - mm2inch(3 - 0.5 * pkg.env$longCuadrado) - mm2inch( pkg.env$longCuadrado ) ) )
+    print(altoRect)
+    caso <- 3  
+  }
+  
+  
+  ## Caluculando las posiciones de las etiquetas para que quede centrado
+  cadenaEtiqueta1 <- ""
+  cadenaEtiqueta2 <- ""
+  if( caso == 1  )
+  {
+    print("CASO 1")
+    print(paste("El punto medio para la primera etiqueta es: ", 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ), sep = " "))
+    apoyoX  <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) -  0.5 * ( lonEtiqueta1  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado ) )
+    finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * (  lonEtiqueta1  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )
+    print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
+    separacion <-  ( mm2inch(pkg.env$longCuadrado) + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + lonEtiqueta1 )  + ( 0.5 * pkg.env$ancho - finEtiqueta1 )  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + mm2inch(pkg.env$longCuadrado) )  )  
+    cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,midway,right,scale = 1]{", as.character( names(data)[2] ),"};", sep = "")
+    cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,midway,right,scale = 1]{", as.character( names(data)[3] ),"};", sep = "")
+  }else if( caso == 2 ){
+    print("CASO 2")
+    apoyoX <- ( 0.5 * pkg.env$ancho  + pkg.env$tol ) - 0.5 * 1.10 * ( lonEtiqueta1 + 2 * mm2inch(3 - 0.5 * pkg.env$longCuadrado ) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 )
+    separacion <-  mm2inch(pkg.env$longCuadrado) + mm2inch( 3 - 0.5 * pkg.env$longCuadrado )  + lonEtiqueta1   + 0.10 * ( lonEtiqueta1 + 2 * mm2inch( 3 - 0.5 * pkg.env$longCuadrado ) + 2 * mm2inch(pkg.env$longCuadrado) + lonEtiqueta2 ) 
+    cadenaEtiqueta1 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,midway,right,scale = 1, draw]{", as.character( names(data)[2] ),"};", sep = "")
+    cadenaEtiqueta2 <- paste("node [xshift=0.3cm,inner sep=0pt, outer sep=0pt,midway,right,scale = 1]{", as.character( names(data)[3] ),"};", sep = "")
+  }else {
+    print("CASO 3")
+    print(paste("El punto medio para la primera etiqueta es: ", 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ), sep = " "))
+    apoyoX  <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) -  0.5 * ( lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+    finEtiqueta1 <- 0.5 * ( 0.5 * pkg.env$ancho + pkg.env$tol ) +  0.5 * (  lonEtiqueta1  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )
+    print(paste("El fin de la etiqueta 1 es:" , finEtiqueta1, sep = " "))
+    separacion <- finEtiqueta1  + 0.5 * ( 0.5 * pkg.env$ancho - pkg.env$tol - (  lonEtiqueta2  + mm2inch(3) + mm2inch(pkg.env$longCuadrado) )  )
+  }
+  
+  
+  print(paste("El valor de apoyo es:" , apoyoX, sep = " "))
+  print(paste("La separción es:" , separacion, sep = " "))
+  print(paste("La tolerancia es:" , pkg.env$tol, sep = " "))
+  print(paste("La distancia de un cuadro a otro es:" ,separacion + lonEtiqueta1, sep = " "))
+  tikzDevice::tikzCoord(apoyoX, pkg.env$alto-mm2inch(pt2mm(altoRect)), name= "apoyo", units = "inches") ## ESTA ES LA QUE FUNCIONA 
+  tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pt2mm(altoRect)), name = "longitudFicticia", units= "inches")
+  tikzDevice::tikzCoord(mm2inch(pkg.env$longCuadrado),mm2inch(pkg.env$longCuadrado), name = "longitud", units= "inches")
+  tikzDevice::tikzCoord(separacion,mm2inch(0), name = "desX", units = "inches")
+  tikzDevice::tikzCoord(mm2inch(0), 0.5* mm2inch(pt2mm(altoRect)) - 0.5*mm2inch(pkg.env$longCuadrado), name = "desY", units = "inches")
+  #tikzDevice::tikzCoord(mm2inch(10),0, name = "mdesX", units = "inches")
+  tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
+  tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))      
+  tikzDevice::tikzAnnotate(c("\\definecolor[named]{ctb1}{HTML}{",substr(coloresBorde[1],2,7),"}"))
+  tikzDevice::tikzAnnotate(c("\\definecolor[named]{ctb2}{HTML}{",substr(coloresBorde[2],2,7),"}"))
+  tikzDevice::tikzAnnotate(c("\\path [fill=none] (apoyo) rectangle ($(apoyo)+(longitudFicticia)$)"))
+  tikzDevice::tikzAnnotate(cadenaEtiqueta1)
+  tikzDevice::tikzAnnotate(c("\\draw [color = ctb1,fill=ct1] ( $(apoyo)  + (desY) $) rectangle ($(apoyo)+ (desY) +(longitud)$);"))
+  tikzDevice::tikzAnnotate(c("\\path [fill=none] ($(apoyo)+(desX)$) rectangle ($(apoyo)+(desX)+(longitudFicticia)$)"))
+  tikzDevice::tikzAnnotate(cadenaEtiqueta2)  
+  tikzDevice::tikzAnnotate(c("\\draw [color = ctb2 ,fill=ct2] ( $(apoyo)  + (desY) + (desX) $) rectangle ($(apoyo)+ (desY)+ (desX) +(longitud)$);"))
+  
+  grDevices::dev.off()
   
 }
 

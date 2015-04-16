@@ -2,9 +2,16 @@
 #'las estadísticas vitales.
 #'@param lista Listado de R que contiene los data frame de vitales
 #'@param ruta Ruta de salida para los archivos de las gráficas
+#'@param modalidad String que puede ser, trimestral o anual. Por defecto
+#'se toma como trimestral.
 #'
-graficasVitales<- function(lista, ruta){
-  trimestral()
+graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
+  if( toupper(modalidad)  == "TRIMESTRAL"){
+    trimestral()
+  }else{
+    presentacion()
+  }
+  
   t1 <- graficaLineaTrim(lista$"1_01")
   exportarLatex(paste(ruta,"1_01.tex", sep=""), t1)
   
@@ -95,8 +102,9 @@ graficasVitales<- function(lista, ruta){
   t20 <- etiquetasHorizontales(t20)
   exportarLatex(paste(ruta,"3_03.tex", sep=""), t20)
   
-  t21 <- graficaCol(lista$"3_04", ordenar = F, rotarEtiX = T)
+  t21 <- graficaCol(lista$"3_04", ordenar = F)
   t21 <- etiquetasHorizontales(t21)
+  t21 <- rotarEtiX(t21)
   exportarLatex(paste(ruta,"3_04.tex", sep=""), t21)
   
   t22 <- graficaBar(lista$"3_05")

@@ -814,8 +814,16 @@ rampaColAgrupadas <- function(data){
       }else if(pkg.env$modalidad == "anual"){
         rampaAux = grDevices::colorRampPalette( c(pkg.env$color1, pkg.env$color2 ) )
         rampaAux1 <- rampaAux
-        rampa = rampaAux(length(levels(data$categoria)))
-        rampa1 = rampaAux1(length(levels(data$categoria)))
+        if (length(levels(data$categoria) ) == 3 ){
+          print("Hay 3 categorias")
+          print(levels(data$categoria))
+          rampa = c(rampaAux(2), pkg.env$gris)
+          rampa1 = c(rampaAux(2), pkg.env$gris)
+        }else{
+          rampa = rampaAux(length(levels(data$categoria)))
+          rampa1 = rampaAux1(length(levels(data$categoria)))  
+        }
+        
       }
       
     }
@@ -913,16 +921,17 @@ anual <- function(color1, color2){
   pkg.env$colorRelleno <- color1
   pkg.env$modalidad <- "anual"
   cambiarGraficas(tamFuente = 11)
+  pkg.env$tamEti <- 3.7
 }
 
 #'Función para poner parametrización del formato de trimestrales
 presentacion <- function(){
-  pkg.env$alto <- 1.91*2.5 
-  pkg.env$ancho <- 3.19*2.5
+  pkg.env$alto <-  2.30
+  pkg.env$ancho <-3.80
   options(tikzDocumentDeclaration= "\\documentclass[20pt]{extbook}")
   pkg.env$fontSize = 20
   pkg.env$modalidad <- "trimestral"
   pkg.env$tamEti <- 6.4
-  cambiarGraficas(tamFuente = 20)
+  cambiarGraficas(tamFuente = 17)
 }
 
