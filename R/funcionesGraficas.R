@@ -87,7 +87,7 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
 #'un decimal.
 #'@export
 
-graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1, escala = "normal")
+graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1, escala = "normal", rotar = T)
 {
   print("El tamaño de la fuente es: ")
   print(pkg.env$fontSize)
@@ -119,7 +119,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   margenArriba <- pt2mm(calcularAlto(10))
   ## Rotanto las etiquetas del eje x cuando la modalidad es trimestral
   
-  if(pkg.env$modalidad == "trimestral"){
+  if(pkg.env$modalidad == "trimestral" || rotar == T){
     grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
   }
   

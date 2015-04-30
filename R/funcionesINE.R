@@ -410,9 +410,29 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
   enteros <- sonEnteros(d)
   
   
+  lista <- NULL
+  lista <- c(lista,max(d$y), min(d$y))
+  if( !(d$y[[1]] %in% lista) ){
+    lista <- c(lista, d$y[[1]])
+  }
+  
+  if( !(d$y[[length(posiciones)]] %in% lista) ){
+    lista <- c(lista, d$y[[length(posiciones)]])
+  }
+  print(lista)
+  maximo <- F
+  minimo <- F
   for(i in 1:length(posiciones))
   {
     dato <- d$y[[i]] 
+    ultimo <- d$y[[length(posiciones)]]
+    if( !(dato %in% lista) ){
+      dato <- NA
+    }else{
+      if(i != length(posiciones) ){
+        lista <- lista[lista != dato ]
+      }
+    }
     
     if(enteros == 0)
     {
@@ -423,6 +443,8 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pre, drop0trailing = T)
     }
     
+    print("#####LAS ETIQUETAS SON ##########" )
+    print(d$etiqueta)
     
     if(posiciones[[i]] == 1)
     {
@@ -621,7 +643,7 @@ etiquetasBarras <- function(graph, margenIz = 0  )
 #'@param graph El objeto ggplot2 que se desea anotar
 #'@return Objeto ggplot2 anotado listo para usar
 #'@export
-etiquetasHorizontales <- function(graph)
+etiquetasHorizontales <- function(graph, precision = 1)
 {
   longitud <- 4
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
@@ -807,11 +829,13 @@ rampaColAgrupadas <- function(data){
     }else{
       print("No hay ignorados")
       if( pkg.env$modalidad == "trimestral"){
+        print("La modalidad es trimestral")
         rampaAux = grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0.5,0.5,0.5)))
         rampaAux1 <- grDevices::colorRampPalette(c(grDevices::rgb(0,0,0), grDevices::rgb(0.5,0.5,0.5)))
         rampa = rampaAux(length(levels(data$categoria)))
         rampa1 = rampaAux1(length(levels(data$categoria)))  
-      }else if(pkg.env$modalidad == "anual"){
+      }else if(pkg.env$modalidad == "anual" || pkg.env$modalidad == "presentacion"){
+        print("Es anual o presentacion")
         rampaAux = grDevices::colorRampPalette( c(pkg.env$color1, pkg.env$color2 ) )
         rampaAux1 <- rampaAux
         if (length(levels(data$categoria) ) == 3 ){
@@ -926,12 +950,14 @@ anual <- function(color1, color2){
 
 #'Función para poner parametrización del formato de trimestrales
 presentacion <- function(){
-  pkg.env$alto <-  2.30
-  pkg.env$ancho <-3.80
-  options(tikzDocumentDeclaration= "\\documentclass[20pt]{extbook}")
-  pkg.env$fontSize = 20
+  pkg.env$alto <- 1.91 
+  pkg.env$ancho <- 3.19
+  options(tikzDocumentDeclaration= "\\documentclass[10pt,twoside]{book}")
   pkg.env$modalidad <- "trimestral"
-  pkg.env$tamEti <- 6.4
-  cambiarGraficas(tamFuente = 17)
+  cambiarGraficas(tamFuente = 10)
+  pkg.env$tamEti <- 3.2
+  pkg.env$color1 <- rgb(0,0,1) #0 0 0
+  pkg.env$color2 <- rgb(0.3,0.7,1)
+  pkg.env$colorRelleno <- rgb(0,0,1) # 1 1 1 
 }
 

@@ -4,7 +4,7 @@
 \alias{etiquetasHorizontales}
 \title{Pone etiquetas a las columnas en una grafica de columnas}
 \usage{
-etiquetasHorizontales(graph)
+etiquetasHorizontales(graph, precision = 1)
 }
 \arguments{
 \item{graph}{El objeto ggplot2 que se desea anotar}

@@ -22,7 +22,7 @@ cambiarGraficas <- function(tamFuente){
   
   pkg.env$temaBarras <- pkg.env$temaINE
   pkg.env$temaBarras <- pkg.env$temaBarras + ggplot2::theme(
-    axis.line.y = ggplot2::element_line(colour = pkg.env$color1),
+    axis.line.y = ggplot2::element_line(colour = "black"),
     axis.line.x = ggplot2::element_line(colour = NA),
     axis.text.y = ggplot2::element_text(hjust = 1, vjust = 0.5)
   ) 
