@@ -11,9 +11,6 @@
 graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE, escala = "normal")
 {
   
-  
-  
-  
   ggplot2::theme_set(pkg.env$temaColumnas)
   names(data)<- c("x","y")
   data <- data[ordenarNiveles(data, ordenar),]
@@ -39,6 +36,8 @@ graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::scale_x_discrete(breaks =  unique(data$x), labels = data$x)+
     ggplot2::geom_abline(intercept = 0, slope = 0)
+  
+
   return(grafica)
 }
 
@@ -66,12 +65,20 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
     data$y <- data$y/1000000000
   }
   
+  
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x, y))
   grafica <- grafica + 
     ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::coord_flip()
+  if(nrow(subset(data, y<0)) > 0){
+    grafica <- grafica + ggplot2::geom_abline(intercept = 0, slope = 90)
+  }else{
+    grafica <- grafica + ggplot2::theme(
+      axis.line.y = ggplot2::element_line(colour = pkg.env$color1)
+    ) 
+  }
   return(grafica)
 }
 

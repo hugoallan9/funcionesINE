@@ -626,13 +626,13 @@ etiquetasBarras <- function(graph, margenIz = 0  )
   {
     graph <- graph +
       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1)), size=3, hjust=-0.5, vjust = 0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,0), "mm")) 
+      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,6), "mm")) 
   }
   else
   {
     graph <- graph +
       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1,drop0trailing = T)), size=3, hjust=-0.5, vjust = 0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,0), "mm")) 
+      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,6), "mm")) 
   }
   
 }
