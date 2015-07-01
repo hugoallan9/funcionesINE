@@ -9,6 +9,7 @@ pkg.env$exclusion <- c(pkg.env$ignorado, "otro", "otros", "otra", "otras")
 pkg.env$gris <- rgb(200,200,200, maxColorValue = 255)
 pkg.env$grisBase <- rgb(152,152,152, maxColorValue = 255)
 pkg.env$fontSize <-10
+pkg.env$botarCeros <- T
 pkg.env$temaINE <- ggplot2::theme_gray(base_size = pkg.env$fontSize, base_family = "Open Sans Condensed Light")+ ggplot2::theme(
   text= ggplot2::element_text(family = "Open Sans Condensed Light", face = "plain", colour='black', size = pkg.env$fontSize),
   axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9),

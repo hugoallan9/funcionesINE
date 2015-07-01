@@ -624,17 +624,16 @@ etiquetasBarras <- function(graph, margenIz = 0  )
   mIz <- 0 + margenIz
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
-    graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1)), size=3, hjust=-0.5, vjust = 0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,6), "mm")) 
+    pkg.env$botarCeros <- T
   }
   else
   {
-    graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1,drop0trailing = T)), size=3, hjust=-0.5, vjust = 0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,6), "mm")) 
+    pkg.env$botarCeros <- F
   }
   
+  graph <- graph +
+    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1, drop0trailing = !pkg.env$botarCeros)), size=3, hjust=-0.5, vjust = 0.5)+
+    ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,6), "mm"))
 }
 
 
@@ -936,7 +935,7 @@ trimestral <- function(){
 #'rgb(v1,v2,v3, maxColorValue = 255), si maxColorValue no está definido
 #'se usa por defecto 1. 
 anual <- function(color1, color2){
-  pkg.env$alto <- 2.75
+  pkg.env$alto <- 2.75  ##2.75
   pkg.env$ancho <- 4
   options(tikzDocumentDeclaration= "\\documentclass[11pt,twoside]{book}")
   pkg.env$fontSize = 11

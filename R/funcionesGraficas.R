@@ -70,15 +70,15 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
   grafica <- grafica + 
     ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
+    ggplot2::geom_abline(intercept = 0, slope = 0)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
+    ggplot2::theme(
+      axis.line.y = ggplot2::element_line(colour = NA)
+    )+
     ggplot2::coord_flip()
-  if(nrow(subset(data, y<0)) > 0){
-    grafica <- grafica + ggplot2::geom_abline(intercept = 0, slope = 90)
-  }else{
-    grafica <- grafica + ggplot2::theme(
-      axis.line.y = ggplot2::element_line(colour = pkg.env$color1)
-    ) 
-  }
+  
+
+
   return(grafica)
 }
 
@@ -139,12 +139,12 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
-      ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,0,-5), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,1,-5), "mm"))
   }
   else
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
-      ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,0,-2), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,1,-2), "mm"))
   }
   return(grafica)
 }

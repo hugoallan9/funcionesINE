@@ -38,8 +38,8 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   t6 <- etiquetasHorizontales(t6)
   exportarLatex(paste(ruta,"1_06.tex", sep=""), t6)
   
-#   t7 <- graficaAnillo(lista$"1_07", paste(ruta,"1_07.tex", sep=""))
-#   compilar(paste(ruta,"1_07.tex", sep=""),F)
+   t7 <- graficaAnillo(lista$"1_07", paste(ruta,"1_07.tex", sep=""))
+   compilar(paste(ruta,"1_07.tex", sep=""),F)
   
   t8 <- graficaBar(lista$"1_08")
   t8 <- etiquetasBarras(t8)
