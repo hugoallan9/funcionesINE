@@ -6,13 +6,16 @@
 #'se toma como trimestral.
 #'
 graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
+  pre <- F
   if( toupper(modalidad)  == "TRIMESTRAL"){
     trimestral()
+    pre <-T
   }else{
     presentacion()
+    pre <- F
   }
   
-  t1 <- graficaLineaTrim(lista$"1_01")
+  t1 <- graficaLinea(lista$"1_01")
   exportarLatex(paste(ruta,"1_01.tex", sep=""), t1)
   
   t2 <- graficaCol(lista$"1_02")
@@ -38,8 +41,11 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   t6 <- etiquetasHorizontales(t6)
   exportarLatex(paste(ruta,"1_06.tex", sep=""), t6)
   
-   t7 <- graficaAnillo(lista$"1_07", paste(ruta,"1_07.tex", sep=""))
-   compilar(paste(ruta,"1_07.tex", sep=""),F)
+   t7 <- graficaAnillo(lista$"1_07", paste(ruta,"1_07.tex", sep=""), preambulo = pre)
+  if( pre == T ){
+    compilar(paste(ruta,"1_07.tex", sep=""),F)  
+  } 
+  
   
   t8 <- graficaBar(lista$"1_08")
   t8 <- etiquetasBarras(t8)
@@ -48,7 +54,7 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   
   
   
-  t9 <- graficaLineaTrim(lista$"1_09")
+  t9 <- graficaLinea(lista$"1_09")
   exportarLatex(paste(ruta,"1_09.tex", sep=""), t9)
   
   
@@ -57,7 +63,7 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"1_10.tex", sep=""), t10)
   
   
-  t11 <- graficaLineaTrim(lista$"2_01")
+  t11 <- graficaLinea(lista$"2_01")
   exportarLatex(paste(ruta,"2_01.tex", sep=""), t11)
   
   
@@ -72,11 +78,13 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"2_03.tex", sep=""), t13)
   
   pkg.env$modalidad = modalidad
-  t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""), preambulo = T, etiquetas = "h", ancho = 0.5)
-  compilar(paste(ruta,"2_04.tex", sep=""), F)
+  t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""), preambulo = pre, etiquetas = "h", ancho = 0.5)
+  if( pre == T){
+    compilar(paste(ruta,"2_04.tex", sep=""), F) 
+  }
   pkg.env$modalidad = "trimestral"
   
-  t15 <- graficaLineaTrim(lista$"2_05")
+  t15 <- graficaLinea(lista$"2_05")
   exportarLatex(paste(ruta,"2_05.tex", sep=""), t15)
   
   
@@ -90,7 +98,7 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"2_07.tex", sep=""), t17)
   
   
-  t18 <- graficaLineaTrim(lista$"3_01")
+  t18 <- graficaLinea(lista$"3_01")
   exportarLatex(paste(ruta,"3_01.tex", sep=""), t18)
   
   t19 <- graficaCol(lista$"3_02")
@@ -119,7 +127,7 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   t24 <- etiquetasBarras(t24)
   exportarLatex(paste(ruta,"3_07.tex", sep=""), t24)
   
-  t25 <- graficaLineaTrim(lista$"4_01")
+  t25 <- graficaLinea(lista$"4_01")
   exportarLatex(paste(ruta,"4_01.tex", sep=""), t25)
   
   t26 <- graficaCol(lista$"4_02")
@@ -136,7 +144,7 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"4_04.tex", sep=""), t28)
   
   
-  t29 <- graficaLineaTrim(lista$"5_01")
+  t29 <- graficaLinea(lista$"5_01")
   exportarLatex(paste(ruta,"5_01.tex", sep=""), t29)
   
   t30 <- graficaCol(lista$"5_02")

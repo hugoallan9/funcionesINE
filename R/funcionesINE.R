@@ -408,31 +408,37 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
   print(pre)
   d <- ggplot2::ggplot_build(graph)$data[[1]]
   enteros <- sonEnteros(d)
+  if (pkg.env$maxMin == T){
+    lista <- NULL
+    lista <- c(lista,max(d$y), min(d$y))
+    if( !(d$y[[1]] %in% lista) ){
+      lista <- c(lista, d$y[[1]])
+    }
+    
+    if( !(d$y[[length(posiciones)]] %in% lista) ){
+      lista <- c(lista, d$y[[length(posiciones)]])
+    }
+    print(lista)
+    maximo <- F
+    minimo <- F
+  }  
   
-  
-  lista <- NULL
-  lista <- c(lista,max(d$y), min(d$y))
-  if( !(d$y[[1]] %in% lista) ){
-    lista <- c(lista, d$y[[1]])
-  }
-  
-  if( !(d$y[[length(posiciones)]] %in% lista) ){
-    lista <- c(lista, d$y[[length(posiciones)]])
-  }
-  print(lista)
-  maximo <- F
-  minimo <- F
+
   for(i in 1:length(posiciones))
   {
-    dato <- d$y[[i]] 
-    ultimo <- d$y[[length(posiciones)]]
-    if( !(dato %in% lista) ){
-      dato <- NA
-    }else{
-      if(i != length(posiciones) ){
-        lista <- lista[lista != dato ]
+    dato <- d$y[[i]]
+    
+    if (pkg.env$maxMin == T) { 
+      ultimo <- d$y[[length(posiciones)]]
+      if( !(dato %in% lista) ){
+        dato <- NA
+      }else{
+        if(i != length(posiciones) ){
+          lista <- lista[lista != dato ]
+        }
       }
     }
+    
     
     if(enteros == 0)
     {
@@ -970,5 +976,13 @@ presentacion <- function(){
   pkg.env$color1 <- rgb(0,0,1) #0 0 0
   pkg.env$color2 <- rgb(0.3,0.7,1)
   pkg.env$colorRelleno <- rgb(0,0,1) # 1 1 1 
+}
+#'Funcion para activar las cuatro etiquetas, maximo y minimo.
+cuatroEtiquetas <- function(){
+  if (pkg.env$maxMin == T){
+    pkg.env$maxMin <- F
+  } else{
+    pkg.env$masMin <- T
+  }
 }
 

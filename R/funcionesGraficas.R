@@ -117,8 +117,12 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   ## Cambiando el ancho cuando es trimestral
   if (pkg.env$modalidad == "trimestral" ){
     ancho <- 0.5
+  }else if(pkg.env$modalidad =="presentacion"){
+    print('Como presentacion')
+    ancho <- 0.8
   }
-  
+  print("La modalidad es: \n")
+  print(pkg.env$modalidad)
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group=1))
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)

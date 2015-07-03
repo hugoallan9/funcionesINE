@@ -43,6 +43,7 @@ pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
 
 pkg.env$modalidad <- NULL
 pkg.env$tamEti <- 3.2
+pkg.env$maxMin <- F
 
 
 
