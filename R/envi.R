@@ -41,7 +41,7 @@ pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
   axis.text.y = ggplot2::element_text(colour = NA)
 )
 
-pkg.env$modalidad = "trimestral"
+pkg.env$modalidad <- NULL
 pkg.env$tamEti <- 3.2
 
 

@@ -8,6 +8,12 @@
 #' @export
 graficaAnillo <- function(data, nombre, preambulo = T)
 {
+  colorBorde <- NULL
+  if ( pkg.env$modalidad == "trimestral"){
+    colorBorde <- rgb(0,0,0)
+  }else{
+    colorBorde <- rgb(1,1,1)
+  }
   names(data)<- c("x","y")
   data <- data[ordenarNiveles(data),]
   data$x <- factor(data$x, levels = data$x)
@@ -21,7 +27,7 @@ graficaAnillo <- function(data, nombre, preambulo = T)
   data$y <- round(data$y,1)
   p1 <- ggplot2::ggplot(data, ggplot2::aes(fill =  x, ymax = ymax, ymin = ymin ,xmax= 10, xmin= 5))+
     #geom_rect(show_guide=F)+
-    ggplot2::geom_rect(fill = colores ,colour= "black", show_guide=F)+
+    ggplot2::geom_rect(fill = colores ,colour= colorBorde, show_guide=F)+
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks = y.breaks, labels=data$y, expand = c(0,0))+
     ggplot2::labs(x = NULL, y=NULL)+
@@ -31,15 +37,27 @@ graficaAnillo <- function(data, nombre, preambulo = T)
   temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(p1))
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
   grid::grid.draw(temp)
+  
+  colorBorde <- NULL
+  if ( pkg.env$modalidad == "trimestral"){
+    colorBorde <- rgb(1,1,1)
+    colores[1] <- pkg.env$color1
+    print(pkg.env$color1)
+    print(colores[1])
+  }else{
+    colorBorde <- pkg.env$color1
+  }
+  
   if(length(data$y) == 2){
     tikzDevice::tikzCoord(2*pkg.env$ancho/3, pkg.env$alto/2, name= "rect", units = "inches") ## ESTA ES LA QUE FUNCIONA 
     tikzDevice::tikzCoord(0,mm2inch(2.5+ 4), name = "desY", units= "inches")
     tikzDevice::tikzCoord(mm2inch(2.5),mm2inch(0+ 4), name = "desX", units = "inches")
     tikzDevice::tikzCoord(mm2inch(2.5),-mm2inch(0+ 4), name = "mdesX", units = "inches")
-    tikzDevice::tikzAnnotate("\\definecolor[named]{ct1}{rgb}{0.0,0.0,0.0}")
+    tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
+    tikzDevice::tikzAnnotate(c("\\definecolor[named]{borde}{HTML}{",substr(colorBorde,2,7),"}"))
     tikzDevice::tikzAnnotate("\\coordinate (t1) at ($(rect) + 0.5*(desX) + 0.5*(desY)$);")
     tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(rect)+0.5*(mdesX)-0.5*(desY)$);")
-    tikzDevice::tikzAnnotate(c("\\draw [color=ct1] ($(rect)+(desY)$) rectangle ($(rect)+(desX)$);"))
+    tikzDevice::tikzAnnotate(c("\\draw [color=ct1,fill=borde] ($(rect)+(desY)$) rectangle ($(rect)+(desX)$);"))
     tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
     tikzDevice::tikzAnnotate(c("\\node [text width=",
                                mm2pt(20), 
@@ -58,7 +76,7 @@ graficaAnillo <- function(data, nombre, preambulo = T)
     tikzDevice::tikzCoord(0,mm2inch(6), name = "espacio", units = "inches")
     tikzDevice::tikzCoord(0, mm2inch(2.5), name = "lonY", units = "inches")
     tikzDevice::tikzCoord(mm2inch(2.5),0, name = "lonX", units = "inches")
-    tikzDevice::tikzAnnotate("\\definecolor[named]{ct1}{HTML}{000000}")
+    tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct1}{HTML}{",substr(colores[1],2,7),"}"))
     tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct2}{HTML}{",substr(colores[2],2,7),"}"))
     tikzDevice::tikzAnnotate(c("\\definecolor[named]{ct3}{HTML}{",substr(colores[3],2,7),"}"))
     tikzDevice::tikzAnnotate("\\coordinate (t2) at ($(rect) +0.5*(lonX)$);")

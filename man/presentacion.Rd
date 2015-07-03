@@ -2,11 +2,11 @@
 % Please edit documentation in R/funcionesINE.R
 \name{presentacion}
 \alias{presentacion}
-\title{Función para poner parametrización del formato de trimestrales}
+\title{Función para poner parametrización del formato de presentaciones}
 \usage{
 presentacion()
 }
 \description{
-Función para poner parametrización del formato de trimestrales
+Función para poner parametrización del formato de presentaciones
 }
 

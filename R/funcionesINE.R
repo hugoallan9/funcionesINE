@@ -712,21 +712,30 @@ exportarLatex <- function(nombre = grafica.tex, graph, preambulo = F)
 
 calcularRampaAnillo <- function(x, categoria = TRUE){
   rampa = NULL
+  print( pkg.env$modalidad )
+  if (pkg.env$modalidad == "trimestral"){
+    pkg.env$color1 <- rgb(1,1,1)
+  }
+  
   if(categoria == TRUE){
     if("IGNORADO" %in% toupper(x))
     {
       #print("IGNORADO")
-      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0.6,0.6,0.6), pkg.env$gris)
+      rampa = c(pkg.env$color1, pkg.env$color2, pkg.env$gris)
     }else{
-      rampa = c(grDevices::rgb(1,1,1), grDevices::rgb(0.6,0.6,0.6))
+      rampa = c(pkg.env$color1, pkg.env$color2)
     }
   }else{
-    rampaAux <- grDevices::colorRampPalette(c(grDevices::rgb(1,1,1), grDevices::rgb(0.6,0.6,0.6)))
+    rampaAux <- grDevices::colorRampPalette(c(pkg.env$color1,pkg.env$color2))
     if("IGNORADO" %in% toupper(x)){
       rampa <- c(rampaAux(2), pkg.env$gris)
     }else{
       rampa <- rampaAux(length(x))
     }
+  }
+  
+  if (pkg.env$modalidad == "trimestral"){
+    pkg.env$color1 <- rgb(0,0,0)
   }
   return(rampa)
 }
@@ -925,6 +934,8 @@ trimestral <- function(){
   options(tikzDocumentDeclaration= "\\documentclass[10pt,twoside]{book}")
   pkg.env$modalidad <- "trimestral"
   cambiarGraficas(tamFuente = 10)
+  pkg.env$color1 <- rgb(0,0,0)
+  pkg.env$color2 <- rgb(0.6,0.6,0.6)
 }
 
 #'Función para poner parametrización del formato anual
@@ -947,12 +958,13 @@ anual <- function(color1, color2){
   pkg.env$tamEti <- 3.7
 }
 
-#'Función para poner parametrización del formato de trimestrales
+#'Función para poner parametrización del formato de presentaciones
 presentacion <- function(){
+  pkg.env$modalidad <- "presentacion"
   pkg.env$alto <- 1.91 
   pkg.env$ancho <- 3.19
   options(tikzDocumentDeclaration= "\\documentclass[10pt,twoside]{book}")
-  pkg.env$modalidad <- "trimestral"
+  #pkg.env$modalidad <- "trimestral"
   cambiarGraficas(tamFuente = 10)
   pkg.env$tamEti <- 3.2
   pkg.env$color1 <- rgb(0,0,1) #0 0 0
