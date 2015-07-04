@@ -8,8 +8,6 @@ etiquetasBarras(graph, margenIz = 0)
 }
 \arguments{
 \item{graph}{Objeto ggplot2 que se desea anotar}
-
-\item{margenIz}{Controla el margen izquierdo de la grafica}
 }
 \value{
 Retorna objeto ggplot2 listo para graficar

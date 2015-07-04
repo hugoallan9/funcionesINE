@@ -4,7 +4,7 @@
 \alias{cuatroEtiquetas}
 \title{Funcion para activar las cuatro etiquetas, maximo y minimo.}
 \usage{
-cuatroEtiquetas()
+cuatroEtiquetas(encendido = T)
 }
 \description{
 Funcion para activar las cuatro etiquetas, maximo y minimo.
