@@ -77,15 +77,15 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   t13 <- etiquetasHorizontales(t13)
   exportarLatex(paste(ruta,"2_03.tex", sep=""), t13)
   
-  pkg.env$modalidad = modalidad
+  #pkg.env$modalidad = modalidad
   t14 <- graficaColCategorias(lista$'2_04', ruta = paste(ruta,"2_04.tex", sep=""), preambulo = pre, etiquetas = "h", ancho = 0.5)
   if( pre == T){
     compilar(paste(ruta,"2_04.tex", sep=""), F) 
   }
-  pkg.env$modalidad = "trimestral"
+  #pkg.env$modalidad = "trimestral"
   
-  t15 <- graficaLinea(lista$"2_05")
-  exportarLatex(paste(ruta,"2_05.tex", sep=""), t15)
+   t15 <- graficaLinea(lista$"2_05")
+   exportarLatex(paste(ruta,"2_05.tex", sep=""), t15, preambulo )
   
   
   t16 <- graficaCol(lista$"2_06")

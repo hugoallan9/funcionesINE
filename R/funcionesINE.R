@@ -403,9 +403,7 @@ calcularPosicionesDobles <- function(graph)
 #'Por defecto se usa un decimal
 etiquetasLineas <- function(graph, posiciones, precision=1)
 {
-  print(c('La precision es: ', precision ))
-  pre <- precision
-  print(pre)
+  pkg.env$precision <- precision
   d <- ggplot2::ggplot_build(graph)$data[[1]]
   enteros <- sonEnteros(d)
   if (pkg.env$maxMin == T){
@@ -442,11 +440,11 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
     
     if(enteros == 0)
     {
-      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pre)
+      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
     }
     else
     {
-      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pre, drop0trailing = T)
+      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
     }
     
     print("#####LAS ETIQUETAS SON ##########" )
@@ -486,7 +484,7 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
 etiquetasLineasDobles <- function(graph, pos, precision=1)
 {
   print(c('La precision es: ', precision ))
-  pre <- precision
+  pkg.env$precision <- precision
   d1 <- ggplot2::ggplot_build(graph)$data[[1]]
   d2 <- ggplot2::ggplot_build(graph)$data[[2]]
   enteros1 <- sonEnteros(d1)
@@ -501,11 +499,11 @@ etiquetasLineasDobles <- function(graph, pos, precision=1)
     
     if(enteros1 == 0)
     {
-      d1$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d1$x))), format = 'f', big.mark = ',', digits = pre)
+      d1$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d1$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
     }
     else
     {
-      d1$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d1$x))), format = 'f', big.mark = ',', digits = pre, drop0trailing = T)
+      d1$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d1$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
     }
     
     
@@ -533,11 +531,11 @@ etiquetasLineasDobles <- function(graph, pos, precision=1)
     
     if(enteros1 == 0)
     {
-      d2$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d2$x))), format = 'f', big.mark = ',', digits = pre)
+      d2$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d2$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
     }
     else
     {
-      d2$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d2$x))), format = 'f', big.mark = ',', digits = pre, drop0trailing = T)
+      d2$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d2$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
     }
     
     
@@ -621,16 +619,16 @@ rotarEtiX2 <- function(graph)
 #' 
 #' @param graph Objeto ggplot2 que se desea anotar
 #' @return Retorna objeto ggplot2 listo para graficar
-etiquetasBarras <- function(graph, margenIz = 0)
+etiquetasBarras <- function(graph, margenIz = 0, precision = 1)
 {
-  
+  pkg.env$precision <- precision
   if(nrow(subset(ggplot2::ggplot_build(graph)$data[[1]], y>0)) > 0){
     print("Hay valores negativos")
   }
   
   longitudIzquierda <- 6
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
-  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala) 
   longitud <- longitud*0.352777778 + 2.3
   mIz <- 0 + margenIz
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
@@ -643,7 +641,7 @@ etiquetasBarras <- function(graph, margenIz = 0)
   }
   
   graph <- graph +
-    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = 1, drop0trailing = !pkg.env$botarCeros)), size=3, hjust=-0.5, vjust = 0.5)+
+    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)), size=3, hjust=-0.5, vjust = 0.5)+
     ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,longitudIzquierda), "mm"))
 }
 

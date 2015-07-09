@@ -4,7 +4,7 @@
 \alias{etiquetasBarras}
 \title{Anota las etiquetas para una grafica de barras}
 \usage{
-etiquetasBarras(graph, margenIz = 0)
+etiquetasBarras(graph, margenIz = 0, precision = 1)
 }
 \arguments{
 \item{graph}{Objeto ggplot2 que se desea anotar}

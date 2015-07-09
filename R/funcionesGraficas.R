@@ -96,6 +96,7 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
 
 graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1, escala = "normal", rotar = T)
 {
+  pkg.env$precision <- precision
   print("El tamaño de la fuente es: ")
   print(pkg.env$fontSize)
   ggplot2::theme_set(pkg.env$temaColumnas)
@@ -126,7 +127,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group=1))
   grafica <- grafica + ggplot2::geom_line( colour = color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)
-  grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica), precision = precision)
+  grafica <- etiquetasLineas(grafica, calcularPosiciones(grafica), precision = pkg.env$precision)
   margenArriba <- pt2mm(calcularAlto(10))
   ## Rotanto las etiquetas del eje x cuando la modalidad es trimestral
   
@@ -139,7 +140,8 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   limite <- minimo - 
     0.3*(maximo - minimo)
   print(c('El límite es: ', limite))
-  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
+  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0, size = 0.1
+                                            )
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
