@@ -622,14 +622,18 @@ rotarEtiX2 <- function(graph)
 etiquetasBarras <- function(graph, margenIz = 0, precision = 1)
 {
   pkg.env$precision <- precision
-  if(nrow(subset(ggplot2::ggplot_build(graph)$data[[1]], y>0)) > 0){
-    print("Hay valores negativos")
-  }
+  posiciones <- NULL
+    posiciones <- posicionesBarras(ggplot2::ggplot_build((graph))$data[[1]]$y)
+    
+
   
   longitudIzquierda <- 6
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
+  min <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[1]
   longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala) 
   longitud <- longitud*0.352777778 + 2.3
+  longitudInferior <- tikzDevice::getLatexStrWidth(formatC(min,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala)
+  longitudInferior <- longitudInferior*0.352777778 + 2.3
   mIz <- 0 + margenIz
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
@@ -640,11 +644,51 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1)
     pkg.env$botarCeros <- F
   }
   
-  graph <- graph +
-    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)), size=3, hjust=-0.5, vjust = 0.5)+
-    ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,longitudIzquierda), "mm"))
-}
+  d <- ggplot2::ggplot_build(graph)$data[[1]]
+  for(i in 1:length(posiciones)){
+    dato <- d$y[[i]]
+    
+    
+    
+    if(pkg.env$botarCeros == T)
+    {
+      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
+    }
+    else
+    {
+      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
+    }
+    
+    print("#####LAS ETIQUETAS SON ##########" )
+    print(d$etiqueta)
+    
+    if(posiciones[[i]] == 1)
+    {
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$tamEti,hjust = -0.2, vjust = 0.5)
+    }else if(posiciones[[i]] == -1)
+    {
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$tamEti,hjust = 1.2, vjust = 0.5)
+    }
+  }
+  graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(longitudInferior,"mm"),
+                 plot.margin = grid::unit(c(0,longitud,-longitudInferior,longitudIzquierda), "mm"))
+  
+  return(graph)
+} 
 
+#'Función para calcular vector de posiciones para las etiquetas de Barras
+#'@param x Vector de valores para el eje y.
+posicionesBarras <- function(x){
+  posiciones <- c()
+  for(var in x){
+    if(var < 0){
+     posiciones <- c(posiciones,-1) 
+    }else{
+      posiciones <-c(posiciones,1)
+    }
+  }
+  return(posiciones)
+}
 
 #'Pone etiquetas a las columnas en una grafica de columnas
 #'
