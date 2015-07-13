@@ -845,9 +845,11 @@ cambiarCodificacion <- function(tabla){
 #'@param mostrar Booleano, cuando es verdadero muestra el pdf compilado.
 #'@export
 compilar <- function(ruta = "", mostrar = T){
-  shell(cmd=paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)
+  cadenaCompilacion <-  paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta)
+  print(cadenaCompilacion)
+  suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
   if( mostrar == T){
-    shell.exec(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"))  
+    system(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"), intern = T, ignore.stderr = T)  
   }
   
 }

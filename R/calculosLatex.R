@@ -72,7 +72,7 @@ calcularAlto <- function( texto, factor = 0.90, largo = 20 ){
   ## Compilación con XeLaTeX
   cadenaCompilacion <-  paste("xelatex", '-interaction=batchmode', '-halt-on-error',
          '-output-directory', texDir, texFile)
-
+  print(cadenaCompilacion)
   suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
   
   # Abriendo la bitácora.
