@@ -35,7 +35,7 @@ graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::scale_x_discrete(breaks =  unique(data$x), labels = data$x)+
-    ggplot2::geom_abline(intercept = 0, slope = 0)
+    ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1)
   
 
   return(grafica)
@@ -70,7 +70,7 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
   grafica <- grafica + 
     ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::geom_abline(intercept = 0, slope = 0)+
+    ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::theme(
       axis.line.y = ggplot2::element_line(colour = NA)
@@ -239,7 +239,7 @@ graficaDobleLinea <- function(data, ruta, preambulo = F, color1 = pkg.env$color1
   }
   
   
-  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
+  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0, size = 0.1)
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,limiteFin))+
@@ -374,7 +374,7 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, prec
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   limite <- minimo - 0.5*(maximo - minimo)
-  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0)
+  grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0, size = 0.1)
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
     grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
