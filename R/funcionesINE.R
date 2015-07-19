@@ -801,18 +801,21 @@ calcularRampaAnillo <- function(x, categoria = TRUE){
 #'@export  
 fact2Num <- function(tabla)
 {
-  print(tabla)
-  nombres <- names(tabla)
-  names(tabla) <- c("x","y")
-  if(is.factor(tabla$y))
-  {
-    tabla$y<- as.numeric(levels(tabla$y))[tabla$y]    
+  if(length(names(tabla)) > 1 ){
+    print(tabla)
+    nombres <- names(tabla)
+    names(tabla) <- c("x","y")
+    if(is.factor(tabla$y))
+    {
+      tabla$y<- as.numeric(levels(tabla$y))[tabla$y]    
+    }
+    else
+    {
+      tabla$y<- as.numeric(tabla$y)   
+    }
+    names(tabla) <- nombres
   }
-  else
-  {
-    tabla$y<- as.numeric(tabla$y)   
-  }
-  names(tabla) <- nombres
+
   #print(names(tablas))
   return(tabla)
 }
@@ -824,19 +827,23 @@ fact2Num <- function(tabla)
 #'
 
 cambiarCodificacion <- function(tabla){
-  print(names(tabla))
-  nombres <- names(tabla)
-  if(nombres[1] == "X")
-    nombres[1] <- "x"
-  if(nombres[2] == "Y")
-    nombres[2] <- "y"
-  names(tabla) <- nombres
-  ##nombres <- gsub("\\.", " ", nombres)
-  nombres <- iconv(nombres, to = "UTF8//TRANSLIT")
-  names(tabla) <- nombres
-  x <- tabla$x
-  x <- iconv(x, to = "UTF8//TRANSLIT")
-  tabla$x <- x
+  print(length(names(tabla)))
+  if( length( names(tabla) ) >1){
+    print('Entre al if')
+    print(names(tabla))
+    nombres <- names(tabla)
+    if(nombres[1] == "X")
+      nombres[1] <- "x"
+    if(nombres[2] == "Y")
+      nombres[2] <- "y"
+    names(tabla) <- nombres
+    ##nombres <- gsub("\\.", " ", nombres)
+    nombres <- iconv(nombres, to = "UTF8//TRANSLIT")
+    names(tabla) <- nombres
+    x <- tabla$x
+    x <- iconv(x, to = "UTF8//TRANSLIT")
+    tabla$x <- x
+  }
   return(tabla)
 }
 
@@ -845,9 +852,13 @@ cambiarCodificacion <- function(tabla){
 #'@param mostrar Booleano, cuando es verdadero muestra el pdf compilado.
 #'@export
 compilar <- function(ruta = "", mostrar = T){
+  if (.Platform$OS.type == "windows") {
+    shell(cmd=paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)  
+  }else{
   cadenaCompilacion <-  paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta)
   print(cadenaCompilacion)
   suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
+  }
   if( mostrar == T){
     system(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"), intern = T, ignore.stderr = T)  
   }

@@ -45,6 +45,7 @@ capitulo1 <- function(){
 #'Fucnion para hacer el capitulo 2
 
 capitulo2 <- function(){
+  print("Este es el capitulo2")
   anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
   g7<- graficaLinea(getListIpc()$"2_02")
   exportarLatex(paste(getPath(),"2_02.tex",sep="/"),g7)
