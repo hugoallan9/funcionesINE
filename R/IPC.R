@@ -46,6 +46,7 @@ capitulo1 <- function(){
 
 capitulo2 <- function(){
   print("Este es el capitulo2")
+  cuatroEtiquetas()
   anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
   g7<- graficaLinea(getListIpc()$"2_02")
   exportarLatex(paste(getPath(),"2_02.tex",sep="/"),g7)
@@ -160,7 +161,7 @@ capitulo2 <- function(){
   exportarLatex(paste( getPath(), "2_39.tex", sep = "/"),g110)
   
   g111<- graficaLinea(getListIpc()$"2_40")
-  exportarLatex(paste( getPath(), "2_35.tex", sep = "/"),g111)
+  exportarLatex(paste( getPath(), "2_40.tex", sep = "/"),g111)
   
   g112<- graficaLinea(getListIpc()$"2_41")
   exportarLatex(paste( getPath(), "2_41.tex", sep = "/"),g112)
