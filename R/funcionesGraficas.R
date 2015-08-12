@@ -142,7 +142,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = -1, ancho = 1.5
     limite <- minimo - 
       0.3*(maximo - minimo)  
   }else{
-    limit <- inicio
+    limite <- inicio
   }
   
   
