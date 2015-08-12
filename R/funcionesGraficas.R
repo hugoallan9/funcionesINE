@@ -94,7 +94,7 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
 #'un decimal.
 #'@export
 
-graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5, precision=1, escala = "normal", rotar = T)
+graficaLinea <- function(data, color1 = pkg.env$color1, inicio = -1, ancho = 1.5, precision=1, escala = "normal", rotar = T)
 {
   pkg.env$precision <- precision
   print("El tamaño de la fuente es: ")
@@ -137,8 +137,15 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = 0, ancho = 1.5,
   
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
-  limite <- minimo - 
-    0.3*(maximo - minimo)
+  
+  if (inicio != -1){
+    limite <- minimo - 
+      0.3*(maximo - minimo)  
+  }else{
+    limit <- inicio
+  }
+  
+  
   print(c('El límite es: ', limite))
   grafica <- grafica + ggplot2::geom_abline(intercept = limite, slope = 0, size = 0.1
                                             )

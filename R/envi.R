@@ -41,6 +41,17 @@ pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
   axis.text.y = ggplot2::element_text(colour = NA)
 )
 
+pkg.env$temaFacets <- pkg.env$temaINE
+pkg.env$temaFacets <- pkg.env$temaFacets + ggplot2::theme(
+  strip.background = ggplot2::element_rect(fill = NA),
+  axis.line.x = ggplot2::element_line(colour = NA),
+  axis.line.y = ggplot2::element_line(colour = NA),
+  axis.text.y = ggplot2::element_text(colour = NA),
+  panel.margin = grid::unit(0.2,"cm"),
+  plot.margin = grid::unit(c(0,0,0,-1),"cm"),
+  strip.text = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9)
+  )
+
 pkg.env$modalidad <- NULL
 pkg.env$tamEti <- 3.2
 pkg.env$maxMin <- F

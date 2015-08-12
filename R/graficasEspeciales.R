@@ -318,5 +318,12 @@ graficaBarFacets <-function(data, escala = 'normal'){
   }else if(toupper(escala) == "MILESMILLONES"){
     dataLista$y <- dataLista$y/1000000000
   }
+  ggplot2::theme_set(pkg.env$temaFacets)
+  grafica <- ggplot2::ggplot(dataLista, ggplot2::aes(x = x, y = y))+
+    ggplot2::geom_bar(stat = 'identity', position =  ggplot2::position_dodge(width = 0.9), width=0.5  )+
+    ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1)+
+    ggplot2::labs(x=NULL, y=NULL)+
+    ggplot2::facet_grid(. ~ categoria)
+  return(grafica)
   
 }
