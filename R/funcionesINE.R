@@ -961,7 +961,8 @@ cargaMasiva <- function (ruta, recodificar = F) {
   
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
-    read.csv(i,header = TRUE, sep = ";",  fileEncoding="iso-8859-1", check.names = F)
+    #iso-8859-1
+    read.csv(i,header = TRUE, sep = ";",  fileEncoding="UTF-8", check.names = F)
   })
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
