@@ -138,7 +138,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = -1, ancho = 1.5
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   
-  if (inicio != -1){
+  if (inicio == -1){
     limite <- minimo - 
       0.3*(maximo - minimo)  
   }else{
