@@ -53,10 +53,10 @@ capitulo2 <- function(){
   g7<- graficaLinea(getListIpc()$"2_02")
   exportarLatex(paste(getPath(),"2_02.tex",sep="/"),g7)
   
-  g7777<- graficaBar(getListIpc()$"2_03")
-  g7777 <- etiquetasBarras(g7777)
-  exportarLatex(paste( getPath(), "2_03.tex", sep = "/"),g7777)
-  
+#   g7777<- graficaBar(getListIpc()$"2_03")
+#   g7777 <- etiquetasBarras(g7777)
+#   exportarLatex(paste( getPath(), "2_03.tex", sep = "/"),g7777)
+#   
   g9<- graficaLinea(getListIpc()$"2_06")
   exportarLatex(paste( getPath(), "2_06.tex", sep = "/"),g9)
   
