@@ -36,6 +36,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   dataLista$x <- factor(dataLista$x, levels = data$x)
   levels(dataLista$x) <- gsub("\\\\n", "\n", levels(dataLista$x))
   print(length(levels(dataLista$categoria)))
+  print(dataLista)
   if(toupper(escala) == "MILES"){
     dataLista$y <- dataLista$y/1000
   }else if(toupper(escala) == "MILLONES"){
@@ -286,4 +287,36 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   }
   grDevices::dev.off()
   return(dataLista)
+}
+
+
+
+
+#'Función para gráficar con facets.
+#'@param Data Frame con el que se desea trabajar
+#'@param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
+#' son "miles", "millones" o "milesmillones".
+#'
+graficaBarFacets <-function(data, escala = 'normal'){
+  x <- rep(data$x,length(data)-1)
+  y <- NULL
+  for(i in 2:length(data)){
+    y <- c(y,as.matrix(data)[,i])
+  }
+  categoria <- gl(length(data)-1, length(data$x), labels = names(data)[c(2:ncol(data))])
+  print(categoria)
+  dataLista <- data.frame(x,y,categoria)
+  dataLista <- fact2Num(dataLista)
+  dataLista$x <- factor(dataLista$x, levels = data$x)
+  levels(dataLista$x) <- gsub("\\\\n", "\n", levels(dataLista$x))
+  print(length(levels(dataLista$categoria)))
+  print(dataLista)
+  if(toupper(escala) == "MILES"){
+    dataLista$y <- dataLista$y/1000
+  }else if(toupper(escala) == "MILLONES"){
+    dataLista$y <- dataLista$y/1000000
+  }else if(toupper(escala) == "MILESMILLONES"){
+    dataLista$y <- dataLista$y/1000000000
+  }
+  
 }
