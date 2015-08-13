@@ -47,7 +47,7 @@ capitulo1 <- function(){
 capitulo2 <- function(){
   print("Este es el capitulo2")
   print(getListIpc()$"2_03")
-  print(getListIpc)
+  print(getListIpc())
   cuatroEtiquetas()
   anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
   g7<- graficaLinea(getListIpc()$"2_02")
