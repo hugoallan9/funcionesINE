@@ -49,8 +49,8 @@ capitulo2 <- function(){
   print(getListIpc()$"2_03")
   cuatroEtiquetas()
   anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
-  g7<- graficaLinea(getListIpc()$"2_02")
-  exportarLatex(paste(getPath(),"2_02.tex",sep="/"),g7)
+#   g7<- graficaLinea(getListIpc()$"2_02")
+#   exportarLatex(paste(getPath(),"2_02.tex",sep="/"),g7)
   
   g7777<- graficaBar(getListIpc()$"2_03")
   g7777 <- etiquetasBarras(g7777)
