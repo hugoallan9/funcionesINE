@@ -28,6 +28,16 @@ graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
     data$y <- data$y/1000000000
   }
   
+  numeroCol <- nrow(data)
+  
+  if( numeroCol == 3 ){
+    ancho <- 0.45
+  }else if( numeroCol == 4){
+    ancho <- 0.55
+  }else if( numeroCol == 5){
+    ancho <- 0.55
+  }
+  print(ancho)
   
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x, y))
   grafica <- grafica + 
