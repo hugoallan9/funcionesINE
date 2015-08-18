@@ -30,15 +30,15 @@ pkg.env$temaINE <- ggplot2::theme_gray(base_size = pkg.env$fontSize, base_family
 pkg.env$temaBarras <- pkg.env$temaINE
 pkg.env$temaBarras <- pkg.env$temaBarras + ggplot2::theme(
   axis.line.y = ggplot2::element_line(colour = NA),
-  axis.line.x = ggplot2::element_line(colour = NA),
-  axis.text.y = ggplot2::element_text(hjust = 1, vjust = 0.5)
+  axis.line.x = ggplot2::element_line(colour = NA)
 ) 
 
 pkg.env$temaColumnas <- pkg.env$temaINE
 pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
   axis.line.x = ggplot2::element_line(colour = NA),
   axis.line.y = ggplot2::element_line(colour = NA),
-  axis.text.y = ggplot2::element_text(colour = NA)
+  axis.text.y = ggplot2::element_text(colour = NA),
+  axis.text.x = ggplot2::element_text(hjust = 0, vjust = 1)
 )
 
 pkg.env$temaFacets <- pkg.env$temaINE

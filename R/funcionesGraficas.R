@@ -405,5 +405,87 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, prec
   return(grafica)
 }
 
+#'Función para hacer gráficas piramidales de población
+#'@param data Es el data frame con el que se hará la gráfica
+#'@param ancho Gradua el ancho de las Barras. Por defecto es 0.6
+#'@param color1 El color con el que se desea hacer la gráfica
+#'@param ruta La ruta completa de donde se desea almacenar la gráfica
 
+
+piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = pkg.env$color1, ruta, preambulo = F){
+  ggplot2::theme_set(pkg.env$temaBarras)
+  ##Poniendo la escala correspondiente
+  if(toupper(escala) == "MILES"){
+    data$y <- data$y/1000
+  }else if(toupper(escala) == "MILLONES"){
+    data$y <- data$y/1000000
+  }else if(toupper(escala) == "MILESMILLONES"){
+    data$y <- data$y/1000000000
+  }
+  
+  ## Graduando el ancho
+  numeroCol <- nrow(data)
+  
+  if( numeroCol == 3 ){
+    ancho <- 0.45
+  }else if( numeroCol == 4){
+    ancho <- 0.55
+  }else if( numeroCol == 5){
+    ancho <- 0.55
+  }
+  print(ancho)
+  
+  nombres <- names(data)
+  names(data)<- c("x","y","z")
+  data$x <- factor(data$x, levels = data$x)
+  levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
+  print(levels(data$x))
+  grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y,z))
+  grafica.x <- grafica  +
+    ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
+    ggplot2::labs(x=NULL,y=NULL)+
+    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
+    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= y),size=3, hjust=-0.5, vjust = 0.5)+
+    ggplot2::theme(
+       axis.ticks.margin=grid::unit(c(-2,0),'mm'),
+       axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5),
+      axis.line.y = ggplot2::element_line(colour = NA)
+    )+
+    ggplot2::coord_flip()
+  
+  
+  print(grafica.x)
+  tempx<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica.x))
+  tempx$layout$clip[tempx$layout$name=="panel"] <- "off"
+  
+  
+  grafica.y <- grafica +    
+    ggplot2::geom_bar(ggplot2::aes(x,y = ), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
+    ggplot2::labs(x=NULL,y=NULL)+
+    ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1)+
+    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0), trans = 'reverse')+
+    ggplot2::scale_x_discrete(breaks=NULL)+
+    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= z),size=3, hjust=1.5, vjust = 0.5)+
+    ggplot2::theme(
+      axis.line.y = ggplot2::element_line(colour = NA),
+      axis.text.y = ggplot2::element_text(colour = NA)
+    )+
+    ggplot2::coord_flip()
+  
+  print(grafica.y)
+  
+  tempy<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica.y))
+  tempy$layout$clip[tempy$layout$name=="panel"] <- "off"
+  
+
+
+  
+  gr <- gridExtra::grid.arrange(tempy, tempx, 
+                          widths = c(1,1),
+                          ncol =2)
+#   
+  tikzDevice::tikz(ruta, standAlone = preambulo, bareBones = TRUE, bg = "transparent", width = pkg.env$ancho, height= pkg.env$alto, sanitize = F)
+  grid::grid.draw(gr)
+  dev.off()
+  }
 

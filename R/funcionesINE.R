@@ -619,10 +619,12 @@ rotarEtiX2 <- function(graph)
 #' 
 #' @param graph Objeto ggplot2 que se desea anotar
 #' @return Retorna objeto ggplot2 listo para graficar
-etiquetasBarras <- function(graph, margenIz = 0, precision = 1)
+#' @return cambiarNegativas parámetro temporal, desaparecerá en futuras versiones.
+etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas = F)
 {
   pkg.env$precision <- precision
   posiciones <- NULL
+    
     posiciones <- posicionesBarras(ggplot2::ggplot_build((graph))$data[[1]]$y)
     
 
@@ -646,7 +648,12 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1)
   
   d <- ggplot2::ggplot_build(graph)$data[[1]]
   for(i in 1:length(posiciones)){
-    dato <- d$y[[i]]
+    if (cambiarNegativas == T){
+      dato <- -1*d$y[[i]]  
+    }else{
+      dato <- d$y[[i]]
+    }
+    
     
     
     
@@ -661,6 +668,8 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1)
     
     print("#####LAS ETIQUETAS SON ##########" )
     print(d$etiqueta)
+    
+   
     
     if(posiciones[[i]] == 1)
     {

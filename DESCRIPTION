@@ -16,7 +16,8 @@ Imports:
   tools,
   plyr,
   scales,
-  tikzDevice
+  tikzDevice,
+  ggExtra
 Description: Algoritmos basicos para la creacion de cuadros estadisticos con estilos propios
 License: GNU
 LazyData: true
