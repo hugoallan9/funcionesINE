@@ -679,8 +679,8 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
       graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$tamEti,hjust = 1.2, vjust = 0.5)
     }
   }
-  graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(longitudInferior,"mm"),
-                 plot.margin = grid::unit(c(0,longitud,-longitudInferior,longitudIzquierda), "mm"))
+  graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(c(-7,longitudInferior),"mm"),
+                 plot.margin = grid::unit(c(0,longitud,-longitudInferior+7,longitudIzquierda), "mm"))
   
   return(graph)
 } 
@@ -971,7 +971,7 @@ cargaMasiva <- function (ruta, recodificar = F) {
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
     #iso-8859-1
-    read.csv(i,header = TRUE, sep = ";",  fileEncoding="UTF-8", check.names = F)
+    read.csv(i,header = TRUE, sep = ";",  fileEncoding="iso-8859-1", check.names = F)
   })
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
