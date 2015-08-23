@@ -21,6 +21,18 @@
   
   options(tikzUnicodeMetricPackages = c("\\usetikzlibrary{calc}\n"))
   
+  if (.Platform$OS.type == "unix" ) {
+    rutaPadre = "~/Dictionary"
+    rutaDiccionario = "tikzMetricsDictionary"  
+  }else{
+    rutaPadre = "C:/"
+    rutaDiccionario = "tikzMetricsDictionary"
+  }
+  
+  if (!file.exists( rutaPadre )){
+    dir.create( file.path(rutaPadre) )
+  }
+  options( tikzMetricsDictionary = file.path(rutaPadre,rutaDiccionario))
   
   # Variables para el tamaño de la gráfica
   
