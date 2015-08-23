@@ -25,7 +25,7 @@
     rutaPadre = "~/Dictionary"
     rutaDiccionario = "tikzMetricsDictionary"  
   }else{
-    rutaPadre = "C:/"
+    rutaPadre = "C:"
     rutaDiccionario = "tikzMetricsDictionary"
   }
   
