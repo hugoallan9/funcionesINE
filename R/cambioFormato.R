@@ -33,6 +33,7 @@ cambiarGraficas <- function(tamFuente){
   pkg.env$temaColumnas <- pkg.env$temaBarras + ggplot2::theme(
     axis.line.x = ggplot2::element_line(colour = NA),
     axis.line.y = ggplot2::element_line(colour = NA),
+    axis.text.x = ggplot2::element_text(hjust = -0.5),
     axis.text.y = ggplot2::element_text(colour = NA)
   )
   
