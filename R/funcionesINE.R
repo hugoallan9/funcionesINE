@@ -628,9 +628,9 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     posiciones <- posicionesBarras(ggplot2::ggplot_build((graph))$data[[1]]$y)
     
   data <- ggplot2::ggplot_build(graph)$data[[1]]
-#   if ( nrow(subset(data), y>0)) > 0 ){
+#   if ( nrow(subset(data), y>0) > 0 ){
 #     min <- min(subset(data), y > 0)
-#     longitudIzquierda <- tikzDevice::getLatexStrWidth(formatC(min,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala)
+#     longitudIzquierdo <- tikzDevice::getLatexStrWidth(formatC(min,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala)
 #   }else{
 #   longitudIzquierda <- 6
 #   }
@@ -683,8 +683,8 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
       graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0.5)
     }
   }
-  graph <- graph + ggplot2::theme(
-                 plot.margin = grid::unit(c(0,longitud,-longitudInferior+7,longitudIzquierda), "mm"))
+  graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(c(0,longitudInferior),"mm"),
+                 plot.margin = grid::unit(c(0,longitud,-longitudInferior+0,longitudIzquierda), "mm"))
   
   return(graph)
 } 
@@ -1035,6 +1035,7 @@ anual <- function(color1, color2){
   pkg.env$color2 <- color2
   pkg.env$colorRelleno <- color1
   pkg.env$modalidad <- "anual"
+  pkg.env$fEscala <- 1
   cambiarGraficas(tamFuente = 11)
   #pkg.env$fontSize <- 11
 }
