@@ -634,6 +634,7 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
 #   }else{
 #   longitudIzquierda <- 6
 #   }
+  longitudIzquierda <- 6
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
   min <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[1]
   longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala) 
