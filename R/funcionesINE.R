@@ -638,7 +638,7 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     espacio <- -2
   }
   print(c("El valor de espacio es: ", espacio))
-  longitudIzquierda <- 2
+  longitudIzquierda <- 3
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
   min <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[1]
   longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala) 
