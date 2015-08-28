@@ -407,6 +407,7 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
   d <- ggplot2::ggplot_build(graph)$data[[1]]
   enteros <- sonEnteros(d)
   if (pkg.env$maxMin == T){
+    print("La función de cuatro etiquetas está activada")
     lista <- NULL
     lista <- c(lista,max(d$y), min(d$y))
     if( !(d$y[[1]] %in% lista) ){
@@ -424,6 +425,7 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
 
   for(i in 1:length(posiciones))
   {
+    
     dato <- d$y[[i]]
     
     if (pkg.env$maxMin == T) { 
@@ -437,7 +439,7 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
       }
     }
     
-    
+    print(c("El dato correspondiente a la posición i es: ", i, " con valor ", dato))
     if(enteros == 0)
     {
       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
@@ -689,7 +691,7 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     }
   }
   graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(c(0,espacio),"mm"),
-                 plot.margin = grid::unit(c(0,longitud,-longitudInferior+espacio,longitudIzquierda), "mm"))
+                 plot.margin = grid::unit(c(0,longitud,1,longitudIzquierda), "mm"))
   
   return(graph)
 } 
@@ -1059,11 +1061,14 @@ presentacion <- function(){
 }
 
 #'Funcion para activar las cuatro etiquetas, maximo y minimo.
-cuatroEtiquetas <- function(encendido = T){
+cuatroEtiquetas <- function(encendido = TRUE){
+  print(c("El valor de encendido es: ", encendido))
   if (encendido == T){
+    print("maxMin activado")
     pkg.env$maxMin <- T
   } else{
-    pkg.env$masMin <- F
+    print("maxMin desactivado")
+    pkg.env$maxMin <- F
   }
 }
 
