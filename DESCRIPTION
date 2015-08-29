@@ -17,7 +17,8 @@ Imports:
   plyr,
   scales,
   tikzDevice,
-  mailR
+  mailR,
+  stringr
 Description: Algoritmos basicos para la creacion de cuadros estadisticos con estilos propios
 License: GNU
 LazyData: true

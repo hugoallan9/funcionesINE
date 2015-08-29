@@ -55,11 +55,11 @@ capitulo2 <- function(){
   g7777 <- etiquetasBarras(g7777)
   exportarLatex(paste( getPath(), "2_03.tex", sep = "/"),g7777)
   
-  g9<- graficaLinea(getListIpc()$"2_06", precision  = 2)
-  exportarLatex(paste( getPath(), "2_06.tex", sep = "/"),g9, preambulo = T)
+  g9<- graficaLinea(getListIpc()$"2_06", precision = 2)
+  exportarLatex(paste( getPath(), "2_06.tex", sep = "/"),g9)
   
   g12<- graficaBar(getListIpc()$"2_07")
-  g12<- etiquetasBarras(g12)
+  g12<- etiquetasBarras(g12, precision = 2)
   exportarLatex(paste( getPath(), "2_07.tex", sep = "/"),g12)
   
   g18<- graficaBar(getListIpc()$"2_08")
@@ -70,10 +70,10 @@ capitulo2 <- function(){
   g19 <- etiquetasBarras(g19)
   exportarLatex(paste( getPath(), "2_09.tex", sep = "/"),g19)
   
-  g200<- graficaLinea(getListIpc()$"2_10")
+  g200<- graficaLinea(getListIpc()$"2_10", precision = 2)
   exportarLatex(paste( getPath(), "2_10.tex", sep = "/"),g200)
   
-  g202<- graficaLinea(getListIpc()$"2_11")
+  g202<- graficaLinea(getListIpc()$"2_11", precision = 2)
   exportarLatex(paste( getPath(), "2_11.tex", sep = "/"),g202)
   
   g203<- graficaLinea(getListIpc()$"2_12")

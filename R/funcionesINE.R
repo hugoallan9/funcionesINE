@@ -429,42 +429,47 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
     dato <- d$y[[i]]
     
     if (pkg.env$maxMin == T) { 
-      ultimo <- d$y[[length(posiciones)]]
       if( !(dato %in% lista) ){
         dato <- NA
       }else{
-        if(i != length(posiciones) ){
-          lista <- lista[lista != dato ]
+        if ( length(lista) == 1 && i != length(posiciones)){
+          dato <-NA
+        }else{
+          lista <- lista[lista != dato ] 
+          }
         }
-      }
     }
     
+    print("La lista es ")
+    print(lista)
+    
     print(c("El dato correspondiente a la posición i es: ", i, " con valor ", dato))
-    if(enteros == 0)
-    {
-      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
-    }
-    else
-    {
-      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
-    }
+    d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = enteros)
+#     if(enteros == 0)
+#     {
+#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
+#     }
+#     else
+#     {
+#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
+#     }
     
     print("#####LAS ETIQUETAS SON ##########" )
     print(d$etiqueta)
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA" ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
     }else if(posiciones[[i]] == 0.5)
     {
-      graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"", etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
+      graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","", etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
     }
     else
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
     }
     
     
@@ -581,7 +586,7 @@ completarEtiquetas <- function(dato,posicion, tam = 5)
     }
     else
     {
-      etiquetas <- c(etiquetas,"")  
+      etiquetas <- c(etiquetas,"NA")  
     }
   }
   return(etiquetas)
@@ -666,16 +671,16 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     }
     
     
+    d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)
     
-    
-    if(pkg.env$botarCeros == T)
-    {
-      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
-    }
-    else
-    {
-      d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
-    }
+#     if(pkg.env$botarCeros == T)
+#     {
+#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
+#     }
+#     else
+#     {
+#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
+#     }
     
     print("#####LAS ETIQUETAS SON ##########" )
     print(d$etiqueta)
@@ -684,10 +689,10 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0.5)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0.5)
     }
   }
   graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(c(0,espacio),"mm"),
