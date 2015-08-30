@@ -27,6 +27,7 @@ getPath <- function(){
 #'Funcion para hacer las graficas del capitulo 1
 capitulo1 <- function(){
   anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
+  cuatroEtiquetas()
   g1<- graficaLinea(getListIpc()$"1_01")
   exportarLatex(paste(getPath() , "1_01.tex", sep = "/"),g1)
   g2<- graficaLinea(getListIpc()$"1_02")
