@@ -38,7 +38,7 @@ capitulo1 <- function(){
   exportarLatex( paste(getPath() , "1_04.tex", sep = "/"),g4)
   g5<- graficaLinea(getListIpc()$"1_05")
   exportarLatex( paste(getPath() , "1_05.tex", sep = "/"),g5)
-  g6<- graficaLinea(getListIpc()$"1_06")
+  g6<- graficaLinea(getListIpc()$"1_06", precision = 2)
   exportarLatex(paste(getPath() , "1_06.tex", sep = "/"),g6)
 }
 

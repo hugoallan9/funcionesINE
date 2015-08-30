@@ -417,8 +417,7 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
     if( !(d$y[[length(posiciones)]] %in% lista) ){
       lista <- c(lista, d$y[[length(posiciones)]])
     }
-    maximo <- F
-    minimo <- F
+    print(c("La lista inicial es: " , lista))
   }  
   
 
@@ -427,22 +426,26 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
     
     dato <- d$y[[i]]
     
+    
     if (pkg.env$maxMin == T) { 
       if( !(dato %in% lista) ){
         dato <- NA
       }else{
-        if ( length(lista) == 1 && i != length(posiciones)){
+        if ( dato ==d$y[[length(posiciones)]]  && i != length(posiciones)){
+          print("Etiqueta en riesgo")
           dato <-NA
         }else{
           lista <- lista[lista != dato ] 
           }
-        }
+      }
+      print("La lista es ")
+      print(lista)
     }
     
-    print("La lista es ")
-    print(lista)
     
-    print(c("El dato correspondiente a la posición i es: ", i, " con valor ", dato))
+    
+    print(c("El dato correspondiente a la posición i es: ", i, " con valor ", dato, " mientras que la longitud de la posicion es: " , length(posiciones)))
+    
     d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = enteros)
 #     if(enteros == 0)
 #     {
