@@ -417,7 +417,6 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
     if( !(d$y[[length(posiciones)]] %in% lista) ){
       lista <- c(lista, d$y[[length(posiciones)]])
     }
-    print(lista)
     maximo <- F
     minimo <- F
   }  
