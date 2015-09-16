@@ -6,11 +6,13 @@
 #'se toma como trimestral.
 #'
 graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
-  pre <- F
+  pre <- T
   if( toupper(modalidad)  == "TRIMESTRAL"){
     trimestral()
     pre <-T
-  }else{
+  }else if ( toupper(modalidad) == "ANUAL"){
+    anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
+  }else {
     presentacion()
     pre <- F
   }
@@ -85,7 +87,7 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   #pkg.env$modalidad = "trimestral"
   
    t15 <- graficaLinea(lista$"2_05")
-   exportarLatex(paste(ruta,"2_05.tex", sep=""), t15, preambulo )
+   exportarLatex(paste(ruta,"2_05.tex", sep=""), t15 )
   
   
   t16 <- graficaCol(lista$"2_06")

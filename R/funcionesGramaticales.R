@@ -37,9 +37,9 @@ calcularRespuestaNeta <- function(data, cota = 1, primeraPos = 5, ultimaPos = 9)
   paso <- ultimaPos - primeraPos
   punto <- ifelse(cambioInterAnualNeto(data,paso) == 1, " punto porcentual "," puntos porcentuales ")
   if(data$y[ultimaPos] - data$y[primeraPos] > 0 && abs(cambioInterAnualNeto(data,paso)) > cota ){
-    respuesta = paste('un aumento de  ', round(cambioInterAnualNeto(data), 1), punto,'   respecto a lo registrado en ', sep = '')
+    respuesta = paste('un aumento de  ', round(cambioInterAnualNeto(data, paso), 1), punto,'   respecto a lo registrado en ', sep = '')
   }else if(data$y[ultimaPos] - data$y[primeraPos] < 0 && abs(cambioInterAnual(data,paso)) > cota){
-    respuesta = paste(' una reducción de  ', round(cambioInterAnualNeto(data), 1), punto,'  respecto a lo registrado en ', sep = '')  
+    respuesta = paste(' una reducción de  ', round(cambioInterAnualNeto(data, paso), 1), punto,'  respecto a lo registrado en ', sep = '')  
   }else if(data$y[ultimaPos] - data$y[primeraPos] == 0){
     respuesta = 'lo mismo que se registró en'
   }else if(data$y[ultimaPos] - data$y[primeraPos] > 0){

@@ -968,28 +968,25 @@ rampaColAgrupadas <- function(data){
 #' @param ruta Ruta dentro del disco duro en la cual están contenidos los CSV
 #' @return Una lista con los data frame que contiene la información.
 
-cargaMasiva <- function (ruta, recodificar = F) {
+cargaMasiva <- function (ruta, codificacion = 'iso') {
   filenames <- list.files(path = ruta, pattern = ".csv", full.names = TRUE)
   numfiles <- length(filenames)
   fn <- list.files(path = paste(tempdir(), "CSV", sep = "/") , full.names = TRUE)
   file.remove(fn)
-  if ( recodificar ){
-    unlink(paste(tempdir(), "CSV", sep = "/"), force = T)
-    dir.create(path = paste(tempdir(), "CSV", sep = "/") )
-    for (i in 1:numfiles)
-    {
-      shell(cmd=paste("iconv -f ISO-8859-1 -t UTF-8 <\"",filenames[[i]],"\">", paste(tempdir(),"CSV", basename(filenames[[i]]),sep="/"), sep = ""), mustWork=TRUE, intern=F, translate=TRUE)
-    }
-    dir <- paste(tempdir(),"CSV", sep = "/")
-  }else{
-    dir <- ruta
+  dir <- ruta
+  
+  cod = ''
+  if ( toupper(codificacion) == 'iso' ){
+    codificacion = 'iso-8859-1'  
+  }else if( toupper(codificacion) == 'utf8' )
+  {
+    codificacion = 'utf-8'
   }
-  
-  
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
     #iso-8859-1
-    read.csv(i,header = TRUE, sep = ";",  fileEncoding="utf-8", check.names = F)
+    #utf-8
+    read.csv(i,header = TRUE, sep = ";",  fileEncoding=cod, check.names = F)
   })
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
@@ -1040,7 +1037,8 @@ trimestral <- function(){
 #'@param color2 Color secundario para graficar, definido por el usuario con el formato 
 #'rgb(v1,v2,v3, maxColorValue = 255), si maxColorValue no está definido
 #'se usa por defecto 1. 
-anual <- function(color1, color2){
+#'rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1)
+anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333333333333,1)){
   pkg.env$alto <- 2.75  ##2.75
   pkg.env$ancho <- 4
   options(tikzDocumentDeclaration= "\\documentclass[11pt,twoside]{book}")

@@ -31,9 +31,9 @@ graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
   numeroCol <- nrow(data)
   
   if( numeroCol == 3 ){
-    ancho <- 0.45
+    ancho <- 0.4
   }else if( numeroCol == 4){
-    ancho <- 0.55
+    ancho <- 0.5
   }else if( numeroCol == 5){
     ancho <- 0.55
   }
@@ -410,9 +410,10 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, prec
 #'@param ancho Gradua el ancho de las Barras. Por defecto es 0.6
 #'@param color1 El color con el que se desea hacer la gráfica
 #'@param ruta La ruta completa de donde se desea almacenar la gráfica
+#'@param digitos El número de dígitos que se usa para los decimales
 
 
-piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = pkg.env$color1, ruta, preambulo = F){
+piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = pkg.env$color1, ruta, preambulo = F, digitos = 1){
   ggplot2::theme_set(pkg.env$temaBarras)
   ##Poniendo la escala correspondiente
   if(toupper(escala) == "MILES"){
@@ -427,9 +428,9 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   numeroCol <- nrow(data)
   
   if( numeroCol == 3 ){
-    ancho <- 0.45
+    ancho <- 0.4
   }else if( numeroCol == 4){
-    ancho <- 0.55
+    ancho <- 0.5
   }else if( numeroCol == 5){
     ancho <- 0.55
   }
@@ -437,6 +438,18 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   
   nombres <- names(data)
   names(data)<- c("x","y","z")
+  
+  pkg.env$enteros <- sonEnteros( data )
+  pkg.env$digitos
+  
+  print(data$y)
+  maximo <- max( data$y )
+  print(c("El maximo en y es: ", maximo))
+  longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
+  longitud <- pt2mm(longitud) + 3
+  
+  
+  
   data$x <- factor(data$x, levels = data$x)
   levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
   print(levels(data$x))
@@ -445,12 +458,13 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
     ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
-    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= y),size=3, hjust=-0.5, vjust = 0.5)+
+    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
     ggplot2::theme(
-       axis.ticks.margin=grid::unit(c(-2,0),'mm'),
+       axis.ticks.margin=grid::unit(c(-1),'mm'),
        axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5),
-      axis.line.y = ggplot2::element_line(colour = NA)
-    )+
+      axis.line.y = ggplot2::element_line(colour = NA),
+      plot.margin = grid::unit(c(0,longitud,0,0), "mm")  
+      )+
     ggplot2::coord_flip()
   
   
@@ -458,17 +472,23 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   tempx<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica.x))
   tempx$layout$clip[tempx$layout$name=="panel"] <- "off"
   
-  
+  print(data$z)
+  maximo <- max( data$z )
+  print(c("El maximo en z es: ", maximo))
+  longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
+  longitud <- pt2mm(longitud) + 3
   grafica.y <- grafica +    
     ggplot2::geom_bar(ggplot2::aes(x,y = ), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0), trans = 'reverse')+
     ggplot2::scale_x_discrete(breaks=NULL)+
-    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= z),size=3, hjust=1.5, vjust = 0.5)+
+    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
     ggplot2::theme(
+      axis.ticks.margin=grid::unit(c(-1),'mm'),
       axis.line.y = ggplot2::element_line(colour = NA),
-      axis.text.y = ggplot2::element_text(colour = NA)
+      axis.text.y = ggplot2::element_text(colour = NA),
+      axis.line.x = ggplot2::element_line(colour = NA),
+      plot.margin = grid::unit(c(0,1,0,longitud), "mm")
     )+
     ggplot2::coord_flip()
   
@@ -480,12 +500,12 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
 
 
   
-  gr <- gridExtra::grid.arrange(tempy, tempx, 
-                          widths = c(1,1),
-                          ncol =2)
+  
 #   
   tikzDevice::tikz(ruta, standAlone = preambulo, bareBones = TRUE, bg = "transparent", width = pkg.env$ancho, height= pkg.env$alto, sanitize = F)
-  grid::grid.draw(gr)
+  gr <- gridExtra::grid.arrange(tempy, tempx, 
+                              widths = c(1,1),
+                              ncol =2)
   dev.off()
   }
 
