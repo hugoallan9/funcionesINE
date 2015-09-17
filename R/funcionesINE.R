@@ -724,17 +724,18 @@ posicionesBarras <- function(x){
 #'@export
 etiquetasHorizontales <- function(graph, precision = 1)
 {
+  pkg.env$digitos <- precision
   longitud <- 6
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
   }
   else
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = 1,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
   }
 }
@@ -746,15 +747,16 @@ etiquetasHorizontales <- function(graph, precision = 1)
 #'@param graph El objeto ggplot2 que se desea anotar
 #'@return Objeto ggplot2 anotado listo para usar
 #'@export
-etiquetasVerticales <- function(graph)
+etiquetasVerticales <- function(graph, precision = 1)
 {
+  pkg.env$digitos <- precision
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2] 
-  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$digitos), cex = pkg.env$fEscala) 
   longitud <- longitud*0.352777778 + 1
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =1)), angle = 90, size=pkg.env$sizeText, hjust=-0.1, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =pkg.env$digitos)), angle = 90, size=pkg.env$sizeText, hjust=-0.1, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))  
   }
   else
