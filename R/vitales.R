@@ -16,7 +16,6 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
     presentacion()
     pre <- F
   }
-  
   t1 <- graficaLinea(lista$"1_01")
   exportarLatex(paste(ruta,"1_01.tex", sep=""), t1)
   

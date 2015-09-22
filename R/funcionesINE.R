@@ -979,9 +979,11 @@ cargaMasiva <- function (ruta, codificacion = 'iso') {
   
   cod = ''
   if ( toupper(codificacion) == 'iso' ){
+    print("Estas usando codificacion Windows")
     codificacion = 'iso-8859-1'  
   }else if( toupper(codificacion) == 'utf8' )
   {
+    print('Estas usando codificacion linux')
     codificacion = 'utf-8'
   }
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
