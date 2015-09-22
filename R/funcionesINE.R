@@ -978,10 +978,10 @@ cargaMasiva <- function (ruta, codificacion = 'iso') {
   dir <- ruta
   
   cod = ''
-  if ( toupper(codificacion) == 'iso' ){
+  if ( toupper(codificacion) == 'ISO' ){
     print("Estas usando codificacion Windows")
     cod = 'iso-8859-1'  
-  }else if( toupper(codificacion) == 'utf8' )
+  }else if( toupper(codificacion) == 'UTF8' )
   {
     print('Estas usando codificacion linux')
     cod = 'utf-8'
