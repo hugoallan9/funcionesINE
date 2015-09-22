@@ -986,6 +986,7 @@ cargaMasiva <- function (ruta, codificacion = 'iso') {
     print('Estas usando codificacion linux')
     cod = 'utf-8'
   }
+  print(cod)
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
     #iso-8859-1
