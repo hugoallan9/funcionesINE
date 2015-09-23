@@ -414,15 +414,24 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, prec
 
 
 piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = pkg.env$color1, ruta, preambulo = F, digitos = 1){
-  ggplot2::theme_set(pkg.env$temaBarras)
-  ##Poniendo la escala correspondiente
-  if(toupper(escala) == "MILES"){
-    data$y <- data$y/1000
-  }else if(toupper(escala) == "MILLONES"){
-    data$y <- data$y/1000000
-  }else if(toupper(escala) == "MILESMILLONES"){
-    data$y <- data$y/1000000000
+  nombres <- names(data)
+  if( toupper( names(data)[2] ) == 'HOMBRES' ){
+    temp <- data[3]
+    data[3] <- data[2]
+    data[2] <- temp
   }
+  
+  names(data)<- c("x","y","z")
+  ##Calculando los porcentajes
+  poblacion <- sum(data$y, data$z)
+  data$y <- data$y / poblacion * 100
+  data$z <- data$z / poblacion * 100
+  
+  
+  print(data)
+  
+  ggplot2::theme_set(pkg.env$temaBarras)
+
   
   ## Graduando el ancho
   numeroCol <- nrow(data)
@@ -436,11 +445,42 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   }
   print(ancho)
   
-  nombres <- names(data)
-  names(data)<- c("x","y","z")
+
+  etiquetaMaxima <- tikzDevice::getLatexStrWidth(max(data$x))
+  etiquetaMaxima <- pt2mm(etiquetaMaxima)
   
   pkg.env$enteros <- sonEnteros( data )
-  pkg.env$digitos
+  pkg.env$digitos <- digitos
+  
+  print(data$z)
+  maximo <- max( data$z )
+  print(c("El maximo en z es: ", maximo))
+  longitudy <- tikzDevice::getLatexStrWidth(trimws( formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros) ), cex = pkg.env$fEscala)  
+  longitudy <- pt2mm(longitudy) + 2
+  print(longitudy)
+  grafica <- ggplot2::ggplot(data, ggplot2::aes(x,z,y))
+  grafica.y <- grafica +    
+    ggplot2::geom_bar(ggplot2::aes(x,y = z), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, pkg.env$color1), width = ancho, position =  "dodge")+
+    ggplot2::labs(x=NULL,y=NULL)+
+    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0), trans = 'reverse')+
+    #ggplot2::scale_x_discrete(breaks=NULL)+
+    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
+    ggplot2::theme(
+      axis.ticks.margin = grid::unit(c(0,longitudy),"mm"),
+      #axis.ticks.margin=grid::unit(c(-2.5, 2.5),'mm'),
+      axis.line.y = ggplot2::element_line(colour = NA),
+      #axis.text.y = ggplot2::element_text(colour = NA),
+      axis.line.x = ggplot2::element_line(colour = NA),
+      plot.margin = grid::unit(c(0,-etiquetaMaxima,-longitudy,0), "mm")
+    )+
+    ggplot2::coord_flip()+ggplot2::ggtitle("Hombres")
+  
+  print(grafica.y)
+  
+  tempy<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica.y))
+  tempy$layout$clip[tempy$layout$name=="panel"] <- "off"
+  
+  
   
   print(data$y)
   maximo <- max( data$y )
@@ -448,60 +488,33 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
   longitud <- pt2mm(longitud) + 3
   
-  etiquetaMaxima <- tikzDevice::getLatexStrWidth(max(data$x))
-  etiquetaMaxima <- pt2mm(etiquetaMaxima)
+
   
   data$x <- factor(data$x, levels = data$x)
   levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
-  print(levels(data$x))
-  grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y,z))
+  print(levels(data$x))  
   grafica.x <- grafica  +
-    ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
+    ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno2), colour = calcularRampa(data, pkg.env$color2), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::scale_x_discrete(breaks=NULL)+
     #ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1, ggplot2::aes(colour = "gray"))+
     ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
     ggplot2::theme(
-      axis.ticks.margin = grid::unit(c(0,longitud),"mm"),
-       #axis.ticks.margin=grid::unit(c(-2.5),'mm'),
+      axis.ticks.margin = grid::unit(c(0,longitudy),"mm"),
+       axis.ticks.margin=grid::unit(c(-2.5),'mm'),
        axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5),
       axis.line.y = ggplot2::element_line(colour = NA),
-      plot.margin = grid::unit(c(0,0,-longitud,etiquetaMaxima-longitud-3), "mm")  
+      plot.margin = grid::unit(c(0,longitud,-longitudy,etiquetaMaxima-longitudy-2.9), "mm")  
       )+
-    ggplot2::coord_flip()
+    ggplot2::coord_flip()+ ggplot2::ggtitle("Mujeres")
   
   
   print(grafica.x)
   tempx<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica.x))
   tempx$layout$clip[tempx$layout$name=="panel"] <- "off"
   
-  print(data$z)
-  maximo <- max( data$z )
-  print(c("El maximo en z es: ", maximo))
-  longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
-  longitud <- pt2mm(longitud) + 3
-  grafica.y <- grafica +    
-    ggplot2::geom_bar(ggplot2::aes(x,y = ), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno2), colour = calcularRampa(data, pkg.env$color2), width = ancho, position =  "dodge")+
-    ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0), trans = 'reverse')+
-    #ggplot2::scale_x_discrete(breaks=NULL)+
-    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
-    ggplot2::theme(
-      axis.ticks.margin = grid::unit(c(0,longitud),"mm"),
-      #axis.ticks.margin=grid::unit(c(-2.5, 2.5),'mm'),
-      axis.line.y = ggplot2::element_line(colour = NA),
-      #axis.text.y = ggplot2::element_text(colour = NA),
-      axis.line.x = ggplot2::element_line(colour = NA),
-      plot.margin = grid::unit(c(0,-etiquetaMaxima,-longitud,0), "mm")
-    )+
-    ggplot2::coord_flip()
-  
-  print(grafica.y)
-  
-  tempy<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica.y))
-  tempy$layout$clip[tempy$layout$name=="panel"] <- "off"
-  
+
 
 
   
