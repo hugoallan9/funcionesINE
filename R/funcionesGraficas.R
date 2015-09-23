@@ -448,7 +448,8 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
   longitud <- pt2mm(longitud) + 3
   
-  
+  etiquetaMaxima <- tikzDevice::getLatexStrWidth(max(data$x))
+  etiquetaMaxima <- pt2mm(etiquetaMaxima)
   
   data$x <- factor(data$x, levels = data$x)
   levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
@@ -459,13 +460,14 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::scale_x_discrete(breaks=NULL)+
-    ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1, ggplot2::aes(colour = "gray"))+
+    #ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1, ggplot2::aes(colour = "gray"))+
     ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
     ggplot2::theme(
+      axis.ticks.margin = grid::unit(c(0,longitud),"mm"),
        #axis.ticks.margin=grid::unit(c(-2.5),'mm'),
        axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5),
       axis.line.y = ggplot2::element_line(colour = NA),
-      plot.margin = grid::unit(c(0,longitud,0,0), "mm")  
+      plot.margin = grid::unit(c(0,0,-longitud,etiquetaMaxima-longitud-3), "mm")  
       )+
     ggplot2::coord_flip()
   
@@ -480,17 +482,18 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
   longitud <- pt2mm(longitud) + 3
   grafica.y <- grafica +    
-    ggplot2::geom_bar(ggplot2::aes(x,y = ), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, color1), width = ancho, position =  "dodge")+
+    ggplot2::geom_bar(ggplot2::aes(x,y = ), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno2), colour = calcularRampa(data, pkg.env$color2), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0), trans = 'reverse')+
     #ggplot2::scale_x_discrete(breaks=NULL)+
     ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
     ggplot2::theme(
+      axis.ticks.margin = grid::unit(c(0,longitud),"mm"),
       #axis.ticks.margin=grid::unit(c(-2.5, 2.5),'mm'),
       axis.line.y = ggplot2::element_line(colour = NA),
       #axis.text.y = ggplot2::element_text(colour = NA),
       axis.line.x = ggplot2::element_line(colour = NA),
-      plot.margin = grid::unit(c(0,1,0,0), "mm")
+      plot.margin = grid::unit(c(0,-etiquetaMaxima,-longitud,0), "mm")
     )+
     ggplot2::coord_flip()
   

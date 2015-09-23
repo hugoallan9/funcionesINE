@@ -1051,6 +1051,7 @@ anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333
   pkg.env$color1 <- color1
   pkg.env$color2 <- color2
   pkg.env$colorRelleno <- color1
+  pkg.env$colorRelleno2 <- color2
   pkg.env$modalidad <- "anual"
   pkg.env$fEscala <- 1
   cambiarGraficas(tamFuente = 11)
