@@ -21,7 +21,7 @@ cambiarGraficas <- function(tamFuente){
     axis.ticks.x = ggplot2::element_line( size=NULL, color=NA ),
     axis.ticks.y = ggplot2::element_line(size = NULL, color=NA),
     plot.background = ggplot2::element_rect(fill = NA, colour=NA),
-    panel.border = element_rect(colour = NA, fill=NA)
+    panel.border = ggplot2::element_rect(colour = NA, fill=NA)
   )
   
   pkg.env$temaBarras <- pkg.env$temaINE
