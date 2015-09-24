@@ -29,7 +29,7 @@ cambiarGraficas <- function(tamFuente){
     axis.line.y = ggplot2::element_line(colour = NA),
     axis.text.y = ggplot2::element_text(hjust = 1, vjust = 0.5),
     axis.line.x = ggplot2::element_line(colour = NA),
-    plot.title = element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9)
+    plot.title = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = 0.5, vjust =0.5, angle = 0, lineheight = 0.9)
   ) 
   
   pkg.env$temaColumnas <- pkg.env$temaINE
