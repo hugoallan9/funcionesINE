@@ -452,6 +452,11 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   pkg.env$enteros <- sonEnteros( data )
   pkg.env$digitos <- digitos
   
+  
+  data$x <- factor(data$x, levels = data$x)
+  levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
+  print(levels(data$x))  
+  
   print(data$z)
   maximo <- max( data$z )
   print(c("El maximo en z es: ", maximo))
@@ -490,9 +495,6 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   
 
   
-  data$x <- factor(data$x, levels = data$x)
-  levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
-  print(levels(data$x))  
   grafica.x <- grafica  +
     ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno2), colour = calcularRampa(data, pkg.env$color2), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
@@ -525,5 +527,6 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
                               widths = c(1,1),
                               ncol =2)
   dev.off()
+  return(data)
   }
 
