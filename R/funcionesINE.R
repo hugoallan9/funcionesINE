@@ -977,26 +977,26 @@ cargaMasiva <- function (ruta, codificacion = 'iso') {
   file.remove(fn)
   dir <- ruta
   
-  cod = ''
+  pkg.env$cod = ''
   if ( toupper(codificacion) == 'ISO' ){
     print("Estas usando codificacion Windows")
-    cod = 'iso-8859-1'  
+    pkg.env$cod = 'iso-8859-1'  
   }else if( toupper(codificacion) == 'UTF8' )
   {
     print('Estas usando codificacion linux')
-    cod = 'utf-8'
+    pkg.env$cod = 'utf-8'
   }
-  print(cod)
+  print(pkg.env$cod)
   filenames <- list.files(path = dir, pattern = ".csv", full.names = TRUE)
   All <- lapply(filenames,function(i){
     #iso-8859-1
     #utf-8
-    read.csv(i,header = TRUE, sep = ";",  fileEncoding=cod, check.names = F)
+    read.csv(i,header = TRUE, sep = detectarSeparador(i),  fileEncoding=pkg.env$cod, check.names = F) 
   })
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
   tablas <- lapply(All,fact2Num)
-  tablas <- lapply(tablas, cambiarCodificacion)
+  #tablas <- lapply(tablas, cambiarCodificacion)
   return(tablas)
 }
 
@@ -1083,3 +1083,12 @@ cuatroEtiquetas <- function(encendido = TRUE){
   }
 }
 
+detectarSeparador <- function(ruta){
+  separador = NULL
+  if( length ( read.csv(ruta,header = TRUE, sep = ";",  fileEncoding='utf-8', check.names = F) ) == 1 ){
+    separador = ','
+  }else{
+    separador = ';'
+  }
+  return(separador)
+}
