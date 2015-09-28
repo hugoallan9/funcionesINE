@@ -834,6 +834,7 @@ fact2Num <- function(tabla)
     print(tabla)
     nombres <- names(tabla)
     names(tabla) <- c("x","y")
+    tabla$y <- as.numeric(gsub(",","", tabla$y))
     if(is.factor(tabla$y))
     {
       tabla$y<- as.numeric(levels(tabla$y))[tabla$y]    
@@ -991,7 +992,7 @@ cargaMasiva <- function (ruta, codificacion = 'iso') {
   All <- lapply(filenames,function(i){
     #iso-8859-1
     #utf-8
-    read.csv(i,header = TRUE, sep = detectarSeparador(i),  fileEncoding=pkg.env$cod, check.names = F) 
+    read.csv(i,header = TRUE, sep = detectarSeparador(i),  fileEncoding=pkg.env$cod, check.names = F, quote="\"") 
   })
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
@@ -1091,4 +1092,36 @@ detectarSeparador <- function(ruta){
     separador = ';'
   }
   return(separador)
+}
+
+#'Función para escribir un libro de excel a partir de una lista de data frames
+#'@lista Lista que aloja los data frames
+#'@ruta Ruta completa del archivo que se desea como salida
+escribirLibro <- function(lista, ruta){
+  nombres <- names(lista)
+  contador <- 1
+  for( i in lista){
+    xlsx::write.xlsx(i, file = ruta, sheetName = nombres[contador], append = T, row.names = FALSE)
+    contador = contador + 1
+  }
+}
+
+
+#' Función leer libro excel
+#' @param ruta Ruta dentro del disco duro en la cual están contenidos los CSV
+#' @return Una lista con los data frame que contiene la información.
+
+leerLibro <- function (ruta, codificacion = 'iso') {
+  libro <- xlsx::loadWorkbook(ruta)
+  hojas <- xlsx::getSheets(libro)
+  nombres <- names(hojas)
+  lista <- list()
+  #names(lista) <- nombres
+  contador <-1
+  for( x in hojas){
+    lista[contador] <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], encoding = 'iso-8859-1', as.data.frame = T, header = T)
+    contador = contador +1 
+  }
+  names(lista) <- nombres
+  return(lista)
 }
