@@ -1119,7 +1119,9 @@ leerLibro <- function (ruta, codificacion = 'iso') {
   #names(lista) <- nombres
   contador <-1
   for( x in hojas){
-    lista[contador] <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], encoding = 'iso-8859-1', as.data.frame = T, header = T)
+    print(nombres[contador])
+    print( xlsx::read.xlsx2(ruta, sheetName = nombres[contador], as.data.frame = T, header = T) )
+    lista[[contador]] <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], as.data.frame = T, header = T)
     contador = contador +1 
   }
   names(lista) <- nombres
