@@ -1020,7 +1020,7 @@ cargaMasiva <- function (ruta, codificacion = 'iso') {
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
   tablas <- lapply(All,fact2Num)
-  #tablas <- lapply(tablas, cambiarCodificacion)
+  tablas <- lapply(tablas, cambiarCodificacion)
   return(tablas)
 }
 
