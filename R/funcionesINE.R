@@ -741,6 +741,29 @@ etiquetasHorizontales <- function(graph, precision = 1)
 }
 
 
+#'Pone etiquetas a las columnas en una grafica de columnas
+#'
+#'@param graph El objeto ggplot2 que se desea anotar
+#'@return Objeto ggplot2 anotado listo para usar
+#'@export
+etiquetasFacets <- function(graph, precision = 1)
+{
+  pkg.env$digitos <- precision
+  longitud <- 6
+  if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
+  {
+    graph <- graph +
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(0,0,2,-8), "mm"))
+  }
+  else
+  {
+    graph <- graph +
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+      ggplot2::theme(plot.margin = grid::unit(c(0,0,2,-8), "mm"))
+  }
+}
+
 
 #'Pone etiquetas verticales a las columnas en una grafica de columnas 
 #'
@@ -1126,4 +1149,21 @@ leerLibro <- function (ruta, codificacion = 'iso') {
   }
   names(lista) <- nombres
   return(lista)
+}
+
+#'Función para escribir CSV
+#'@param lista Es la lista que contiene los data frame
+#'@ruta Es la ruta padre donde irán alojados los archivos csv
+
+escribirCSV <- function(lista, ruta){
+  nombres <- names(lista)
+  print(nombres)
+  contador <- 1
+  for(x in lista){
+    print( file.path(ruta, paste( nombres[contador], ".csv", sep = '' ) ) )
+    print( nombres[contador] ) 
+    write.csv2(x, file.path(ruta, paste( nombres[contador], ".csv", sep = ''
+                                         ) ), , row.names = F, quote = F )
+    contador <- contador +1 
+  }
 }
