@@ -297,7 +297,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
 #'@param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 #' son "miles", "millones" o "milesmillones".
 #'
-graficaBarFacets <-function(data, escala = 'normal'){
+graficaBarFacets <-function(data, ruta, escala = 'normal', etiquetas = 'H', preambulo = F){
   x <- rep(data$x,length(data)-1)
   y <- NULL
   for(i in 2:length(data)){
@@ -328,7 +328,31 @@ graficaBarFacets <-function(data, escala = 'normal'){
     ggplot2::labs(x=NULL, y=NULL)
     print(grafica)
     etiquetasHorizontales(grafica)
-    grafica <- grafica + ggplot2::facet_grid(. ~ categoria) 
-  return(grafica)
+    grafica <- grafica + ggplot2::facet_grid(. ~ categoria)
+    
+  ##Poniendo las etiquetas
+    grafica <- etiquetasFacets(grafica)
+  
+  ##etiquetas para el eje X
+    margenes <- NULL
+    if (toupper(etiquetas) == 'V'){
+      grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))
+    }
+    grafica <- grafica + ggplot2::theme(plot.margin = grid::unit(c(4,0,2,-7), "mm"))
+    
+  ## Exportando el tex
+  tikzDevice::tikz(ruta, standAlone = preambulo, bg = "transparent",bareBones = !preambulo, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
+  temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(grafica))
+  temp$layout$clip[temp$layout$name=="panel"] <- "off"
+  temp$layout$clip <- "off"
+  grid::grid.draw(temp)
+    
+  ##Escribiendo la linea de divison
+    
+  tikzDevice::tikzCoord(pkg.env$ancho / 2 , pkg.env$alto , name= 'punto1', units = 'inches')
+  tikzDevice::tikzCoord(pkg.env$ancho / 2, 0, name = 'punto2', units = 'inches' )
+  tikzDevice::tikzAnnotate(c("\\definecolor[named]{linea}{HTML}{",substr(pkg.env$grisBase,2,7),"}"))
+  tikzDevice::tikzAnnotate('\\draw[color = linea] (punto1) -- (punto2); ')
+  grDevices::dev.off()
   
 }
