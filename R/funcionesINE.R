@@ -754,13 +754,13 @@ etiquetasFacets <- function(graph, precision = 1)
   {
     graph <- graph +
       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(0,0,2,-8), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(4,0,2,-8), "mm"))
   }
   else
   {
     graph <- graph +
       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
-      ggplot2::theme(plot.margin = grid::unit(c(0,0,2,-8), "mm"))
+      ggplot2::theme(plot.margin = grid::unit(c(4,0,2,-8), "mm"))
   }
 }
 
@@ -779,13 +779,13 @@ etiquetasVerticales <- function(graph, precision = 1)
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =pkg.env$digitos)), angle = 90, size=pkg.env$sizeText, hjust=-0.1, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =pkg.env$digitos)), angle = 90, size=pkg.env$sizeText, hjust=0.3, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))  
   }
   else
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =0, drop0trailing = T)), angle = 90, size=pkg.env$sizeText, hjust=-0.1, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =0, drop0trailing = T)), angle = 90, size=pkg.env$sizeText, hjust=-0.3, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
 }
@@ -800,6 +800,7 @@ exportarLatex <- function(nombre = grafica.tex, graph, preambulo = F)
   tikzDevice::tikz(nombre, standAlone = preambulo, bareBones = TRUE, bg = "transparent",width = pkg.env$ancho, height= pkg.env$alto, sanitize = F)
   temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(graph))
   temp$layout$clip[temp$layout$name=="panel"] <- "off"
+  temp$layout$clip <- "off"
   grid::grid.draw(temp)
   dev.off()
 }
@@ -1020,7 +1021,7 @@ cargaMasiva <- function (ruta, codificacion = 'iso') {
   filenames <- gsub(".csv","", filenames)
   names(All) <- basename(filenames)
   tablas <- lapply(All,fact2Num)
-  tablas <- lapply(tablas, cambiarCodificacion)
+  #tablas <- lapply(tablas, cambiarCodificacion)
   return(tablas)
 }
 

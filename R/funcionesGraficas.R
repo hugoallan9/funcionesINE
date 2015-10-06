@@ -104,7 +104,7 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
 #'un decimal.
 #'@export
 
-graficaLinea <- function(data, color1 = pkg.env$color1, inicio = -1, ancho = 1.5, precision=1, escala = "normal", rotar = T)
+graficaLinea <- function(data, color1 = pkg.env$color1, inicio = -1, ancho = 1.5, precision=1, escala = "normal", rotar = T, final = NA)
 {
   pkg.env$precision <- precision
   print("El tamaño de la fuente es: ")
@@ -161,12 +161,12 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = -1, ancho = 1.5
                                             )
   if(ggplot2::ggplot_build(grafica)$data[[1]]$y[1] > 3)
   {
-    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
+    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,final))+
       ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,1,-5), "mm"))
   }
   else
   {
-    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,NA))+
+    grafica <- grafica + ggplot2::scale_y_continuous(limits = c(limite,final))+
       ggplot2::theme(plot.margin = grid::unit(c(margenArriba,3,1,-2), "mm"))
   }
   return(grafica)

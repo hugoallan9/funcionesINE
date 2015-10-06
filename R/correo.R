@@ -6,8 +6,8 @@
 
 mandarCorreo <- function(direccion, asunto, cuerpo, ruta){
    sender <- "reportesine@gmail.com"
-#   , "<rdnarcisoc@gmail.com>","aerthes@gmail.com"
-  recipients <- c(direccion)
+   #, "<rdnarcisoc@gmail.com>",
+  recipients <- direccion
   mailR::send.mail(from = sender,
             to = recipients,
             subject=asunto,
