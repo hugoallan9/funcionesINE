@@ -886,7 +886,6 @@ cambiarCodificacion <- function(tabla){
     print('Entre al if')
     print(names(tabla))
     nombres <- names(tabla)
-    if(nombres[1] == "X")
       nombres[1] <- "x"
     if(nombres[2] == "Y")
       nombres[2] <- "y"
