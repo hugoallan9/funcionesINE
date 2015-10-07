@@ -1142,7 +1142,7 @@ leerLibro <- function (ruta, codificacion = 'iso') {
   #names(lista) <- nombres
   contador <-1
   for( x in hojas){
-    if (  is.na(as.numeric(nombres[contador])) == TRUE ){
+    if (  is.na(as.numeric(substring(nombres[contador],1,1))) == TRUE ){
       pkg.env$header = F
     }else{
       pkg.env$header = T
