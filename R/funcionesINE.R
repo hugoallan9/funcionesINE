@@ -604,9 +604,7 @@ rotarEtiX <- function(graph)
 {
   
   longitud <- 2.8 + 2
-  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))+
-    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
-  
+  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))
 }
 
 #'Funcion que rota las etiquetas en el eje X para graficas de columnas que poseen
@@ -616,9 +614,9 @@ rotarEtiX <- function(graph)
 #'@return Objeto ggplot2 modificado en las etiquetas del eje X
 rotarEtiX2 <- function(graph)
 {
-  max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2]
-  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
-  longitud <- longitud*0.352777778 + 1
+  ##max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2]
+  ##longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
+  ##longitud <- longitud*0.352777778 + 1
   graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))+
     ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
 }
@@ -725,7 +723,7 @@ posicionesBarras <- function(x){
 #'@param graph El objeto ggplot2 que se desea anotar
 #'@return Objeto ggplot2 anotado listo para usar
 #'@export
-etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F, rotarEjeX = F)
+etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F)
 {
   pkg.env$precision <- precision
   posiciones <- NULL
@@ -792,9 +790,7 @@ etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F, ro
     }
   }
   
-  if( rotarEjeX == T ){
-    graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))
-  }
+ 
   
   graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(c(espacio,0),"mm"),
                                   plot.margin = grid::unit(c(top,0,0,-espacio), "mm"))

@@ -114,9 +114,20 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     print(altoRect)
   } 
   
+  print( is.factor( dataLista$y) )
+  if(sonEnteros(dataLista) == 0)
+  {
+    pkg.env$botarCeros <- T
+  }
+  else
+  {
+    pkg.env$botarCeros <- F
+  }
+  print(pkg.env$botarCeros)
+  
   if ( toupper(etiquetas) == "V" ){
     max <-ggplot2::ggplot_build(grafica)$panel$ranges[[1]]$y.range[2]
-    longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala)
+    longitud <- tikzDevice::getLatexStrWidth( formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala )
     longitud <- pt2mm(longitud + altoRect) + 1.2 + 2 ## Se contempla la distancia de las barras a las etiquetas y de las etiquetas a la leyenda
     print(c(" La longitud en mm es: ", longitud))
     grafica <- grafica + ggplot2::theme(
@@ -286,7 +297,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     }
   }
   grDevices::dev.off()
-  return(dataLista)
+  return(grafica)
 }
 
 
