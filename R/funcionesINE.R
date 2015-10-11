@@ -617,8 +617,7 @@ rotarEtiX2 <- function(graph)
   ##max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2]
   ##longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = 1), cex = pkg.env$fEscala) 
   ##longitud <- longitud*0.352777778 + 1
-  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))+
-    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
+  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust =0.5 , hjust= 1))
 }
 
 

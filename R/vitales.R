@@ -20,7 +20,7 @@ graficasVitales<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"1_01.tex", sep=""), t1)
   
   t2 <- graficaCol(lista$"1_02")
-  t2 <- etiquetasVerticales(t2)
+t2 <- etiquetasVerticales(t2)
   t2 <- rotarEtiX2(t2)
   exportarLatex(paste(ruta,"1_02.tex", sep=""), t2)
 
