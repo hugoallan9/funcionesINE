@@ -991,6 +991,23 @@ compilar <- function(ruta = "", mostrar = T){
   
 }
 
+#'Función que hace pdfcrop
+#'@param ruta Es la ruta de donde se desea guardar el fichero .tex
+#'@param mostrar Booleano, cuando es verdadero muestra el pdf compilado.
+#'@export
+pdfcrop <- function(ruta = "", mostrar = T){
+  if (.Platform$OS.type == "windows") {
+    shell(cmd=paste("cd", dirname(ruta), "&& pdfcrop ",basename(ruta)), mustWork=TRUE, intern=TRUE, translate=TRUE)  
+  }else{
+    cadenaCompilacion <-  paste("cd", dirname(ruta), "&& pdfcrop",basename(ruta), basename(ruta))
+    print(cadenaCompilacion)
+    suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
+  }
+  if( mostrar == T){
+    system(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"), intern = T, ignore.stderr = T)  
+  }
+  
+}
 
 
 preview <- function(graph)
