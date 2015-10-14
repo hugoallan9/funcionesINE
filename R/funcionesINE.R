@@ -1147,6 +1147,7 @@ trimestral <- function(){
   pkg.env$color1 <- rgb(0,0,0)
   pkg.env$color2 <- rgb(0.6,0.6,0.6)
   pkg.env$colorRelleno <- rgb(1,1,1)
+  pkg.env$colorRelleno2 <- rgb(0.6,0.6,0.6)
 }
 
 #'Función para poner parametrización del formato anual

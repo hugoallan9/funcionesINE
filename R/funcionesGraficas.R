@@ -457,6 +457,17 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   levels(data$x) <- gsub("\\\\n", "\n", levels(data$x))
   print(levels(data$x))  
   
+  
+  if ( pkg.env$modalidad == "trimestral"){
+    color1 <- pkg.env$color1
+    pkg.env$color1 <- pkg.env$color2
+    pkg.env$color2 <- rgb(0.9,0.9,0.9)
+    relleno <- pkg.env$colorRelleno 
+    pkg.env$colorRelleno <- pkg.env$colorRelleno2
+    pkg.env$colorRelleno2 <- rgb(0.9,0.9,0.9)
+  }
+  
+  
   print(data$z)
   maximo <- max( data$z )
   print(c("El maximo en z es: ", maximo))
@@ -493,8 +504,7 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
   longitud <- pt2mm(longitud) + 3
   
-
-  
+    
   grafica.x <- grafica  +
     ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno2), colour = calcularRampa(data, pkg.env$color2), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
@@ -527,6 +537,10 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
                               widths = c(1,1),
                               ncol =2)
   dev.off()
+
+if ( pkg.env$modalidad == "trimestral"){
+  trimestral()
+  }
   return(data)
   }
 
