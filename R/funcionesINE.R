@@ -999,7 +999,7 @@ pdfcrop <- function(ruta = "", mostrar = T){
   if (.Platform$OS.type == "windows") {
     shell(cmd=paste("cd", dirname(ruta), "&& pdfcrop ",gsub(".tex",".pdf",basename(ruta))), mustWork=TRUE, intern=TRUE, translate=TRUE)  
   }else{
-    cadenaCompilacion <-  paste("cd", dirname(ruta), "&& pdfcrop",gsub(".tex",".pdf",basename(ruta)), basename(ruta))
+    cadenaCompilacion <-  paste("cd", dirname(ruta), "&& pdfcrop",gsub(".tex",".pdf",basename(ruta)), gsub(".tex",".pdf",basename(ruta)))
     print(cadenaCompilacion)
     suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
   }
