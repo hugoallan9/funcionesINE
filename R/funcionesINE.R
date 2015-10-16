@@ -1236,7 +1236,7 @@ leerLibro <- function (ruta, codificacion = 'iso') {
       pkg.env$header = T
     }
     print(c("El nombre es: ", nombres[contador], " y el booleano dio " , pkg.env$header))
-    data <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], as.data.frame = T, header = pkg.env$header, check.names = F)
+    data <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], as.data.frame = T, header = pkg.env$header, check.names = F, stringsAsFactors = F)
     temp <- data[-which(data[1] == ""),]
     if ( nrow(temp) != 0){
       data <- temp
@@ -1246,6 +1246,30 @@ leerLibro <- function (ruta, codificacion = 'iso') {
   }
   names(lista) <- nombres
   return(lista)
+}
+
+
+#' Función leer convertirFechas de vitales
+#' @return lista Una lista con los data frame que contiene la información.
+
+convertirFechas <- function (lista) {
+  nombres <- names(lista)
+  contador <-1
+  lis <- list()
+  for ( x in lista ){
+    if (  is.na(as.numeric(substring(nombres[contador],1,1))) == TRUE ){
+      if(as.numeric( substring(nombres[contador],nchar(nombres[contador]), nchar(nombres[contador]) ) ) %% 2 == 0 ){
+          print( format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%b/%Y" ) )
+          x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]  <- format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%B/%Y" )
+          print(x)
+          }
+    }
+    lis[[contador]] <- x
+    contador <- contador +1 
+    
+  }
+  names(lis) <- nombres
+  return(lis)
 }
 
 #'Función para escribir CSV
