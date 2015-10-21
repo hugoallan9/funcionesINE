@@ -1290,8 +1290,8 @@ escribirCSV <- function(lista, ruta){
       print(c(nombres[contador],"Si tiene encabezado"))
       pkg.env$quitarNombres <- F
     }
-    write.csv2(x, file.path(ruta, paste( nombres[contador], ".csv", sep = ''
-                                         ) ), col.names= pkg.env$quitarNombres, row.names = F, quote = F )
+    write.table(x, file.path(ruta, paste( nombres[contador], ".csv", sep = ''
+                                         ) ), col.names= pkg.env$quitarNombres, row.names = F, quote = F, sep = ";" )
     contador <- contador +1 
   }
 }
