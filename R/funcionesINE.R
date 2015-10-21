@@ -1284,11 +1284,11 @@ escribirCSV <- function(lista, ruta){
     print( file.path(ruta, paste( nombres[contador], ".csv", sep = '' ) ) )
     print( nombres[contador] )
     if( is.na(as.numeric(names(x)))[1] == F  ){
-      pkg.env$quitarNombres <- T
+      pkg.env$quitarNombres <- F
       print(c(nombres[contador],"Quitando los numeros"))
     }else{
       print(c(nombres[contador],"Si tiene encabezado"))
-      pkg.env$quitarNombres <- F
+      pkg.env$quitarNombres <- T
     }
     write.table(x, file.path(ruta, paste( nombres[contador], ".csv", sep = ''
                                          ) ), col.names= pkg.env$quitarNombres, row.names = F, quote = F, sep = ";" )
