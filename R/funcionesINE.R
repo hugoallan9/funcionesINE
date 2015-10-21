@@ -1283,7 +1283,7 @@ escribirCSV <- function(lista, ruta){
   for(x in lista){
     print( file.path(ruta, paste( nombres[contador], ".csv", sep = '' ) ) )
     print( nombres[contador] )
-    if( is.na(as.numeric(x))[1] == F  ){
+    if( is.na(as.numeric(names(x)))[1] == F  ){
       pkg.env$quitarNombres <- T
       print(c(nombres[contador],"Quitando los numeros"))
     }else{
