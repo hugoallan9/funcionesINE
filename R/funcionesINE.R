@@ -1289,7 +1289,7 @@ escribirCSV <- function(lista, ruta){
       pkg.env$quitarNombres <- F
     }
     write.csv2(x, file.path(ruta, paste( nombres[contador], ".csv", sep = ''
-                                         ) ), , row.names = pkg.env$quitarNombres, quote = F )
+                                         ) ), col.names= pkg.env$quitarNombres, row.names = F, quote = F )
     contador <- contador +1 
   }
 }
