@@ -1282,9 +1282,14 @@ escribirCSV <- function(lista, ruta){
   contador <- 1
   for(x in lista){
     print( file.path(ruta, paste( nombres[contador], ".csv", sep = '' ) ) )
-    print( nombres[contador] ) 
+    print( nombres[contador] )
+    if( is.na(as.numeric(nombres[contador]))[1] == F  ){
+      pkg.env$quitarNombres <- T
+    }else{
+      pkg.env$quitarNombres <- F
+    }
     write.csv2(x, file.path(ruta, paste( nombres[contador], ".csv", sep = ''
-                                         ) ), , row.names = F, quote = F )
+                                         ) ), , row.names = pkg.env$quitarNombres, quote = F )
     contador <- contador +1 
   }
 }
