@@ -1285,9 +1285,9 @@ escribirCSV <- function(lista, ruta){
     print( nombres[contador] )
     if( is.na(as.numeric(nombres[contador]))[1] == F  ){
       pkg.env$quitarNombres <- T
-      print("Quitando los numeros")
+      print(c(nombres[contador],"Quitando los numeros"))
     }else{
-      print("Si tiene encabezado")
+      print(c(nombres[contador],"Si tiene encabezado"))
       pkg.env$quitarNombres <- F
     }
     write.csv2(x, file.path(ruta, paste( nombres[contador], ".csv", sep = ''
