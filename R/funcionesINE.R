@@ -766,14 +766,7 @@ etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F)
     
     d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)
     
-    #     if(pkg.env$botarCeros == T)
-    #     {
-    #       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
-    #     }
-    #     else
-    #     {
-    #       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
-    #     }
+
     
     print("#####LAS ETIQUETAS SON ##########" )
     print(d$etiqueta)
@@ -852,7 +845,7 @@ etiquetasVerticales <- function(graph, precision = 1)
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =pkg.env$digitos)), angle = 90, size=pkg.env$sizeText, hjust=0.3, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =pkg.env$digitos)), angle = 90, size=pkg.env$sizeText, hjust=-0.3, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))  
   }
   else
