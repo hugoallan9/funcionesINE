@@ -413,7 +413,7 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, prec
 #'@param digitos El número de dígitos que se usa para los decimales
 
 
-piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = pkg.env$color1, ruta, preambulo = F, digitos = 1){
+piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = pkg.env$color1, ruta, preambulo = F, digitos = 1, porcentual = T){
   nombres <- names(data)
   if( toupper( names(data)[2] ) == 'HOMBRES' ){
     temp <- data[3]
@@ -423,9 +423,13 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   
   names(data)<- c("x","y","z")
   ##Calculando los porcentajes
-  poblacion <- sum(data$y, data$z)
-  data$y <- data$y / poblacion * 100
-  data$z <- data$z / poblacion * 100
+  
+  if (porcentual == T){
+    poblacion <- sum(data$y, data$z)
+    data$y <- data$y / poblacion * 100
+    data$z <- data$z / poblacion * 100  
+  }
+  
   
   
   print(data)
