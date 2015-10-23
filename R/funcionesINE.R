@@ -841,7 +841,7 @@ etiquetasVerticales <- function(graph, precision = 1)
   pkg.env$digitos <- precision
   max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$y.range[2] 
   longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$digitos), cex = pkg.env$fEscala) 
-  longitud <- longitud*0.352777778 + 1
+  longitud <- longitud*0.352777778 + 2.5
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
@@ -1245,11 +1245,11 @@ leerLibro <- function (ruta, codificacion = 'iso') {
 #' Función leer convertirFechas de vitales
 #' @return lista Una lista con los data frame que contiene la información.
 
-convertirFechas <- function (lista) {
-  nombres <- names(lista)
+convertirFechas <- function (lista) {  nombres <- names(lista)
   contador <-1
   lis <- list()
   for ( x in lista ){
+    print(is.na(as.numeric(substring(nombres[contador],1,1))) )
     if (  is.na(as.numeric(substring(nombres[contador],1,1))) == TRUE ){
       if(as.numeric( substring(nombres[contador],nchar(nombres[contador]), nchar(nombres[contador]) ) ) %% 2 == 0 ){
           print( format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%b/%Y" ) )
@@ -1264,6 +1264,27 @@ convertirFechas <- function (lista) {
   names(lis) <- nombres
   return(lis)
 }
+
+
+convertirFechasTodos <- function (lista) {  nombres <- names(lista)
+                                       contador <-1
+                                       lis <- list()
+                                       for ( x in lista ){
+                                         print(is.na(as.numeric(substring(nombres[contador],1,1))) )
+                                         if (  is.na(as.numeric(substring(nombres[contador],1,1))) == TRUE ){
+                                             print( format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%b/%Y" ) )
+                                             x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]  <- format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%B/%Y" )
+                                             print(x)
+                                         }
+                                         lis[[contador]] <- x
+                                         contador <- contador +1 
+                                         
+                                       }
+                                       names(lis) <- nombres
+                                       return(lis)
+}
+
+
 
 #'Función para escribir CSV
 #'@param lista Es la lista que contiene los data frame
