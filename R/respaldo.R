@@ -7,7 +7,7 @@ respaldo <- function(direccion, asunto, cuerpo, ruta){
   if (.Platform$OS.type == "windows") {
     ## No hay impelentacion  
   }else{
-    cadena <-  paste("tar -zcvf ", paste(respaldo,str(basename(ruta), 1, nchar(basename(ruta))-4),"tar.gz", sep= ""),dirname())
+    cadena <-  paste("tar -zcvf ", paste(respaldo,substr(basename(ruta), 1, nchar(basename(ruta))-4),"tar.gz", sep= ""),dirname())
     print(cadenaCompilacion)
     suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
   }
