@@ -22,5 +22,5 @@ respaldo <- function(direccion, asunto, cuerpo, ruta){
                                user.name="reportesine@gmail.com", passwd="Ine$2020", ssl=TRUE),
                    authenticate = TRUE,
                    send = TRUE,
-                   attach.files = paste(respaldo,str(basename(ruta), 1, nchar(basename(ruta))-4),"tar.gz", sep= "") )
+                   attach.files = paste("respaldo",str(basename(ruta), 1, nchar(basename(ruta))-4),"tar.gz", sep= "") )
 }
