@@ -1229,7 +1229,7 @@ leerLibro <- function (ruta, codificacion = 'iso') {
       pkg.env$header = T
     }
     print(c("El nombre es: ", nombres[contador], " y el booleano dio " , pkg.env$header))
-    data <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], as.data.frame = T, header = pkg.env$header, check.names = F, stringsAsFactors = F)
+    data <- xlsx::read.xlsx(ruta, sheetName = nombres[contador], as.data.frame = T, header = pkg.env$header, check.names = F, stringsAsFactors = F, keepFormulas = T)
     temp <- data[-which(data[1] == ""),]
     if ( nrow(temp) != 0){
       data <- temp
