@@ -11,7 +11,7 @@ respaldo <- function(direccion, asunto, cuerpo, ruta){
     print(archivo)
     cadena <-  paste("tar -zcvf ", paste("respaldo",archivo,"tar.gz", sep= ""),dirname(ruta))
     print(cadenaCompilacion)
-    suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
+    suppressWarnings(silence <- system( cadena, intern=T, ignore.stderr=T))
   }
   recipients <- direccion
   mailR::send.mail(from = sender,
