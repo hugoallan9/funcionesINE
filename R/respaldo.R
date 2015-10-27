@@ -9,7 +9,7 @@ respaldo <- function(direccion, asunto, cuerpo, ruta){
   }else{
     archivo <- substr(basename(ruta), 1, nchar(basename(ruta))-4)
     print(archivo)
-    cadena <-  paste("tar -zcvf ", file.path(dirname(ruta), paste("respaldo",str(basename(ruta), 1, nchar(basename(ruta))-4),"tar.gz", sep= "") ),dirname(ruta))
+    cadena <-  paste("tar -zcvf ", file.path(dirname(ruta), paste("respaldo",str(basename(ruta), 1, nchar(basename(ruta))-4),".tar.gz", sep= "") ),dirname(ruta))
     print(cadena)
     suppressWarnings(silence <- system( cadena, intern=T, ignore.stderr=T))
   }
@@ -22,5 +22,5 @@ respaldo <- function(direccion, asunto, cuerpo, ruta){
                                user.name="reportesine@gmail.com", passwd="Ine$2020", ssl=TRUE),
                    authenticate = TRUE,
                    send = TRUE,
-                   attach.files = file.path(dirname(ruta), paste("respaldo",str(basename(ruta), 1, nchar(basename(ruta))-4),"tar.gz", sep= "") ))
+                   attach.files = file.path(dirname(ruta), paste("respaldo",str(basename(ruta), 1, nchar(basename(ruta))-4),".tar.gz", sep= "") ))
 }
