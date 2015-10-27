@@ -9,7 +9,7 @@ respaldo <- function(direccion, asunto, cuerpo, ruta){
   }else{
     archivo <- substr(basename(ruta), 1, nchar(basename(ruta))-4)
     print(archivo)
-    cadena <-  paste("tar -zcvf ", paste(respaldo,archivo,"tar.gz", sep= ""),dirname())
+    cadena <-  paste("tar -zcvf ", paste("respaldo",archivo,"tar.gz", sep= ""),dirname())
     print(cadenaCompilacion)
     suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
   }
