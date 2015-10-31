@@ -6,7 +6,7 @@ setListJudiciales <- function(lista){
 
 #'Función para obtener de nuevo la lista de datos para faltas judiciales
 
-getLisJudiciales <- function(){
+getListJudiciales <- function(){
   return(pkg.env$judiciales)
 }
 
@@ -18,142 +18,143 @@ setPathJudiciales <- function(ruta){
 
 #'Funcion para obtener la ruta en la cual se exportan los tex con las gráficas
 
-getPath <- function(){
+getPathJudiciales <- function(){
   return(pkg.env$rutaJudiciales)
 }
 
 j01_01 <- function(){
-  g <- graficaLinea(data = getListJudiciales$'1_01')
+  g <- graficaLinea(data = getListJudiciales()$'1_01')
   exportarLatex(nombre = paste(getPathJudiciales() , "1_01.tex", sep="/"), g)
 }
 
 j01_02 <- function(){
-  g <- graficaCol(data = getListJudiciales$'1_02')
-  g <- etiquetasVerticales()
-  g <- rotarEtiX2()
+  g <- graficaCol(data = getListJudiciales()$'1_02')
+  g <- etiquetasVerticales(g)
+  g <- rotarEtiX2(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_02.tex", sep="/"), g)
 }
 
 j01_03 <- function(){
-  g <- graficaCol(data = getListJudiciales$'1_03')
-  g <- etiquetasHorizontales()
+  g <- graficaCol(data = getListJudiciales()$'1_03')
+  g <- etiquetasHorizontales(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_03.tex", sep="/"), g)
 }
 
 j01_04 <- function(){
-  g <- graficaCol(data = getListJudiciales$'1_04')
-  g <- etiquetasHorizontales()
-  g <- rotarEtiX()
+  g <- graficaCol(data = getListJudiciales()$'1_04')
+  g <- etiquetasHorizontales(g)
+  g <- rotarEtiX(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_04.tex", sep="/"), g)
 }
 
 j01_05 <- function(){
-  g <- graficaAnillo(data = getListJudiciales$'1_05', nombre = paste(getPathJudiciales() , "1_05.tex", sep="/"))
+  g <- graficaAnillo(data = getListJudiciales()$'1_05', nombre = paste(getPathJudiciales() , "1_05.tex", sep="/"))
 }
 
 j01_06 <- function(){
-  g <- graficaCol(data = getListJudiciales$'1_06')
-  g <- etiquetasHorizontales()
+  g <- graficaCol(data = getListJudiciales()$'1_06')
+  g <- etiquetasHorizontales(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_06.tex", sep="/"), g)
 }
 
 
 j01_07 <- function(){
-  g <- graficaCol(data = getListJudiciales$'1_07')
-  g <- etiquetasHorizontales()
+  g <- graficaCol(data = getListJudiciales()$'1_07')
+  g <- etiquetasHorizontales(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_07.tex", sep="/"), g)
 }
 
 j01_08 <- function(){
-  g <- graficaCol(data = getListJudiciales$'1_08')
-  g <- etiquetasHorizontales()
-  g <- rotarEtiX()
+  g <- graficaCol(data = getListJudiciales()$'1_08')
+  g <- etiquetasHorizontales(g)
+  g <- rotarEtiX(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_08.tex", sep="/"), g)
 }
 
 j01_09 <- function(){
-  g <- graficaCol(data = getListJudiciales$'1_09')
-  g <- etiquetasHorizontales()
+  g <- graficaCol(data = getListJudiciales()$'1_09')
+  g <- etiquetasHorizontales(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_09.tex", sep="/"), g)
 }
 
 j01_10 <- function(){
-  g <- graficaBar(data = getListJudiciales$'1_10')
-  g <- etiquetasBarras()
+  g <- graficaBar(data = getListJudiciales()$'1_10')
+  g <- etiquetasBarras(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_10.tex", sep="/"), g)
 }
 
 j01_11 <- function(){
-  g <- graficaColCategorias(getListJudiciales$'1_11', ruta = paste(getPathJudiciales() , "1_10.tex", sep="/"))
+  g <- graficaColCategorias(getListJudiciales()$'1_11', ruta = paste(getPathJudiciales() , "1_10.tex", sep="/"))
 }
 
 j02_01 <- function(){
-  g <- graficaLinea(data = getListJudiciales$'2_01')
+  g <- graficaLinea(data = getListJudiciales()$'2_01')
   exportarLatex(nombre = paste(getPathJudiciales() , "2_01.tex", sep="/"), g)
 }
 
 j02_02 <- function(){
-  g <- graficaCol(data = getListJudiciales$'2_02')
-  g <- etiquetasVerticales()
-  g <- rotarEtiX2()
+  g <- graficaCol(data = getListJudiciales()$'2_02')
+  g <- etiquetasVerticales(g)
+  g <- rotarEtiX2(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_02.tex", sep="/"), g)
 }
 
 j02_03 <- function(){
-  g <- graficaAnillo(data = getListJudiciales$'2_03', nombre = paste(getPathJudiciales() , "2_03.tex", sep="/"))
+  g <- graficaAnillo(data = getListJudiciales()$'2_03', nombre = paste(getPathJudiciales() , "2_03.tex", sep="/"))
 }
 
 j02_04 <- function(){
-  g <- graficaCol(data = getListJudiciales$'2_04')
-  g <- etiquetasHorizontales()
+  g <- graficaCol(data = getListJudiciales()$'2_04')
+  g <- etiquetasHorizontales(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "2_04.tex", sep="/"), g)
 }
 
 j02_05 <- function(){
-  g <- graficaAnillo(data = getListJudiciales$'2_05', nombre = paste(getPathJudiciales() , "2_05.tex", sep="/"))
+  g <- graficaAnillo(data = getListJudiciales()$'2_05', nombre = paste(getPathJudiciales() , "2_05.tex", sep="/"))
 }
 
 j02_06 <- function(){
-  g <- graficaCol(data = getListJudiciales$'2_06', ordenar = F)
-  g <- etiquetasHorizontales()
+  g <- graficaCol(data = getListJudiciales()$'2_06', ordenar = F)
+  g <- etiquetasHorizontales(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "2_06.tex", sep="/"), g)
 }
 
 j02_07 <- function(){
-  g <- graficaCol(data = getListJudiciales$'2_07')
-  g <- etiquetasHorizontales()
+  g <- graficaCol(data = getListJudiciales()$'2_07')
+  g <- etiquetasHorizontales(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "2_07.tex", sep="/"), g)
 }
 
 j03_01 <- function(){
-  g <- graficaLinea(data = getListJudiciales$'3_01')
+  g <- graficaLinea(data = getListJudiciales()$'3_01')
   exportarLatex(nombre = paste(getPathJudiciales() , "3_01.tex", sep="/"), g)
 }
 
 j03_02 <- function(){
-  g <- graficaLinea(data = getListJudiciales$'3_02')
+  g <- graficaLinea(data = getListJudiciales()$'3_02')
   exportarLatex(nombre = paste(getPathJudiciales() , "3_02.tex", sep="/"), g)
 }
 
 
 j03_03 <- function(){
-  g <- graficaLinea(data = getListJudiciales$'3_03')
+  g <- graficaLinea(data = getListJudiciales()$'3_03')
   exportarLatex(nombre = paste(getPathJudiciales() , "3_03.tex", sep="/"), g)
 }
 
 
 j03_04 <- function(){
-  g <- graficaLinea(data = getListJudiciales$'3_04')
+  g <- graficaLinea(data = getListJudiciales()$'3_04')
   exportarLatex(nombre = paste(getPathJudiciales() , "3_04.tex", sep="/"), g)
 }
 
 
 j03_05 <- function(){
-  g <- graficaLinea(data = getListJudiciales$'3_05')
+  g <- graficaLinea(data = getListJudiciales()$'3_05')
   exportarLatex(nombre = paste(getPathJudiciales() , "3_05.tex", sep="/"), g)
 }
 
 graficasJudiciales <- function(){
+  trimestral()
   j01_01()
   j01_02()
   j01_03()
