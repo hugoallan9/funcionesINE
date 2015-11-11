@@ -1265,6 +1265,27 @@ convertirFechas <- function (lista) {  nombres <- names(lista)
   return(lis)
 }
 
+#' Función leer convertirFechas de IPC
+#' @return lista Una lista con los data frame que contiene la información.
+
+convertirFechasIPC <- function (lista) {  nombres <- names(lista)
+contador <-1
+lis <- list()
+for ( x in lista ){
+  print(is.na(as.numeric(substring(nombres[contador],1,1))) )
+  if (  is.na(as.numeric(substring(nombres[contador],1,1))) == TRUE ){
+      print( format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%B/%Y" ) )
+      x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]  <- format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%B/%Y" )
+      print(x)
+  }
+  lis[[contador]] <- x
+  contador <- contador +1 
+  
+}
+names(lis) <- nombres
+return(lis)
+}
+
 
 convertirFechasTodos <- function (lista) {  nombres <- names(lista)
                                        contador <-1
