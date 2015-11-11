@@ -1273,7 +1273,7 @@ contador <-1
 lis <- list()
 for ( x in lista ){
   print(is.na(as.numeric(substring(nombres[contador],1,1))) )
-  if (  is.na(as.numeric(substring(nombres[contador],1,1))) == TRUE ){
+  if (  is.na(as.numeric(substring(nombres[contador],1,1))) == FALSE ){
       print( format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%B/%Y" ) )
       x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]  <- format(as.Date(as.numeric(x$'1'[c(1,2,3,4,5,6,7,8,9,10,11,12,13)]), origin="1899-12-30", format = "%Y-%m-%d"), "%B/%Y" )
       print(x)
