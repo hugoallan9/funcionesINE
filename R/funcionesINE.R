@@ -1230,10 +1230,39 @@ leerLibro <- function (ruta, codificacion = 'iso') {
     }
     print(c("El nombre es: ", nombres[contador], " y el booleano dio " , pkg.env$header))
     data <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], as.data.frame = T, header = pkg.env$header, check.names = F, stringsAsFactors = F)
+    print(data)
     temp <- data[-which(data[1] == ""),]
     if ( nrow(temp) != 0){
       data <- temp
     }
+    print(data)
+    lista[[contador]] <- data
+    contador = contador +1 
+  }
+  names(lista) <- nombres
+  return(lista)
+}
+
+
+#' Función leer libro excel
+#' @param ruta Ruta dentro del disco duro en la cual están contenidos los CSV
+#' @return Una lista con los data frame que contiene la información.
+
+leerLibroNormal <- function (ruta, codificacion = 'iso') {
+  libro <- xlsx::loadWorkbook(ruta)
+  hojas <- xlsx::getSheets(libro)
+  nombres <- names(hojas)
+  lista <- list()
+  #names(lista) <- nombres
+  contador <-1
+  for( x in hojas){
+    data <- xlsx::read.xlsx2(ruta, sheetName = nombres[contador], as.data.frame = T, check.names = F, stringsAsFactors = F)
+#     print(data)
+#     temp <- data[-which(data[1] == ""),]
+#     if ( nrow(temp) != 0){
+#       data <- temp
+#     }
+#     print(data)
     lista[[contador]] <- data
     contador = contador +1 
   }
