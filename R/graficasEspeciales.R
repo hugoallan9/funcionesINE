@@ -26,8 +26,8 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   
   if(procesar == F){
     print("CAMBIOS")
-    categoria <- dataLista$y
     dataLista <-data
+    categoria <- dataLista$y
   }else{
     x <- rep(data$x,length(data)-1)
     y <- NULL
