@@ -11,7 +11,7 @@
 #' @param preambulo Etiqueta boolean que indica si se desea que la gráfica tenga preámbulo o no. Por defecto se tiene Falso. 
 #' @return No regresa ningun valor
 
-graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.8, preambulo = F, ejeX = "h"){
+graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "normal", ruta, etiquetas = "v", ancho = 0.8, preambulo = F, ejeX = "h", procesar = T){
   ##ALGUNAS VARIABLES UTILES
   lonEtiqueta1 <- 0
   lonEtiqueta2 <- 0
@@ -24,19 +24,26 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
   
   tikzDevice::tikz(ruta, standAlone = preambulo, bg = "transparent",bareBones = !preambulo, width = pkg.env$ancho, height= pkg.env$alto, sanitize= F)
   
-  x <- rep(data$x,length(data)-1)
-  y <- NULL
-  for(i in 2:length(data)){
-    y <- c(y,as.matrix(data)[,i])
+  if(procesar == F){
+    print("CAMBIOS")
+    categoria <- dataLista$y
+    dataLista <-data
+  }else{
+    x <- rep(data$x,length(data)-1)
+    y <- NULL
+    for(i in 2:length(data)){
+      y <- c(y,as.matrix(data)[,i])
+    }
+    categoria <- gl(length(data)-1, length(data$x), labels = names(data)[c(2:ncol(data))])
+    print(categoria)
+    dataLista <- data.frame(x,y,categoria)
+    dataLista <- fact2Num(dataLista)
+    dataLista$x <- factor(dataLista$x, levels = data$x)
+    levels(dataLista$x) <- gsub("\\\\n", "\n", levels(dataLista$x))
+    print(length(levels(dataLista$categoria)))
+    print(dataLista)
   }
-  categoria <- gl(length(data)-1, length(data$x), labels = names(data)[c(2:ncol(data))])
-  print(categoria)
-  dataLista <- data.frame(x,y,categoria)
-  dataLista <- fact2Num(dataLista)
-  dataLista$x <- factor(dataLista$x, levels = data$x)
-  levels(dataLista$x) <- gsub("\\\\n", "\n", levels(dataLista$x))
-  print(length(levels(dataLista$categoria)))
-  print(dataLista)
+  
   if(toupper(escala) == "MILES"){
     dataLista$y <- dataLista$y/1000
   }else if(toupper(escala) == "MILLONES"){
