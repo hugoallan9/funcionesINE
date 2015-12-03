@@ -423,39 +423,30 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
 
   for(i in 1:length(posiciones))
   {
-    
+    print(c("El valor es numérico: ", is.numeric(lista)))
     dato <- d$y[[i]]
-    
+    print(c("El dato correspondiente a la posición i es: ", i, " con valor ", dato, " mientras que la longitud de la posicion es: " , length(posiciones)))
     
     if (pkg.env$maxMin == T) { 
       if( !(dato %in% lista) ){
         dato <- NA
-      }else{
-        if ( dato ==d$y[[length(posiciones)]]  && i != length(posiciones)){
-          print("Etiqueta en riesgo")
+      }else if ( ( dato ==d$y[[length(posiciones)]]  && i != length(posiciones) )  ){
+        if( !( i == 1 && dato == d$y[[1]] ) ){  
+        print("Etiqueta en riesgo")
           dato <-NA
-        }else{
+        }
+      }else{
           lista <- lista[lista != dato ] 
-          }
-      }
+        }
       print("La lista es ")
       print(lista)
     }
     
     
     
-    print(c("El dato correspondiente a la posición i es: ", i, " con valor ", dato, " mientras que la longitud de la posicion es: " , length(posiciones)))
+   
     
     d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = enteros)
-#     if(enteros == 0)
-#     {
-#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
-#     }
-#     else
-#     {
-#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
-#     }
-    
     print("#####LAS ETIQUETAS SON ##########" )
     print(d$etiqueta)
     
