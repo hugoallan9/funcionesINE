@@ -1304,8 +1304,9 @@ for ( x in lista ){
   print(x[1][[1]])
   if( is.na( as.numeric(x[1][[1]]) ) == FALSE && is.na(as.numeric(substring(nombres[contador],1,1))) == FALSE ){
     print("Entre al if")
-    x[1][[1]]  <- format(as.Date(as.numeric(x[1][[1]]), origin="1899-12-30", format = "%Y-%m-%d"), "%b/%Y" )  
-  }
+    name  <- format(as.Date(as.numeric(x[1][[1]]), origin="1899-12-30", format = "%Y-%m-%d"), "%b-%Y" )  
+    x[1][[1]] <- paste0(toupper(substr(name, 1, 1)), substr(name, 2, nchar(name)))
+    }
   lis[[contador]] <- x
   contador <- contador +1 
   
