@@ -423,7 +423,6 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
 
   for(i in 1:length(posiciones))
   {
-    print(c("El valor es numérico: ", is.numeric(lista)))
     dato <- d$y[[i]]
     print(c("El dato correspondiente a la posición i es: ", i, " con valor ", dato, " mientras que la longitud de la posicion es: " , length(posiciones)))
     
