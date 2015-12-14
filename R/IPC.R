@@ -30,7 +30,7 @@ capitulo1 <- function(){
   cuatroEtiquetas()
   g1<- graficaLinea(getListIpc()$"1_01")
   exportarLatex(paste(getPath() , "1_01.tex", sep = "/"),g1)
-  g2<- graficaLinea(getListIpc()$"1_02")
+  g2<- graficaLinea(getListIpc()$"1_02", precision = 2)
   exportarLatex(paste(getPath() , "1_02.tex", sep = "/"),g2)
   g3<- graficaLinea(getListIpc()$"1_03", precision = 2)
   exportarLatex( paste(getPath() , "1_03.tex", sep="/"),g3)
