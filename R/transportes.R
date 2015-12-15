@@ -152,7 +152,9 @@ graficasTransportes<- function(lista, ruta, modalidad = "trimestral"){
   t25 <- graficaColCategorias(lista$"3_07",ruta = paste( sep="", ruta,  "3_07.tex"),etiquetasCategorias = "A", etiquetas="V", ejeX = "v",ancho = 0.6)
   
   
-  t26 <- graficaColCategorias(lista$"3_08",ruta = paste( sep="", ruta,  "3_08.tex"),etiquetasCategorias = "A", etiquetas="h", ejeX = "h",ancho = 0.6)
+  t76 <- graficaCol(lista$"3_08")
+  t76<- etiquetasHorizontales(t76)
+  exportarLatex(paste( sep="", ruta,  "3_08.tex"),t76)
   
   
   t27 <- graficaLinea(lista$"3_09", inicio=10)
