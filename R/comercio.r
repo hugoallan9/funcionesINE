@@ -3,7 +3,18 @@
 #'@param lista Es el listado que contiene los data frame de comercio exterior
 #'@param ruta Es el path de salida para los tex con las graficas
 #'
-comercio <- function(lista, ruta){
+graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
+  pre <- T
+  if( toupper(modalidad)  == "TRIMESTRAL"){
+    trimestral()
+    pre <-T
+  }else if ( toupper(modalidad) == "ANUAL"){
+    anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
+  }else {
+    presentacion()
+    pre <- T
+  }
+  
   g1<- graficaLineaTrim(lista$'1_01')
   exportarLatex(paste(ruta,"1_01.tex", sep=""),g1)
   

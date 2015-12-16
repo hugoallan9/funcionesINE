@@ -415,7 +415,7 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, prec
 
 piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = pkg.env$color1, ruta, preambulo = F, digitos = 1, porcentual = T){
   nombres <- names(data)
-  if( toupper( names(data)[2] ) == 'HOMBRES' ){
+  if( toupper( names(data)[2] ) == 'HOMBRES' || toupper( names(data)[2] ) == 'HOMBRE'){
     temp <- data[3]
     data[3] <- data[2]
     data[2] <- temp
@@ -473,16 +473,21 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   
   
   print(data$z)
-  maximo <- max( data$z )
-  print(c("El maximo en z es: ", maximo))
-  longitudy <- tikzDevice::getLatexStrWidth(trimws( formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros) ), cex = pkg.env$fEscala)  
+  maximo1 <- max( data$z )
+  print(data$y)
+  maximo2 <- max( data$y )
+  maximo <- max(c(maximo1, maximo2))
+  print(c("El maximo para la escala es: ", maximo))
+  
+  print(c("El maximo en z es: ", maximo1))
+  longitudy <- tikzDevice::getLatexStrWidth(trimws( formatC(maximo1,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros) ), cex = pkg.env$fEscala)  
   longitudy <- pt2mm(longitudy) + 2
   print(longitudy)
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,z,y))
   grafica.y <- grafica +    
     ggplot2::geom_bar(ggplot2::aes(x,y = z), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno), colour = calcularRampa(data, pkg.env$color1), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0), trans = 'reverse')+
+    ggplot2::scale_y_reverse(breaks=NULL,limits = c(maximo,NA), expand= c(0.0,0.0) )+
     #ggplot2::scale_x_discrete(breaks=NULL)+
     ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
     ggplot2::theme(
@@ -502,20 +507,19 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   
   
   
-  print(data$y)
-  maximo <- max( data$y )
-  print(c("El maximo en y es: ", maximo))
-  longitud <- tikzDevice::getLatexStrWidth(formatC(maximo,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
+  
+  print(c("El maximo en y es: ", maximo2))
+  longitud <- tikzDevice::getLatexStrWidth(formatC(maximo2,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros), cex = pkg.env$fEscala) 
   longitud <- pt2mm(longitud) + 3
   
     
   grafica.x <- grafica  +
-    ggplot2::geom_bar(stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno2), colour = calcularRampa(data, pkg.env$color2), width = ancho, position =  "dodge")+
+    ggplot2::geom_bar(ggplot2::aes(x,y = y), stat = 'identity',fill = calcularRampa(data, pkg.env$colorRelleno2), colour = calcularRampa(data, pkg.env$color2), width = ancho, position =  "dodge")+
     ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
+    ggplot2::scale_y_continuous(breaks=NULL,  limits = c(NA,maximo ), expand= c(0.0,0.0))+
     ggplot2::scale_x_discrete(breaks=NULL)+
     #ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1, ggplot2::aes(colour = "gray"))+
-    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
+    ggplot2::geom_text(ggplot2::aes(x, y=y, family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
     ggplot2::theme(
       axis.ticks.margin = grid::unit(c(0,longitudy),"mm"),
        axis.ticks.margin=grid::unit(c(-2.5),'mm'),
