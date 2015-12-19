@@ -41,7 +41,6 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     dataLista$x <- factor(dataLista$x, levels = data$x)
     levels(dataLista$x) <- gsub("\\\\n", "\n", levels(dataLista$x))
     print(length(levels(dataLista$categoria)))
-    print(dataLista)
   }
   
   if(toupper(escala) == "MILES"){
@@ -52,6 +51,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     dataLista$y <- dataLista$y/1000000000
   }
 
+  print(dataLista)
   
 
   col <-   rampaColAgrupadas(dataLista)

@@ -34,7 +34,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"1_04.tex", sep=""),g4)
   
   
-  g5 <- graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex', sep = ''), escala = 'milesmillones')
   
   
   g6 <- graficaCol(lista$"1_06", ordenar =  F)
