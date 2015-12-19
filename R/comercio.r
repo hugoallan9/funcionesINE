@@ -27,14 +27,14 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g3 <- graficaLineaTrim(lista$"1_03")
   exportarLatex(paste(ruta,"1_03.tex", sep=""),g3)
   
-  g4<- graficaCol(lista$"1_04", ordenar = F)#cambiar a col
+  g4<- graficaCol(lista$"1_04", ordenar = F)
   g4 <- etiquetasHorizontales(g4)
   g4 <- rotarEtiX(g4)
   g4 <- g4+ ggplot2::geom_abline(intercept = 0, slope = 0) 
   exportarLatex(paste(ruta,"1_04.tex", sep=""),g4)
   
   
-  graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
   
   g6 <- graficaCol(lista$"1_06", ordenar =  F)
@@ -43,9 +43,9 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g6 <- g6 + ggplot2::geom_abline(intercept = 0, slope = 0) 
   exportarLatex(paste(ruta,"1_06.tex", sep=""),g6)
   
-  graficaColCategorias(lista$'1_07', ruta = paste(ruta, '1_07.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'1_07', ruta = paste(ruta, '1_07.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
-  graficaColCategorias(lista$'1_08', ruta = paste(ruta, '1_08.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'1_08', ruta = paste(ruta, '1_08.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
 
   
@@ -99,16 +99,16 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g18 <- rotarEtiX(g18)
   exportarLatex(paste(ruta,"2_04.tex", sep=""),g18)
   
-  graficaColCategorias(lista$'2_05', ruta = paste(ruta, '2_05.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'2_05', ruta = paste(ruta, '2_05.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
   g20<- graficaCol(lista$"2_06", ordenar = F)
   g20 <- etiquetasHorizontales(g20)
   g20 <- rotarEtiX(g20)
   exportarLatex(paste(ruta,"2_06.tex", sep=""),g20)
 
-  graficaColCategorias(lista$'2_07', ruta = paste(ruta, '2_07.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'2_07', ruta = paste(ruta, '2_07.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
-  graficaColCategorias(lista$'2_08', ruta = paste(ruta, '2_08.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'2_08', ruta = paste(ruta, '2_08.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
     
   g23<- graficaBar(lista$"2_09")
@@ -160,7 +160,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g32 <- rotarEtiX(g32)
   exportarLatex(paste(ruta,"3_04.tex", sep=""),g32)
   
-  graficaColCategorias(lista$'3_05', ruta = paste(ruta, '3_05.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'3_05', ruta = paste(ruta, '3_05.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
   
   g40<- graficaCol(lista$"3_06", ordenar = F)
@@ -168,9 +168,9 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g40 <- rotarEtiX(g40)
   exportarLatex(paste(ruta,"3_06.tex", sep=""),g40)
 
-  graficaColCategorias(lista$'3_07', ruta = paste(ruta, '3_07.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'3_07', ruta = paste(ruta, '3_07.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
-  graficaColCategorias(lista$'3_08', ruta = paste(ruta, '3_08.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'3_08', ruta = paste(ruta, '3_08.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
     
   g43<- graficaBar(lista$"3_09")
@@ -221,7 +221,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g53 <- rotarEtiX(g53)
   exportarLatex(paste(ruta,"4_04.tex", sep=""),g53)
   
-  graficaColCategorias(lista$'4_05', ruta = paste(ruta, '4_05.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'4_05', ruta = paste(ruta, '4_05.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
   
   g60<- graficaCol(lista$"4_06", ordenar = F)
@@ -229,10 +229,10 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g60 <- rotarEtiX(g60)
   exportarLatex(paste(ruta,"4_06.tex", sep=""),g60)
   
-  graficaColCategorias(lista$'4_07', ruta = paste(ruta, '4_07.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'4_07', ruta = paste(ruta, '4_07.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
   
-  graficaColCategorias(lista$'4_08', ruta = paste(ruta, '4_08.tex', sep = ''), escala = 'milesmillones')
+  graficaColCategorias(lista$'4_08', ruta = paste(ruta, '4_08.tex', sep = ''), escala = 'milesmillones', ejeX = "v")
   
   
   

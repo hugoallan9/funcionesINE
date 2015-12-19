@@ -64,7 +64,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
     ggplot2::labs(x=NULL, y=NULL)+
     ggplot2::scale_y_continuous(breaks=NULL, expand = c(0,0))+
     ggplot2::geom_abline(intercept = 0, slope = 0)+
-    ggplot2::scale_x_discrete(breaks =  unique(dataLista$x), labels = dataLista$x)+
+    #ggplot2::scale_x_discrete(breaks =  unique(dataLista$x), labels = dataLista$x)+
     ggplot2::theme(
       plot.background = ggplot2::element_rect(fill = NULL),
       panel.background = ggplot2::element_rect(fill = NULL),
