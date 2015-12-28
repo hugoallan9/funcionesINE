@@ -23,7 +23,7 @@ mandarCorreo <- function(direccion, asunto, cuerpo, ruta){
 #'Funcion de compresión de datos para mapas
 #'
 #'
-comprimir <- function(direccion, asunto, cuerpo, ruta){
+enviarMapas <- function(direccion, asunto, cuerpo, ruta){
   sender <- "reportesine@gmail.com"
   #, "<rdnarcisoc@gmail.com>",
   if (.Platform$OS.type == "windows") {
@@ -31,7 +31,7 @@ comprimir <- function(direccion, asunto, cuerpo, ruta){
   }else{
     archivo <- substr(basename(ruta), 1, nchar(basename(ruta))-4)
     print(archivo)
-    cadena <-  paste("tar -zcvf ", file.path(dirname(ruta), paste("respaldo",str(basename(ruta), 1, nchar(basename(ruta))-4),".tar.gz", sep= "") ),dirname(ruta))
+    cadena <-  'tar -zcvf /home/ineservidor/Mapas/mapas.tar.gz /home/ineservidor/Mapas/*.pdf'
     print(cadena)
     suppressWarnings(silence <- system( cadena, intern=T, ignore.stderr=T))
   }
@@ -44,5 +44,5 @@ comprimir <- function(direccion, asunto, cuerpo, ruta){
                                user.name="reportesine@gmail.com", passwd="Ine$2020", ssl=TRUE),
                    authenticate = TRUE,
                    send = TRUE,
-                   attach.files = file.path(dirname(ruta), paste("respaldo",str(basename(ruta), 1, nchar(basename(ruta))-4),".tar.gz", sep= "") ))
+                   attach.files = '/home/ineservidor/Mapas/mapas.tar.gz')
 }
