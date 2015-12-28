@@ -23,7 +23,7 @@ mandarCorreo <- function(direccion, asunto, cuerpo, ruta){
 #'Funcion de compresión de datos para mapas
 #'
 #'
-enviarMapas <- function(direccion, asunto, cuerpo, ruta){
+enviarMapas <- function(direccion, asunto, cuerpo){
   sender <- "reportesine@gmail.com"
   #, "<rdnarcisoc@gmail.com>",
   if (.Platform$OS.type == "windows") {
