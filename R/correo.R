@@ -31,7 +31,7 @@ enviarMapas <- function(direccion, asunto, cuerpo, ruta){
   }else{
     archivo <- substr(basename(ruta), 1, nchar(basename(ruta))-4)
     print(archivo)
-    cadena <-  'tar -zcvf /home/ineservidor/Mapas/mapas.tar.gz /home/ineservidor/Mapas/*.pdf'
+    cadena <-  'cd /home/ineservidor/Mapas/ && tar -zcvf mapas.tar.gz /home/ineservidor/Mapas/*.pdf'
     print(cadena)
     suppressWarnings(silence <- system( cadena, intern=T, ignore.stderr=T))
   }
