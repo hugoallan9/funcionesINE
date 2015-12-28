@@ -29,8 +29,6 @@ enviarMapas <- function(direccion, asunto, cuerpo){
   if (.Platform$OS.type == "windows") {
     ## No hay impelentacion  
   }else{
-    archivo <- substr(basename(ruta), 1, nchar(basename(ruta))-4)
-    print(archivo)
     cadena <-  'cd /home/ineservidor/Mapas/ && tar -zcvf mapas.tar.gz /home/ineservidor/Mapas/*.pdf'
     print(cadena)
     suppressWarnings(silence <- system( cadena, intern=T, ignore.stderr=T))
