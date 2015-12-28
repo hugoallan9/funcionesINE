@@ -29,7 +29,7 @@ enviarMapas <- function(direccion, asunto, cuerpo){
   if (.Platform$OS.type == "windows") {
     ## No hay impelentacion  
   }else{
-    cadena <-  'cd /home/ineservidor/Mapas/ && tar -zcvf mapas.tar.gz /home/ineservidor/Mapas/*.pdf'
+    cadena <-  'cd /home/ineservidor/Mapas/ && tar -zcvf mapas.tar.gz *.pdf'
     print(cadena)
     suppressWarnings(silence <- system( cadena, intern=T, ignore.stderr=T))
   }
