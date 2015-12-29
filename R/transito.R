@@ -156,7 +156,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"3_12.tex", sep = ""),g33)
   
   
-  g34 <- graficaAnillo(lista$"3_13", 'C:/Users/INE/Desktop/T3_2014/transito/reporte/3_13.tex',preambulo = F)####
+  graficaAnillo(lista$"3_13",paste(ruta,"3_13.tex", sep = ""),preambulo = F)####
 
   
   

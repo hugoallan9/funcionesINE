@@ -521,7 +521,7 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
     #ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1, ggplot2::aes(colour = "gray"))+
     ggplot2::geom_text(ggplot2::aes(x, y=y, family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
     ggplot2::theme(
-      axis.ticks.margin = grid::unit(c(0,longitudy),"mm"),
+      axis.text = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5, margin = grid::unit(c(0,longitudy),"mm")),
        axis.ticks.margin=grid::unit(c(-2.5),'mm'),
        axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5),
       axis.line.y = ggplot2::element_line(colour = NA),
