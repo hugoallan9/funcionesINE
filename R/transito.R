@@ -168,7 +168,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   
   
   g45<-piramidePoblacional(lista$"3_15", ruta = paste(ruta,"3_15.tex", sep = ""),
-                           porcentual=F,preambulo = T)
+                           porcentual=F,preambulo = F)
   
   
   
