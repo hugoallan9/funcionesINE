@@ -44,7 +44,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   g6 <- rotarEtiX(g6)
   exportarLatex(paste(ruta,"1_06.tex", sep = ""),g6)
   
-  g7 <- graficaAnillo(lista$"1_07", paste(ruta, '1_07.tex'),preambulo = F)
+  graficaAnillo(lista$"1_07", paste(ruta, '1_07.tex', sep = ""),preambulo = F)
   
   g8 <- graficaCol(lista$"1_08",ordenar = F)
   g8 <- etiquetasHorizontales(g8)
