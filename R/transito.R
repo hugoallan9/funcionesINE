@@ -77,7 +77,8 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   g13 <- rotarEtiX(g13)
   exportarLatex(paste(ruta,"2_04.tex", sep = ""),g13)
   
-  g14<- graficaAnillo(lista$"2_05", paste(ruta,'2_05.tex'),preambulo = F)
+  graficaAnillo(lista$"2_05", paste(ruta,'2_05.tex', sep=""),preambulo = F)
+  
   g15 <- graficaCol(lista$"2_06", ordenar = F)
   g15<- etiquetasHorizontales(g15)
   g15<- rotarEtiX(g15)
@@ -91,7 +92,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   g17<- rotarEtiX(g17)
   exportarLatex(paste(ruta,"2_08.tex", sep = ""),g17)
   
-  g18 <- graficaAnillo(lista$"2_09", paste(ruta, '2_09'),preambulo = F)
+  g18 <- graficaAnillo(lista$"2_09", paste(ruta, '2_09', sep = ""),preambulo = F)
   
   
   g19 <- graficaCol(lista$"2_10",ordenar = F)
@@ -133,7 +134,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"3_07.tex", sep = ""),g27)
   
   
-  g28 <- graficaAnillo(lista$"3_08", paste(ruta,'3_08.tex'),preambulo= F)
+  graficaAnillo(lista$"3_08", paste(ruta,'3_08.tex',sep = ""),preambulo= F)
   
   
   g29 <- graficaCol(lista$"3_09",ordenar = F)
