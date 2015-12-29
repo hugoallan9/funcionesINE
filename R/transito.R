@@ -92,7 +92,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   g17<- rotarEtiX(g17)
   exportarLatex(paste(ruta,"2_08.tex", sep = ""),g17)
   
-  g18 <- graficaAnillo(lista$"2_09", paste(ruta, '2_09.tex', sep = ""),preambulo = F)
+  graficaAnillo(lista$"2_09", paste(ruta, '2_09.tex', sep = ""),preambulo = F)
   
   
   g19 <- graficaCol(lista$"2_10",ordenar = F)
@@ -168,7 +168,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   
   
   g45<-piramidePoblacional(lista$"3_15", ruta = paste(ruta,"3_15.tex", sep = ""),
-                           porcentual=F,preambulo = F)
+                           porcentual=F,preambulo = T)
   
   
   

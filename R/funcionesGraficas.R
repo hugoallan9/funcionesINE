@@ -452,7 +452,7 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
 
   etiquetaMaxima <- tikzDevice::getLatexStrWidth(max(data$x))
   etiquetaMaxima <- pt2mm(etiquetaMaxima)
-  
+  print(c("La etiqueta maxima mide ",  etiquetaMaxima))
   pkg.env$enteros <- sonEnteros( data )
   pkg.env$digitos <- digitos
   
@@ -480,7 +480,7 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
   print(c("El maximo para la escala es: ", maximo))
   
   print(c("El maximo en z es: ", maximo1))
-  longitudy <- tikzDevice::getLatexStrWidth(trimws( formatC(maximo1,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros) ), cex = pkg.env$fEscala)  
+  longitudy <- tikzDevice::getLatexStrWidth(trimws( formatC(maximo2,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros) ), cex = pkg.env$fEscala)  
   longitudy <- pt2mm(longitudy) + 2
   print(longitudy)
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,z,y))
@@ -491,12 +491,13 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
     #ggplot2::scale_x_discrete(breaks=NULL)+
     ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
     ggplot2::theme(
-      axis.ticks.margin = grid::unit(c(0,longitudy),"mm"),
-      #axis.ticks.margin=grid::unit(c(-2.5, 2.5),'mm'),
+      #axis.ticks.margin = grid::unit(c(0,longitudy),"mm"),
+      #axis.ticks.margin = grid::unit(c(-20, 10),'mm'),
       axis.line.y = ggplot2::element_line(colour = NA),
       #axis.text.y = ggplot2::element_text(colour = NA),
       axis.line.x = ggplot2::element_line(colour = NA),
-      plot.margin = grid::unit(c(0,-etiquetaMaxima,-longitudy,0), "mm")
+      plot.margin = grid::unit(c(0,-7.3,-longitudy,0), "mm")
+      #plot.margin = grid::unit(c(0,-10,10,0), "mm")
     )+
     ggplot2::coord_flip()+ggplot2::ggtitle("Hombres")
   
@@ -525,7 +526,8 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
        axis.ticks.margin=grid::unit(c(-2.5),'mm'),
        axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5),
       axis.line.y = ggplot2::element_line(colour = NA),
-      plot.margin = grid::unit(c(0,longitud,-longitudy,etiquetaMaxima-longitudy-2.9), "mm")  
+      plot.margin = grid::unit(c(0,longitud,-longitudy,etiquetaMaxima-longitudy-2.9), "mm")
+      #plot.margin = grid::unit(c(0,longitud,-longitudy,etiquetaMaxima-longitudy-2.9), "mm")  
       )+
     ggplot2::coord_flip()+ ggplot2::ggtitle("Mujeres")
   
