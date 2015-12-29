@@ -9,7 +9,7 @@ Imports:
   dataframes2xls,
   extrafont,
   foreign,
-  ggplot2(<= 1.0.0),
+  ggplot2(>= 1.0.0),
   grid,
   gridExtra,
   tikzDevice,
