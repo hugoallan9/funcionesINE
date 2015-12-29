@@ -65,7 +65,7 @@ graficasTransito<- function(lista, ruta, modalidad = "trimestral"){
   
   
   
-  g11<- graficaAnillo(lista$"2_02", paste(ruta, '2_02.tex'),preambulo = F)
+  g11<- graficaAnillo(lista$"2_02", paste(ruta, '2_02.tex', sep = ""),preambulo = F)
   
   
   g12 <- graficaLinea(lista$"2_03", inicio = 0)
