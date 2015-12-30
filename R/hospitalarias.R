@@ -29,6 +29,7 @@ graficasHospitalarias<- function(lista, ruta, modalidad = "trimestral"){
   
   t3 <- graficaCol(lista$"1_03", ordenar = F)
   t3 <- etiquetasHorizontales(t3)
+  t3 <- rotarEtiX(t3)
   exportarLatex(paste(ruta, "1_03.tex", sep=""), t3)
   
   t4 <- graficaCol(lista$"1_04", ordenar = F)
@@ -36,8 +37,7 @@ graficasHospitalarias<- function(lista, ruta, modalidad = "trimestral"){
   t4 <- rotarEtiX(t4)
   exportarLatex(paste(ruta, "1_04.tex", sep=""), t4)
   
-  t5 <- graficaLinea(lista$"1_05",rotar = "h", inicio = 0)
-  exportarLatex(paste(ruta, "1_05.tex", sep=""), t5)
+  graficaAnillo(lista$"1_05",nombre = paste(ruta, "1_05.tex", sep=""), preambulo = F)
   
   
   t6<- graficaAnillo(data = lista$"1_06",
