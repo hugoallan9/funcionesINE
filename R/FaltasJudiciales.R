@@ -96,7 +96,7 @@ j02_02 <- function(){
   g <- graficaCol(data = getListJudiciales()$'2_02')
   g <- etiquetasVerticales(g)
   g <- rotarEtiX2(g)
-  exportarLatex(nombre = paste(getPathJudiciales() , "1_02.tex", sep="/"), g)
+  exportarLatex(nombre = paste(getPathJudiciales() , "2_02.tex", sep="/"), g)
 }
 
 j02_03 <- function(){
