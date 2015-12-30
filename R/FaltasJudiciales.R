@@ -84,7 +84,7 @@ j01_10 <- function(){
 }
 
 j01_11 <- function(){
-  g <- graficaColCategorias(getListJudiciales()$'1_11', ruta = paste(getPathJudiciales() , "1_10.tex", sep="/"))
+  g <- graficaColCategorias(getListJudiciales()$'1_11', ruta = paste(getPathJudiciales() , "1_11.tex", sep="/"))
 }
 
 j02_01 <- function(){
