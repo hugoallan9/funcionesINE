@@ -24,18 +24,8 @@ graficasTransportes<- function(lista, ruta, modalidad = "trimestral"){
   t4 <- graficaLinea(lista$"1_02", escala = "miles", inicio=2000)
   exportarLatex(paste( sep="", ruta,  "1_02.tex"), t4)
   
-  g5 <- graficaLinea(lista$"1_03", escala = "miles", inicio=500)
-  exportarLatex(paste( sep="", ruta,  "1_03.tex"), g5)
-  
-  g577 <- graficaLinea(lista$"1_04", escala = "miles", inicio=500)
-  exportarLatex(paste( sep="", ruta,  "1_04.tex"), g577)
-  
-  g588 <- graficaLinea(lista$"1_05", escala = "miles", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "1_05.tex"), g588)
-  
-  g599 <- graficaLinea(lista$"1_06", inicio=5000)
-  exportarLatex(paste( sep="", ruta,  "1_06.tex"), g599)
-  
+   
+   
   t6 <- graficaLinea(lista$"1_07", inicio=5000)
   exportarLatex(paste( sep="", ruta,  "1_07.tex"), t6)
   
@@ -69,62 +59,19 @@ graficasTransportes<- function(lista, ruta, modalidad = "trimestral"){
   t51 <- graficaLinea(lista$"2_02", inicio=1000)
   exportarLatex(paste( sep="", ruta,  "2_02.tex"),t51)
   
-  t63 <- graficaCol(lista$"2_03")
-  t63 <- etiquetasHorizontales(t63)
-  t63 <- rotarEtiX2(t63)
-  exportarLatex(paste( sep="", ruta,  "2_03.tex"),t63)
-  
+   
   t62 <- graficaBar(lista$"2_04")
   t62<- etiquetasBarras(t62)
   exportarLatex(paste( sep="", ruta,  "2_04.tex"),t62)
   
   
-  t54 <- graficaLinea(lista$"2_05", inicio=100)
-  exportarLatex(paste( sep="", ruta,  "2_05.tex"),t54)
-  t55 <- graficaLinea(lista$"2_06", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_06.tex"),t55)
-  t56 <- graficaLinea(lista$"2_07", inicio=500)
-  exportarLatex(paste( sep="", ruta,  "2_07.tex"),t56)
-  t57 <- graficaLinea(lista$"2_08", inicio=500)
-  exportarLatex(paste( sep="", ruta,  "2_08.tex"),t57)
-  t58 <- graficaLinea(lista$"2_09", inicio=500)
-  exportarLatex(paste( sep="", ruta,  "2_09.tex"),t58)
-  t59 <- graficaLinea(lista$"2_10", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_10.tex"),t59)
-  t60 <- graficaLinea(lista$"2_11", inicio=500)
-  exportarLatex(paste( sep="", ruta,  "2_11.tex"),t60)
-  t61 <- graficaLinea(lista$"2_12", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_12.tex"),t61)
   
-  t52 <- graficaLinea(lista$"2_13", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_13.tex"),t52)
-  t53 <- graficaLinea(lista$"2_14", inicio=0)
-  exportarLatex(paste( sep="", ruta,  "2_14.tex"),t53)
   t64 <- graficaLinea(lista$"2_15", inicio=500)
   exportarLatex(paste( sep="", ruta,  "2_15.tex"),t64)
   t65 <- graficaLinea(lista$"2_16", inicio=500)
   exportarLatex(paste( sep="", ruta,  "2_16.tex"),t65)
-  t66 <- graficaLinea(lista$"2_17", inicio=0)
-  exportarLatex(paste( sep="", ruta,  "2_17.tex"),t66)
-  t67 <- graficaLinea(lista$"2_18", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_18.tex"),t67)
-  t68 <- graficaLinea(lista$"2_19", inicio=100)
-  exportarLatex(paste( sep="", ruta,  "2_19.tex"),t68)
-  t69 <- graficaLinea(lista$"2_20", inicio=500)
-  exportarLatex(paste( sep="", ruta,  "2_20.tex"),t69)
-  t70 <- graficaLinea(lista$"2_21", inicio=0)
-  exportarLatex(paste( sep="", ruta,  "2_21.tex"),t70)
-  t71 <- graficaLinea(lista$"2_22", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_22.tex"),t71)
-  t72 <- graficaLinea(lista$"2_23", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_23.tex"),t72)
-  t73 <- graficaLinea(lista$"2_24", inicio=100)
-  exportarLatex(paste( sep="", ruta,  "2_24.tex"),t73)
-  t74 <- graficaLinea(lista$"2_25", inicio=10)
-  exportarLatex(paste( sep="", ruta,  "2_25.tex"),t74)
-  t75 <- graficaLinea(lista$"2_26", inicio=50)
-  exportarLatex(paste( sep="", ruta,  "2_26.tex"),t75)
-  t76 <- graficaCol(lista$"2_27")
+ 
+    t76 <- graficaCol(lista$"2_27")
   t76<- etiquetasHorizontales(t76)
   exportarLatex(paste( sep="", ruta,  "2_27.tex"),t76)
   
@@ -145,11 +92,7 @@ graficasTransportes<- function(lista, ruta, modalidad = "trimestral"){
   
   t22 <- graficaColCategorias(lista$"3_04",ruta = paste( sep="", ruta,  "3_04.tex"),etiquetasCategorias = "A", etiquetas="V", ejeX = "v",ancho = 0.6)
   
-  t23 <- graficaColCategorias(lista$"3_05",ruta = paste( sep="", ruta,  "3_05.tex"),etiquetasCategorias = "A", etiquetas="V", ejeX = "v",ancho = 0.6)
   
-  t24 <- graficaColCategorias(lista$"3_06",ruta = paste( sep="", ruta,  "3_06.tex"),etiquetasCategorias = "A", etiquetas="V", ejeX = "v",ancho = 0.6)
-  
-  t25 <- graficaColCategorias(lista$"3_07",ruta = paste( sep="", ruta,  "3_07.tex"),etiquetasCategorias = "A", etiquetas="V", ejeX = "v",ancho = 0.6)
   
   
   t76 <- graficaCol(lista$"3_08")
