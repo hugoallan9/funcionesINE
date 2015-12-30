@@ -15,7 +15,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
     pre <- T
   }
   
-  g1<- graficaLineaTrim(lista$'1_01')
+  g1<- graficaLinea(lista$'1_01',escala = 'milesmillones')
   exportarLatex(paste(ruta,"1_01.tex", sep=""),g1)
   
   g2 <- graficaCol(lista$"1_02", ordenar = F)
@@ -24,17 +24,17 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g2 <- g2+ ggplot2::geom_abline(intercept = 0, slope = 0)  
   exportarLatex(paste(ruta,"1_02.tex", sep=""),g2)
   
-  g3 <- graficaLineaTrim(lista$"1_03")
+  g3 <- graficaLinea(lista$"1_03", escala = 'milesmillones')
   exportarLatex(paste(ruta,"1_03.tex", sep=""),g3)
   
-  g4<- graficaCol(lista$"1_04", ordenar = F)#cambiar a col
+  g4<- graficaCol(lista$"1_04", ordenar = F)
   g4 <- etiquetasHorizontales(g4)
   g4 <- rotarEtiX(g4)
   g4 <- g4+ ggplot2::geom_abline(intercept = 0, slope = 0) 
   exportarLatex(paste(ruta,"1_04.tex", sep=""),g4)
   
   
-  g5 <- graficaColCategorias(lista$'1_05', ruta = paste(ruta, '1_05.tex'), escala = 'milesmillones')
+  graficaColCategorias(lista$'1_05', ruta = file.path(ruta, '1_05.tex'), escala = 'milesmillones')
   
   
   g6 <- graficaCol(lista$"1_06", ordenar =  F)# cambiar a col
@@ -43,25 +43,15 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g6 <- g6 + ggplot2::geom_abline(intercept = 0, slope = 0) 
   exportarLatex(paste(ruta,"1_06.tex", sep=""),g6)
   
-  #g7<- graficaCol(lista$"1_07")
-  #g7 <- etiquetasHorizontales(g7)
-  #g7 <- rotarEtiX(g7)
-  #exportarLatex("CET1//1_07.tex",g7)
+  graficaColCategorias(lista$'1_07', ruta = file.path(ruta, '1_07.tex'), escala = 'millones')
+  graficaColCategorias(lista$'1_08', ruta = file.path(ruta, '1_08.tex'), escala = 'millones')
   
-  #g8<- graficaCol(lista$"1_08")
-  #g8 <- etiquetasHorizontales(g8)
-  #g8 <- rotarEtiX(g8)
-  #exportarLatex("CET1//1_08.tex",g8)
   
   g9<- graficaBar(lista$"1_09")
   g9 <- etiquetasBarras(g9)
   exportarLatex(paste(ruta,"1_09.tex", sep=""),g9)
   
-  #g9<- graficaCol(lista$"1_09")
-  #g9 <- etiquetasHorizontales(g9)
-  #g9 <- rotarEtiX(g9)
-  #exportarLatex("CET1//1_09.tex",g9)
-  
+ 
   g10<- graficaCol(lista$"1_10")
   g10 <- etiquetasHorizontales(g10)
   g10 <- rotarEtiX(g10)
@@ -87,7 +77,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"1_14.tex", sep=""),g14)
   
   
-  g15<- graficaLineaTrim(lista$"2_01")
+  g15<- graficaLinea(lista$"2_01", escala = 'milesmillones')
   exportarLatex(paste(ruta,"2_01.tex", sep=""),g15)
   
   
@@ -97,7 +87,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"2_02.tex", sep=""),g16)
   
   
-  g17<- graficaLineaTrim(lista$"2_03")
+  g17<- graficaLinea(lista$"2_03",escala = 'milesmillones')
   exportarLatex(paste(ruta,"2_03.tex", sep=""),g17)
   
   
@@ -105,6 +95,12 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g18 <- etiquetasHorizontales(g18)
   g18 <- rotarEtiX(g18)
   exportarLatex(paste(ruta,"2_04.tex", sep=""),g18)
+  
+  graficaColCategorias(lista$'2_05', ruta = file.path(ruta, '2_05.tex'), escala = 'milesmillones')
+  
+  
+  graficaColCategorias(lista$'2_07', ruta = file.path(ruta, '2_07.tex'), escala = 'millones')
+  graficaColCategorias(lista$'2_08', ruta = file.path(ruta, '2_08.tex'), escala = 'millones')
   
   
   g20<- graficaCol(lista$"2_06", ordenar = F)
@@ -140,7 +136,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g28<- etiquetasBarras(g28, margenIz = 0)
   exportarLatex(paste(ruta,"2_14.tex", sep=""),g28)
   
-  g49<- graficaLineaTrim(lista$"3_01")
+  g49<- graficaLinea(lista$"3_01", escala = 'milesmillones')
   exportarLatex(paste(ruta,"3_01.tex", sep=""),g49)
   
   
@@ -150,9 +146,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"3_02.tex", sep=""),g30)
   
   
-  g31<- graficaCol(lista$"3_03", ordenar = F)
-  g31 <- etiquetasHorizontales(g31)
-  g31 <- rotarEtiX(g31)
+  g31<- graficaLinea(lista$"3_03", escala = 'millones')
   exportarLatex(paste(ruta,"3_03.tex", sep=""),g31)
   
   
@@ -161,10 +155,18 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g32 <- rotarEtiX(g32)
   exportarLatex(paste(ruta,"3_04.tex", sep=""),g32)
   
+  graficaColCategorias(lista$'3_05', ruta = file.path(ruta, '3_05.tex'), escala = 'milesmillones')
+  
   g40<- graficaCol(lista$"3_06", ordenar = F)
   g40 <- etiquetasHorizontales(g40)
   g40 <- rotarEtiX(g40)
   exportarLatex(paste(ruta,"3_06.tex", sep=""),g40)
+  
+  graficaColCategorias(lista$'3_07', ruta = file.path(ruta, '3_07.tex'), escala = 'millones')
+  graficaColCategorias(lista$'3_08', ruta = file.path(ruta, '3_08.tex'), escala = 'millones')
+  
+  
+  
   
   g43<- graficaBar(lista$"3_09")
   g43<- etiquetasBarras(g43, margenIz = -12)
@@ -195,7 +197,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"3_14.tex", sep=""),g48)
 
     
-  g50<- graficaLineaTrim(lista$"4_01")
+  g50<- graficaLinea(lista$"4_01", escala = 'millones')
   exportarLatex(paste(ruta,"4_01.tex", sep=""),g50)
   
   
@@ -205,7 +207,7 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta,"4_02.tex", sep=""),g51)
   
   
-  g52<- graficaLineaTrim(lista$"4_03")
+  g52<- graficaLinea(lista$"4_03", escala = 'millones')
   exportarLatex(paste(ruta,"4_03.tex", sep=""),g52)
   
   
@@ -213,6 +215,15 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g53 <- etiquetasHorizontales(g53)
   g53 <- rotarEtiX(g53)
   exportarLatex(paste(ruta,"4_04.tex", sep=""),g53)
+  
+  
+  graficaColCategorias(lista$'4_05', ruta = file.path(ruta, '4_05.tex'), escala = 'milesmillones')
+  
+  
+  graficaColCategorias(lista$'4_07', ruta = file.path(ruta, '4_07.tex'), escala = 'millones')
+  graficaColCategorias(lista$'4_08', ruta = file.path(ruta, '4_08.tex'), escala = 'millones')
+  
+  
   
   g60<- graficaCol(lista$"4_06", ordenar = F)
   g60 <- etiquetasHorizontales(g60)
