@@ -153,8 +153,12 @@ j03_05 <- function(){
   exportarLatex(nombre = paste(getPathJudiciales() , "3_05.tex", sep="/"), g)
 }
 
-graficasJudiciales <- function(){
-  trimestral()
+graficasJudiciales <- function(modalidad = 'trimestral'){
+  if( toupper( modalidad ) == 'TRIMESTRAL' ){
+    trimestral()
+  }else{
+    presentacion()
+  }
   j01_01()
   j01_02()
   j01_03()
