@@ -48,7 +48,7 @@ j01_04 <- function(){
 }
 
 j01_05 <- function(){
-  g <- graficaAnillo(data = getListJudiciales()$'1_05', nombre = paste(getPathJudiciales() , "1_05.tex", sep="/"))
+  g <- graficaAnillo(data = getListJudiciales()$'1_05', nombre = paste(getPathJudiciales() , "1_05.tex", sep="/"), preambulo = F)
 }
 
 j01_06 <- function(){
@@ -100,7 +100,7 @@ j02_02 <- function(){
 }
 
 j02_03 <- function(){
-  g <- graficaAnillo(data = getListJudiciales()$'2_03', nombre = paste(getPathJudiciales() , "2_03.tex", sep="/"))
+  g <- graficaAnillo(data = getListJudiciales()$'2_03', nombre = paste(getPathJudiciales() , "2_03.tex", sep="/"), preambulo = F)
 }
 
 j02_04 <- function(){
@@ -110,7 +110,7 @@ j02_04 <- function(){
 }
 
 j02_05 <- function(){
-  g <- graficaAnillo(data = getListJudiciales()$'2_05', nombre = paste(getPathJudiciales() , "2_05.tex", sep="/"))
+  g <- graficaAnillo(data = getListJudiciales()$'2_05', nombre = paste(getPathJudiciales() , "2_05.tex", sep="/"), preambulo = F)
 }
 
 j02_06 <- function(){
