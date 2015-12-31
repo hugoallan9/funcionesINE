@@ -18,7 +18,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   }
   
   
-  g1<- graficaLinea(lista$"1_011", inicio = 500)
+  g1<- graficaLinea(lista$"1_01", inicio = 500)
   exportarLatex(paste(ruta, "1_01.tex", sep=""),g1)
   
   g2 <- graficaBar(lista$"1_02")
