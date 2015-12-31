@@ -47,32 +47,32 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   graficaColCategorias(lista$'1_08', ruta = file.path(ruta, '1_08.tex'), escala = 'millones')
   
   
-  g9<- graficaBar(lista$"1_09")
+  g9<- graficaBar(lista$"1_09", escala = 'millones')
   g9 <- etiquetasBarras(g9)
   exportarLatex(paste(ruta,"1_09.tex", sep=""),g9)
   
  
-  g10<- graficaCol(lista$"1_10")
+  g10<- graficaCol(lista$"1_10", escala = 'millones')
   g10 <- etiquetasHorizontales(g10)
   g10 <- rotarEtiX(g10)
   exportarLatex(paste(ruta,"1_10.tex", sep=""),g10)
   
   
-  g11<- graficaBar(lista$"1_11")
+  g11<- graficaBar(lista$"1_11", escala = 'millones')
   g11 <- etiquetasBarras(g11)
   exportarLatex(paste(ruta,"1_11.tex", sep=""),g11)
   
-  g12 <- graficaBar(lista$"1_12")
+  g12 <- graficaBar(lista$"1_12", escala = 'millones')
   g12 <- etiquetasBarras(g12)
   exportarLatex(paste(ruta,"1_12.tex", sep=""),g12)
   
   
-  g13<- graficaCol(lista$"1_13")
+  g13<- graficaCol(lista$"1_13", escala = 'millones')
   g13 <- etiquetasHorizontales(g13)
   g13 <- rotarEtiX(g13)
   exportarLatex(paste(ruta,"1_13.tex", sep=""),g13)
   
-  g14<- graficaBar(lista$"1_14")
+  g14<- graficaBar(lista$"1_14", escala = 'millones')
   g14 <- etiquetasBarras(g14, margenIz = -4)
   exportarLatex(paste(ruta,"1_14.tex", sep=""),g14)
   
@@ -108,31 +108,31 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g20 <- rotarEtiX(g20)
   exportarLatex(paste(ruta,"2_06.tex", sep=""),g20)
   
-  g23<- graficaBar(lista$"2_09")
+  g23<- graficaBar(lista$"2_09", escala = 'millones')
   g23<- etiquetasBarras(g23, margenIz = 0)
   exportarLatex(paste(ruta,"2_09.tex", sep=""),g23)
   
-  g24<- graficaCol(lista$"2_10")
+  g24<- graficaCol(lista$"2_10", escala = 'millones')
   g24<- etiquetasHorizontales(g24)
   g24<- rotarEtiX(g24)
   exportarLatex(paste(ruta,"2_10.tex", sep=""),g24)
   
-  g25<- graficaBar(lista$"2_11")
+  g25<- graficaBar(lista$"2_11", escala = 'millones')
   g25<- etiquetasBarras(g25, margenIz = -3)
   exportarLatex(paste(ruta,"2_11.tex", sep=""),g25)
   
   
-  g26<- graficaBar(lista$"2_12")
+  g26<- graficaBar(lista$"2_12", escala = 'millones')
   g26<- etiquetasBarras(g26, margenIz=0)
   exportarLatex(paste(ruta,"2_12.tex", sep=""),g26)
   
-  g27<- graficaCol(lista$"2_13")
+  g27<- graficaCol(lista$"2_13", escala = 'millones')
   g27<- etiquetasHorizontales(g27)
   g27<- rotarEtiX(g27)
   exportarLatex(paste(ruta,"2_13.tex", sep=""),g27)
   
   
-  g28<- graficaBar(lista$"2_14")
+  g28<- graficaBar(lista$"2_14", escala = 'millones')
   g28<- etiquetasBarras(g28, margenIz = 0)
   exportarLatex(paste(ruta,"2_14.tex", sep=""),g28)
   
@@ -168,31 +168,31 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   
   
   
-  g43<- graficaBar(lista$"3_09")
+  g43<- graficaBar(lista$"3_09", escala = 'millones')
   g43<- etiquetasBarras(g43, margenIz = -12)
   exportarLatex(paste(ruta,"3_09.tex", sep=""),g43)
   
-  g44<- graficaCol(lista$"3_10")
+  g44<- graficaCol(lista$"3_10", escala = 'millones')
   g44<- etiquetasHorizontales(g44)
   g44<- rotarEtiX(g44)
   exportarLatex(paste(ruta,"3_10.tex", sep=""),g44)
   
-  g45<- graficaBar(lista$"3_11")
+  g45<- graficaBar(lista$"3_11", escala = 'millones')
   g45<- etiquetasBarras(g45, margenIz = -3)
   exportarLatex(paste(ruta,"3_11.tex", sep=""),g45)
   
   
-  g46<- graficaBar(lista$"3_12")
+  g46<- graficaBar(lista$"3_12", escala = 'millones')
   g46<- etiquetasBarras(g46, margenIz=-3)
   exportarLatex(paste(ruta,"3_12.tex", sep=""),g46)
   
-  g47<- graficaCol(lista$"3_13")
+  g47<- graficaCol(lista$"3_13", escala = 'millones')
   g47<- etiquetasHorizontales(g47)
   g47<- rotarEtiX(g47)
   exportarLatex(paste(ruta,"3_13.tex", sep=""),g47)
   
   
-  g48<- graficaBar(lista$"3_14")
+  g48<- graficaBar(lista$"3_14", escala = 'millones')
   g48<- etiquetasBarras(g48, margenIz = 0)
   exportarLatex(paste(ruta,"3_14.tex", sep=""),g48)
 
@@ -230,31 +230,31 @@ graficasComercio <- function(lista, ruta, modalidad = "trimestral"){
   g60 <- rotarEtiX(g60)
   exportarLatex(paste(ruta,"4_06.tex", sep=""),g60)
   
-  g63<- graficaBar(lista$"4_09")
+  g63<- graficaBar(lista$"4_09", escala = 'millones')
   g63<- etiquetasBarras(g63, margenIz = -4)
   exportarLatex(paste(ruta,"4_09.tex", sep=""),g63)
   
-  g64<- graficaCol(lista$"4_10")
+  g64<- graficaCol(lista$"4_10", escala = 'millones')
   g64<- etiquetasHorizontales(g64)
   g64<- rotarEtiX(g64)
   exportarLatex(paste(ruta,"4_10.tex", sep=""),g64)
   
-  g65<- graficaBar(lista$"4_11")
+  g65<- graficaBar(lista$"4_11", escala = 'millones')
   g65<- etiquetasBarras(g65, margenIz = -3)
   exportarLatex(paste(ruta,"4_11.tex", sep=""),g65)
   
   
-  g66<- graficaBar(lista$"4_12")
+  g66<- graficaBar(lista$"4_12", escala = 'millones')
   g66<- etiquetasBarras(g66, margenIz=-2)
   exportarLatex(paste(ruta,"4_12.tex", sep=""),g66)
   
-  g67<- graficaCol(lista$"4_13")
+  g67<- graficaCol(lista$"4_13", escala = 'millones')
   g67<- etiquetasHorizontales(g67)
   g67<- rotarEtiX(g67)
   exportarLatex(paste(ruta,"4_13.tex", sep=""),g67)
   
   
-  g68<- graficaBar(lista$"4_14")
+  g68<- graficaBar(lista$"4_14", escala = 'millones')
   g68<- etiquetasBarras(g68, margenIz = -4)
   exportarLatex(paste(ruta,"4_14.tex", sep=""),g68)
 }
