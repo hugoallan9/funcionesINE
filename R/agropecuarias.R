@@ -19,20 +19,20 @@ graficasAgropecuarias<- function(lista, ruta, modalidad = "trimestral"){
   
   
   
-  t25 <- graficaCol(lista$"1_01", ordenar = F, escala = "millones")
-  t25 <- etiquetasHorizontales(t25)
-  t25 <- rotarEtiX(t25)
-  exportarLatex(paste(ruta, "1_01.tex", sep = ""), t25)
-  
-  t26 <- graficaCol(lista$"1_02", ordenar = F, escala = "millones")
-  t26 <- etiquetasHorizontales(t26)
-  t26 <- rotarEtiX(t26)
-  exportarLatex(paste(ruta, "1_02.tex", sep = ""), t26)
-  
-  t27 <- graficaCol(lista$"1_03", ordenar = F, escala = "millones")
-  t27 <- etiquetasHorizontales(t27)
-  t27 <- rotarEtiX(t27)
-  exportarLatex(paste(ruta, "1_03.tex", sep = ""), t27)
+#   t25 <- graficaCol(lista$"1_01", ordenar = F, escala = "millones")
+#   t25 <- etiquetasHorizontales(t25)
+#   t25 <- rotarEtiX(t25)
+#   exportarLatex(paste(ruta, "1_01.tex", sep = ""), t25)
+#   
+#   t26 <- graficaCol(lista$"1_02", ordenar = F, escala = "millones")
+#   t26 <- etiquetasHorizontales(t26)
+#   t26 <- rotarEtiX(t26)
+#   exportarLatex(paste(ruta, "1_02.tex", sep = ""), t26)
+#   
+#   t27 <- graficaCol(lista$"1_03", ordenar = F, escala = "millones")
+#   t27 <- etiquetasHorizontales(t27)
+#   t27 <- rotarEtiX(t27)
+#   exportarLatex(paste(ruta, "1_03.tex", sep = ""), t27)
   
   
   
