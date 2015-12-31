@@ -273,10 +273,9 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta, "6_08.tex", sep=""),g20)
   
   
-  graficaAnillo(lista$'6_09', nnombre = file.path(ruta, '6_09'), preambulo = F)
+  graficaAnillo(lista$'6_09', nombre = file.path(ruta, '6_09'), preambulo = F)
   
   
-graficaBarFacets(lista$'6_10', ruta = file.path(ruta, '6_10.tex'),preambulo = F)
   
   g20 <- graficaBar(lista$"6_11")
   g20 <- etiquetasBarras(g20)
