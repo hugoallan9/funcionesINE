@@ -268,48 +268,29 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   
-  g20 <- graficaBar(lista$"6_08")
-  g20 <- etiquetasBarras(g20)
+  g20 <- graficaCol(lista$"6_08")
+  g20 <- etiquetasHorizontales(g20)
   exportarLatex(paste(ruta, "6_08.tex", sep=""),g20)
   
   
+  graficaAnillo(lista$'6_09', nnombre = file.path(ruta, '6_09'), preambulo = F)
   
-  g20 <- graficaBar(lista$"6_09")
+  
+graficaBarFacets(lista$'6_10', ruta = file.path(ruta, '6_10.tex'),preambulo = F)
+  
+  g20 <- graficaBar(lista$"6_11")
   g20 <- etiquetasBarras(g20)
-  exportarLatex(paste(ruta, "6_09.tex", sep=""),g20)
-  
-  
-  g20 <- graficaCol(lista$"6_10")
-  g20 <- etiquetasVerticales(g20)
-  g20 <- rotarEtiX(g20)
-  exportarLatex(paste(ruta, "6_10.tex", sep=""),g20)
+  exportarLatex(paste(ruta, "6_11.tex", sep=""),g20)
   
   
   
-  t334<- graficaAnillo(data = lista$"6_11",
-                       nombre =  paste(ruta, "6_11.tex", sep=""), preambulo = F)
+  
+  
+  g11 <-graficaBar(lista$"6_12")
+  g11 <- etiquetasBarras(g11)
+  exportarLatex(file.path(ruta, '6_12.tex'))
+  
 
-  
-  
-  g11 <-graficaBarFacets(lista$"6_12", ruta = paste(ruta, "6_12.tex", sep=""),
-                         escala = 'normal', etiquetas = 'H', preambulo = F)
-  
-  
-  g20 <- graficaBar(lista$"6_13")
-  g20 <- etiquetasBarras(g20)
-  exportarLatex(paste(ruta, "6_13.tex", sep=""),g20)
-  
-  g20 <- graficaBar(lista$"6_14")
-  g20 <- etiquetasBarras(g20)
-  exportarLatex(paste(ruta, "6_14.tex", sep=""),g20)
-  
-  g20 <- graficaBar(lista$"6_15")
-  g20 <- etiquetasBarras(g20)
-  exportarLatex(paste(ruta, "6_15.tex", sep=""),g20)
-  
-  g20 <- graficaBar(lista$"6_16")
-  g20 <- etiquetasBarras(g20)
-  exportarLatex(paste(ruta, "6_16.tex", sep=""),g20)
   
   
 }
