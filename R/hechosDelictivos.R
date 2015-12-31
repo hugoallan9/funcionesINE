@@ -270,6 +270,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   g20 <- graficaCol(lista$"6_08")
   g20 <- etiquetasHorizontales(g20)
+  g20 <- rotarEtiX(g20)
   exportarLatex(paste(ruta, "6_08.tex", sep=""),g20)
   
   
