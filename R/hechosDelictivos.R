@@ -282,7 +282,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   g20 <- etiquetasBarras(g20)
   exportarLatex(paste(ruta, "6_11.tex", sep=""),g20)
   
-  
+  graficaBarFacets(lista$'6_10', ruta = file.path(ruta, "6_10.tex"), preambulo = F)
   
   
   
