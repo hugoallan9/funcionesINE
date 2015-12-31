@@ -32,8 +32,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta, "1_03.tex", sep=""),g3)
   
   t6<- graficaAnillo(data = lista$"1_04",
-                     nombre =  paste(ruta, "1_04.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "1_04.tex", sep=""))
+                     nombre =  paste(ruta, "1_04.tex", sep=""), preambulo = F)
   
   
   g5<-piramidePoblacional(lista$"1_05", ruta = paste(ruta, "1_05.tex", sep=""),
@@ -57,8 +56,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   t6<- graficaAnillo(data = lista$"1_09",
-                     nombre =  paste(ruta, "1_09.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "1_09.tex", sep=""))
+                     nombre =  paste(ruta, "1_09.tex", sep=""), preambulo = F)
   
   
   
@@ -87,8 +85,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta, "2_03.tex", sep=""),g13)
   
   t14<- graficaAnillo(data = lista$"2_04",
-                      nombre =  paste(ruta, "2_04.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "2_04.tex", sep=""))
+                      nombre =  paste(ruta, "2_04.tex", sep=""), preambulo = F)
   
   g15<-piramidePoblacional(lista$"2_05", ruta = paste(ruta, "2_05.tex", sep=""),porcentual = F,
                            preambulo = F)
@@ -114,8 +111,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   t6<- graficaAnillo(data = lista$"2_09",
-                     nombre =  paste(ruta, "2_09.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "2_09.tex", sep=""))
+                     nombre =  paste(ruta, "2_09.tex", sep=""), preambulo = F)
   
   
   
@@ -148,15 +144,14 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta, "3_03.tex", sep=""),g20)
   
   
-  g200 <- graficaCol(lista$"3_04")
-  g200 <- etiquetasHorizontales(g200)
-  exportarLatex(paste(ruta, "3_04.tex", sep=""),g200)
+#   g200 <- graficaCol(lista$"3_04")
+#   g200 <- etiquetasHorizontales(g200)
+#   exportarLatex(paste(ruta, "3_04.tex", sep=""),g200)
+#   
   
   
-  
-  t333<- graficaAnillo(data = lista$"3_05",
-                       nombre =  paste(ruta, "3_05.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "3_05.tex", sep=""))
+  graficaAnillo(data = lista$"3_05",
+                       nombre =  paste(ruta, "3_05.tex", sep=""), preambulo = F)
   
   
   g10<-piramidePoblacional(lista$"3_06", ruta = paste(ruta, "3_06.tex", sep=""),
@@ -181,8 +176,8 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   t6<- graficaAnillo(data = lista$"4_04",
-                     nombre =  paste(ruta, "4_04.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "4_04.tex", sep=""))
+                     nombre =  paste(ruta, "4_04.tex", sep=""), preambulo = F)
+
   
   
   
@@ -212,8 +207,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   t6<- graficaAnillo(data = lista$"5_04",
-                     nombre =  paste(ruta, "5_04.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "5_04.tex", sep=""))
+                     nombre =  paste(ruta, "5_04.tex", sep=""), preambulo = F)
   
   
   g35 <- graficaCol(lista$"5_05", ordenar = F)
@@ -245,8 +239,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   t333<- graficaAnillo(data = lista$"6_02",
-                       nombre =  paste(ruta, "6_02.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "6_02.tex", sep=""))
+                       nombre =  paste(ruta, "6_02.tex", sep=""), preambulo = F)
   
   
   g20 <- graficaCol(lista$"6_03")
@@ -256,11 +249,10 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   t334<- graficaAnillo(data = lista$"6_04",
-                       nombre =  paste(ruta, "6_04.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "6_04.tex", sep=""))
+                       nombre =  paste(ruta, "6_04.tex", sep=""), preambulo = F)
   
   
-  g11 <-graficaBarFacets(lista$"6_05", ruta = paste(ruta, "6_05.tex", sep=""),
+  graficaBarFacets(lista$"6_05", ruta = paste(ruta, "6_05.tex", sep=""),
                          escala = 'normal', etiquetas = 'H', preambulo = F)
   
   
@@ -295,8 +287,8 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   
   
   t334<- graficaAnillo(data = lista$"6_11",
-                       nombre =  paste(ruta, "6_11.tex", sep=""), preambulo = T)
-  compilar(ruta= paste(ruta, "6_11.tex", sep=""))
+                       nombre =  paste(ruta, "6_11.tex", sep=""), preambulo = F)
+
   
   
   g11 <-graficaBarFacets(lista$"6_12", ruta = paste(ruta, "6_12.tex", sep=""),
