@@ -274,7 +274,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
   exportarLatex(paste(ruta, "6_08.tex", sep=""),g20)
   
   
-  graficaAnillo(lista$'6_09', nombre = file.path(ruta, '6_09'), preambulo = F)
+  graficaAnillo(lista$'6_09', nombre = file.path(ruta, '6_09.tex'), preambulo = F)
   
   
   
