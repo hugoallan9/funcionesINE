@@ -35,7 +35,7 @@ graficasDelictivos<- function(lista, ruta, modalidad = "trimestral"){
                      nombre =  paste(ruta, "1_04.tex", sep=""), preambulo = F)
   
   
-  g5<-piramidePoblacional(lista$"1_05", ruta = paste(ruta, "1_05.tex", sep=""),
+  piramidePoblacional(lista$"1_05", ruta = paste(ruta, "1_05.tex", sep=""),
                           porcentual=F,preambulo = F)
   
   g6 <- graficaBar(lista$"1_06")
