@@ -628,10 +628,11 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
   print(data)
   if ( nrow(subset(data, y<0)) > 0 ){
     min <- min(data$y)
+    print(c("El mínimo es: ", min))
     espacio <- tikzDevice::getLatexStrWidth(formatC(min,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala)
-    espacio <- pt2mm(espacio)
+    espacio <- pt2mm(espacio)+ 1 
   }else{
-    espacio <- -2
+    espacio <- 0
   }
   print(c("El valor de espacio es: ", espacio))
   longitudIzquierda <- 5
@@ -661,16 +662,7 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     
     
     d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)
-    
-#     if(pkg.env$botarCeros == T)
-#     {
-#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision)
-#     }
-#     else
-#     {
-#       d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = T)
-#     }
-    
+
     print("#####LAS ETIQUETAS SON ##########" )
     print(d$etiqueta)
     
@@ -687,8 +679,10 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
   
 
   
-  graph <- graph + ggplot2::theme(axis.ticks.margin = grid::unit(c(0,espacio),"mm"),
-                 plot.margin = grid::unit(c(0,longitud,1,longitudIzquierda), "mm"))
+  graph <- graph + ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,0), "mm")
+                                  ,axis.text.y= ggplot2::element_text(margin=ggplot2::margin(0,espacio,0,0, unit = "mm") )                
+                  #,axis.text.y = ggplot2::element_text(margin=ggplot2::margin(0,longitud,1,longitudIzquierda), "mm")
+                  )
   
   return(graph)
 } 
