@@ -630,7 +630,7 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     min <- min(data$y)
     print(c("El mínimo es: ", min))
     espacio <- tikzDevice::getLatexStrWidth(formatC(min,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala)
-    espacio <- pt2mm(espacio)+ 1 
+    espacio <- pt2mm(espacio)+ 3 
   }else{
     espacio <- 0
   }
