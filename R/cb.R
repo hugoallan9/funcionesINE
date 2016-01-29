@@ -45,7 +45,134 @@ capitulo2CB <- function(){
   print(getListCB())
   
   g<- graficaLinea(getListCB()$"2_01")
-  exportarLatex(paste(getPath(),"2_01Alt.tex",sep="/"),g, preambulo = T )
+  exportarLatex(paste(getPath(),"2_01.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_02")
+  exportarLatex(paste(getPath(),"2_02.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_03")
+  exportarLatex(paste(getPath(),"2_03.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_04")
+  exportarLatex(paste(getPath(),"2_04.tex",sep="/"),g, preambulo = T )
+
+  
+  g<- graficaLinea(getListCB()$"2_05")
+  exportarLatex(paste(getPath(),"2_05.tex",sep="/"),g, preambulo = T )
+  
+  
+  
+  g<- graficaLinea(getListCB()$"2_06")
+  exportarLatex(paste(getPath(),"2_06.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_06")
+  exportarLatex(paste(getPath(),"2_06.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_07")
+  exportarLatex(paste(getPath(),"2_07.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_08")
+  exportarLatex(paste(getPath(),"2_08.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_09")
+  exportarLatex(paste(getPath(),"2_09.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_10")
+  exportarLatex(paste(getPath(),"2_11.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_12")
+  exportarLatex(paste(getPath(),"2_13.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_14")
+  exportarLatex(paste(getPath(),"2_14.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_15")
+  exportarLatex(paste(getPath(),"2_16.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_17")
+  exportarLatex(paste(getPath(),"2_17.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_18")
+  exportarLatex(paste(getPath(),"2_18.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_19")
+  exportarLatex(paste(getPath(),"2_19.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_20")
+  exportarLatex(paste(getPath(),"2_20.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_21")
+  exportarLatex(paste(getPath(),"2_21.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_22")
+  exportarLatex(paste(getPath(),"2_22.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_23")
+  exportarLatex(paste(getPath(),"2_23.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_24")
+  exportarLatex(paste(getPath(),"2_24.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_25")
+  exportarLatex(paste(getPath(),"2_25.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_26")
+  exportarLatex(paste(getPath(),"2_26.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_27")
+  exportarLatex(paste(getPath(),"2_27.tex",sep="/"),g, preambulo = T )
   
 
+  g<- graficaLinea(getListCB()$"2_28")
+  exportarLatex(paste(getPath(),"2_28.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_29")
+  exportarLatex(paste(getPath(),"2_29.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_30")
+  exportarLatex(paste(getPath(),"2_30.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_31")
+  exportarLatex(paste(getPath(),"2_31.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_32")
+  exportarLatex(paste(getPath(),"2_32.tex",sep="/"),g, preambulo = T )
+  
+  g<- graficaLinea(getListCB()$"2_33")
+  exportarLatex(paste(getPath(),"2_33.tex",sep="/"),g, preambulo = T )
+  
+  
+  g<- graficaLinea(getListCB()$"2_34")
+  exportarLatex(paste(getPath(),"2_34.tex",sep="/"),g, preambulo = T )
+  
+  
+  
+  g<- graficaLinea(getListCB()$"2_35")
+  exportarLatex(paste(getPath(),"2_35.tex",sep="/"),g, preambulo = T )
+  
+
+  
+  g<- graficaLinea(getListCB()$"2_36")
+  exportarLatex(paste(getPath(),"2_36.tex",sep="/"),g, preambulo = T )
+  
+    
+  
+  
 }
