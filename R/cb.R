@@ -24,6 +24,18 @@ getPath <- function(){
   return(pkg.env$rutaCB)
 }
 
+#'Funcion para generar las graficas de la canasta básica
+graficasCanasta <- function(modalidad = 'trimestral'){
+  if( modalidad = 'trimestral'){
+    pkg.env$modalidad = 'trimestral'
+  }else{
+    pkg.env$modalidad = 'presentacion'
+  }
+  capitulo1CB()
+  capitulo2CB()
+}
+
+
 #'Funcion para hacer las graficas del capitulo 1
 capitulo1CB <- function(){
   anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
