@@ -26,7 +26,7 @@ getPath <- function(){
 
 #'Funcion para generar las graficas de la canasta básica
 graficasCanasta <- function(modalidad = 'trimestral'){
-  if( modalidad = 'trimestral'){
+  if( modalidad == 'trimestral'){
     pkg.env$modalidad = 'trimestral'
   }else{
     pkg.env$modalidad = 'presentacion'
