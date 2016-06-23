@@ -41,7 +41,7 @@ j01_03 <- function(){
 }
 
 j01_04 <- function(){
-  g <- graficaCol(data = getListJudiciales()$'1_04')
+  g <- graficaCol(data = getListJudiciales()$'1_04', ordenar = F)
   g <- etiquetasHorizontales(g)
   g <- rotarEtiX(g)
   exportarLatex(nombre = paste(getPathJudiciales() , "1_04.tex", sep="/"), g)
