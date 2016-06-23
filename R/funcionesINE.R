@@ -768,8 +768,7 @@ etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F)
   
  #axis.ticks.margin = grid::unit(c(espacio,0),"mm"),
   
-  graph <- graph + ggplot2::theme(axis.text.x = element_text(margin=margin(0,0,espacio,0,"mm")),
-                                  plot.margin = grid::unit(c(top,0,0,-espacio), "mm"))
+  graph <- graph + ggplot2::theme(axis.text.x = element_text(margin=margin(0,0,espacio,0,"mm")))
   
   return(graph)
   
