@@ -22,9 +22,6 @@ cambiarGraficas <- function(tamFuente){
     axis.ticks.y = ggplot2::element_line(size = NULL, color=NA),
     plot.background = ggplot2::element_rect(fill = NA, colour=NA),
     panel.border = ggplot2::element_rect(colour = NA, fill=NA),
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
     panel.ontop = TRUE
   )
   
