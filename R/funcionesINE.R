@@ -955,15 +955,21 @@ cambiarCodificacion <- function(tabla){
 #'@export
 compilar <- function(ruta = "", mostrar = T){
   if (.Platform$OS.type == "windows") {
-    shell(cmd=paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)  
+    print(paste("C: && cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)
+    shell(cmd=paste("C: && cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta), mustWork=TRUE, intern=TRUE, translate=TRUE)  
   }else{
   cadenaCompilacion <-  paste("cd", dirname(ruta), "&&xelatex  --synctex=1 --interaction=nonstopmode",ruta)
   print(cadenaCompilacion)
   suppressWarnings(silence <- system( cadenaCompilacion, intern=T, ignore.stderr=T))
   }
   if( mostrar == T){
-    system(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"), intern = T, ignore.stderr = T)  
-  }
+    if ( .Platform$OS.type == "windows"){ 
+    print(paste0('start ',paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/")))
+    system(paste0('cmd.exe /c start ',paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/")), intern = T, ignore.stderr = T) 
+    }else{
+     system(paste(dirname(ruta), gsub(".tex",".pdf",basename(ruta)), sep="/"), intern = T, ignore.stderr = T) 
+      }
+    }
   
 }
 

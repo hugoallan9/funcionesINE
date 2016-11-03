@@ -25,7 +25,8 @@
     rutaPadre = "~/Dictionary"
     rutaDiccionario = "tikzMetricsDictionary"  
   }else{
-    rutaPadre = "C:"
+    usuario = Sys.getenv("USERNAME")
+    rutaPadre = paste0("C:/Users/", usuario)
     rutaDiccionario = "tikzMetricsDictionary"
   }
   
