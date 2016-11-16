@@ -46,7 +46,7 @@ cambiarGraficas <- function(tamFuente){
     axis.line.x = ggplot2::element_line(colour = NA),
     axis.line.y = ggplot2::element_line(colour = NA),
     axis.text.y = ggplot2::element_text(colour = NA),
-    panel.margin = grid::unit(c(0.2,0,0),"cm"),
+    panel.margin = grid::unit(c(0.2,0,0,0),"cm"),
     plot.margin = grid::unit(c(1,0,0,-1),"cm"),
     strip.text = ggplot2::element_text(family = "Open Sans Condensed Light", colour = "black", face = "plain", size = pkg.env$fontSize, hjust = 0.5, vjust =1.7, angle = 0, lineheight = 0.9),
     plot.margin = grid::unit(c(0,0,0,-1),"cm"),
