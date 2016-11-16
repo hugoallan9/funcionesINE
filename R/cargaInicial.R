@@ -3,6 +3,9 @@
   ## Load all fonts
   extrafont::loadfonts("pdf", quiet = TRUE)
   extrafont::loadfonts("postscript", quiet = TRUE)
+  if ( "Open Sans Condensed Light" %in% extrafont::fonts() ) {
+    extrafont::fonts_import()
+  }
   if (.Platform$OS.type == "windows") {
     extrafont::loadfonts("win", quiet = TRUE)
   }
