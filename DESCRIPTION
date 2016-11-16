@@ -20,7 +20,8 @@ Imports:
   mailR,
   stringr, 
   xlsx,
-  xlsxjars
+  xlsxjars, 
+  extrafontdb
 Description: Algoritmos basicos para la creacion de cuadros estadisticos con estilos propios
 License: GNU
 LazyData: true
