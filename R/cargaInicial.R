@@ -1,10 +1,10 @@
 .onAttach <- function(libname, pkgname) {
-  require(extrafont)
   packageStartupMessage("Este paquete usa una fuente en especifico, registrandola")
   ## Load all fonts
   extrafont::loadfonts("pdf", quiet = TRUE)
   extrafont::loadfonts("postscript", quiet = TRUE)
   if ( ! "Open Sans Condensed Light" %in% fonts() ) {
+    require(extrafont)
     print("Vamos a importar las fuentes, ingrese Y y presione ENTER")
     font_import()
   }
