@@ -4,6 +4,7 @@
   extrafont::loadfonts("pdf", quiet = TRUE)
   extrafont::loadfonts("postscript", quiet = TRUE)
   if ( "Open Sans Condensed Light" %in% extrafont::fonts() ) {
+    print("Hola")
     extrafont::fonts_import()
   }
   if (.Platform$OS.type == "windows") {
