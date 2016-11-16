@@ -6,7 +6,7 @@
   extrafont::loadfonts("postscript", quiet = TRUE)
   if ( ! "Open Sans Condensed Light" %in% fonts() ) {
     print("Vamos a importar las fuentes, ingrese Y y presione ENTER")
-    fonts_import()
+    font_import()
   }
   if (.Platform$OS.type == "windows") {
     extrafont::loadfonts("win", quiet = TRUE)
