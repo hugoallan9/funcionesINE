@@ -757,36 +757,47 @@ etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F)
     top <- 6
     
     
+    #######################
+    pkg.env$digitos <- precision
+    
+#     if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
+#     {
+#       graph <- graph +
+#         ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+#         ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
+#     }
+#     else
+#     {
+#       graph <- graph +
+#         ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)
+#     }
+    
+    ent <- F
+    if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0){
+      ent <- T
+    }else{
+      ent <-F
+    }
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",formatC(etiqueta,digits = pkg.env$digitos,big.mark = ",", drop0trailing = ent)),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5 )
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",formatC(etiqueta,digits = pkg.env$digitos,big.mark = ",", drop0trailing = ent)),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5 )
     }
   }
   
  #axis.ticks.margin = grid::unit(c(espacio,0),"mm"),
+  longitud <- margenArriba <- pt2mm(calcularAlto(10))
+  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(margin=ggplot2::margin(0,0,espacio,0,"mm")))+
+    ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
   
-  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(margin=ggplot2::margin(0,0,espacio,0,"mm")))
+  
+  
   
   return(graph)
   
-  #######################
-#   pkg.env$digitos <- precision
-#   longitud <- 6
-#   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
-#   {
-#     graph <- graph +
-#       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
-#       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
-#   }
-#   else
-#   {
-#     graph <- graph +
-#       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
-#       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
-#   }
+
 }
 
 
