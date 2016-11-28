@@ -1148,9 +1148,9 @@ trimestral <- function(){
 #'rgb(v1,v2,v3, maxColorValue = 255), si maxColorValue no está definido
 #'se usa por defecto 1. 
 #'rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1)
-anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333333333333,1)){
-  pkg.env$alto <- 2.75  ##2.75
-  pkg.env$ancho <- 4
+anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333333333333,1), alto = 2.75, ancho = 4){
+  pkg.env$alto <- alto  ##2.75
+  pkg.env$ancho <- ancho
   options(tikzDocumentDeclaration= "\\documentclass[11pt,twoside]{book}")
   pkg.env$fontSize = 11
   pkg.env$color1 <- color1
@@ -1160,6 +1160,7 @@ anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333
   pkg.env$modalidad <- "anual"
   pkg.env$fEscala <- 1
   cambiarGraficas(tamFuente = 11)
+  
   #pkg.env$fontSize <- 11
 }
 
