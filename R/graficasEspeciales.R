@@ -317,7 +317,7 @@ graficaColCategorias <- function(data, etiquetasCategorias = "A", escala = "norm
 #'@param escala Indica la escala en la cual debe estar el eje y de la grafica. Por defecto se encuentra en normal. Las opciones
 #' son "miles", "millones" o "milesmillones".
 #'
-graficaBarFacets <-function(data, ruta, escala = 'normal', etiquetas = 'H', preambulo = F){
+graficaBarFacets <-function(data, ruta, escala = 'normal', etiquetas = 'H', preambulo = F, precision = 1){
   x <- rep(data$x,length(data)-1)
   y <- NULL
   for(i in 2:length(data)){
@@ -351,7 +351,7 @@ graficaBarFacets <-function(data, ruta, escala = 'normal', etiquetas = 'H', prea
     grafica <- grafica + ggplot2::facet_grid(. ~ categoria)
     
   ##Poniendo las etiquetas
-    grafica <- etiquetasFacets(grafica)
+    grafica <- etiquetasFacets(grafica, precision)
   
   ##etiquetas para el eje X
     margenes <- NULL
