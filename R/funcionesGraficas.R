@@ -8,7 +8,7 @@
 #' son "miles", "millones" o "milesmillones".
 #' @return La gráfica lista para agregarle etiquetas y toques finales 
 #' @export
-graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE, escala = "normal")
+graficaCol <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = FALSE, escala = "normal", rotar, inicio)
 {
   
   ggplot2::theme_set(pkg.env$temaColumnas)
