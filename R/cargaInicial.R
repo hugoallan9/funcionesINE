@@ -48,4 +48,13 @@
   # Variables para las legendas
   pkg.env$longCuadrado <- 2.5 #<--- Esta está en mm
   pkg.env$tol <- pkg.env$ancho/40
+  
+  #La longitud máxima para una palabra
+  
+  pkg.env$longitudMaxima <- 25
+  
+  #Verificando si existe el diccionario de palabras
+  crearDiccionarioPalabras()
+  
+  
 }
