@@ -451,17 +451,17 @@ etiquetasLineas <- function(graph, posiciones, precision=1)
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA" ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA" ,"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
     }else if(posiciones[[i]] == 0.5)
     {
-      graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","", etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
+      graph <- graph +ggplot2::geom_text(data =d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","", etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
     }
     else
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == "NA","",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
     }
     
     
@@ -508,17 +508,17 @@ etiquetasLineasDobles <- function(graph, pos, precision=1)
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d1, ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d1, ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA' ,"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
+      graph <- graph + ggplot2::geom_text(data = d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
     }else if(posiciones[[i]] == 0.5)
     {
-      graph <- graph +ggplot2::geom_text(data =d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"", etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
+      graph <- graph +ggplot2::geom_text(data =d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"", etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
     }
     else
     {
-      graph <- graph + ggplot2::geom_text(data = d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
+      graph <- graph + ggplot2::geom_text(data = d1,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
     }
     
   }
@@ -540,17 +540,17 @@ etiquetasLineasDobles <- function(graph, pos, precision=1)
     
     if(posiciones2[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d2, ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d2, ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA' ,"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
     }else if(posiciones2[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
+      graph <- graph + ggplot2::geom_text(data = d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5)
     }else if(posiciones2[[i]] == 0.5)
     {
-      graph <- graph +ggplot2::geom_text(data =d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"", etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
+      graph <- graph +ggplot2::geom_text(data =d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"", etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0, vjust = -0.5)
     }
     else
     {
-      graph <- graph + ggplot2::geom_text(data = d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
+      graph <- graph + ggplot2::geom_text(data = d2,ggplot2::aes(y=y,label=ifelse(etiqueta == 'NA',"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 1.2, vjust = 0)
     }
     
   }
@@ -619,13 +619,8 @@ rotarEtiX2 <- function(graph)
 etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas = F)
 {
   pkg.env$precision <- precision
-  posiciones <- NULL
-    
-    posiciones <- posicionesBarras(ggplot2::ggplot_build((graph))$data[[1]]$y)
     
   data <- ggplot2::ggplot_build(graph)$data[[1]]
-  print(names(data))
-  print(data)
   if ( nrow(subset(data, y<0)) > 0 ){
     min <- min(data$y)
     print(c("El mínimo es: ", min))
@@ -634,7 +629,6 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
   }else{
     espacio <- 0
   }
-  print(c("El valor de espacio es: ", espacio))
   longitudIzquierda <- 5
   max <-max(ggplot2::ggplot_build(graph)$data[[1]]$y)
   min <-min(ggplot2::ggplot_build(graph)$data[[1]]$y)
@@ -654,40 +648,13 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     pkg.env$botarCeros <- F
   }
   
-  d <- ggplot2::ggplot_build(graph)$data[[1]]
-  # for(i in 1:length(posiciones)){
-  #   if (cambiarNegativas == T){
-  #     dato <- -1*d$y[[i]]  
-  #   }else{
-  #     dato <- d$y[[i]]
-  #   }
-  #   
-  #   
-  #   d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)
-  # 
-  #   print("#####LAS ETIQUETAS SON ##########" )
-  #   print(d$etiqueta)
-  #   
-  #  
-  #   
-  #   if(posiciones[[i]] == 1)
-  #   {
-  #     graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5)
-  #   }else if(posiciones[[i]] == -1)
-  #   {
-  #     graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0.5)
-  #   }
-  # }
+
+
   
-  datos <-ggplot2::ggplot_build(graph)$data[[1]]
+  data$etiqueta <- formatC(as.numeric(  formatC(data$y, format = "f",big.mark = ",", digits = pkg.env$precision,  drop0trailing = !pkg.env$botarCeros), cex = pkg.env$fEscala) )
+
   
-  datos$etiqueta <- formatC(as.numeric(  formatC(datos$y, format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala) )
-  
-  print(datos$y)
-  print(datos)
-  print(d)
-  
-  graph <- graph + ggplot2::geom_text(data = datos ,ggplot2::aes(label= etiqueta ,family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5,  drop0trailing = !pkg.env$botarCeros)
+  graph <- graph + ggplot2::geom_text(data = data ,ggplot2::aes(label= etiqueta ,family=pkg.env$fuente),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5)
   
   
 
@@ -746,10 +713,10 @@ etiquetasBarras2 <- function(graph, margenIz = 0, precision = 1, cambiarNegativa
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = "outward", vjust = "outward")
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = "outward", vjust = "outward")
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = "outward", vjust = "outward")
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = "outward", vjust = "outward")
     }
   }
   
@@ -832,10 +799,10 @@ etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F)
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = -0.5)
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5 )
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family=pkg.env$fuente),size=pkg.env$sizeText,hjust = 0.5, vjust = 1.5 )
     }
   }
   
@@ -851,13 +818,13 @@ etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F)
 #   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
 #   {
 #     graph <- graph +
-#       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+#       ggplot2::geom_text(ggplot2::aes(family = pkg.env$fuente,label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
 #       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
 #   }
 #   else
 #   {
 #     graph <- graph +
-#       ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+#       ggplot2::geom_text(ggplot2::aes(family = pkg.env$fuente,label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
 #       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,3,0), "mm"))
 #   }
 }
@@ -875,13 +842,13 @@ etiquetasFacets <- function(graph, precision = 1)
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = pkg.env$fuente,label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = F)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(4,0,2,-8), "mm"))
   }
   else
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = pkg.env$fuente,label= formatC(y,format = "f",digits = pkg.env$digitos,big.mark = ",", drop0trailing = T)),size=pkg.env$sizeText, hjust=0.5, vjust = -0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(4,0,2,-8), "mm"))
   }
 }
@@ -901,13 +868,13 @@ etiquetasVerticales <- function(graph, precision = 1)
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =pkg.env$digitos)), angle = 90, size=pkg.env$sizeText, hjust=-0.3, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = pkg.env$fuente,label= formatC(y, big.mark = ",", format = "f", digits =pkg.env$digitos)), angle = 90, size=pkg.env$sizeText, hjust=-0.3, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))  
   }
   else
   {
     graph <- graph +
-      ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(y, big.mark = ",", format = "f", digits =0, drop0trailing = T)), angle = 90, size=pkg.env$sizeText, hjust=-0.3, vjust = 0.5)+
+      ggplot2::geom_text(ggplot2::aes(family = pkg.env$fuente,label= formatC(y, big.mark = ",", format = "f", digits =0, drop0trailing = T)), angle = 90, size=pkg.env$sizeText, hjust=-0.3, vjust = 0.5)+
       ggplot2::theme(plot.margin = grid::unit(c(longitud,0,0,0), "mm"))
   }
 }
@@ -1218,7 +1185,7 @@ trimestral <- function(){
 #'rgb(v1,v2,v3, maxColorValue = 255), si maxColorValue no está definido
 #'se usa por defecto 1. 
 #'rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1)
-anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333333333333,1)){
+anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333333333333,1),fuente = pkg.env$fuente){
   pkg.env$alto <- 2.75  ##2.75
   pkg.env$ancho <- 4
   options(tikzDocumentDeclaration= "\\documentclass[11pt,twoside]{book}")
@@ -1229,9 +1196,27 @@ anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333
   pkg.env$colorRelleno2 <- color2
   pkg.env$modalidad <- "anual"
   pkg.env$fEscala <- 1
+  pkg.env$fuente <- fuente
   cambiarGraficas(tamFuente = 11)
   #pkg.env$fontSize <- 11
 }
+
+web <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333333333333,1)){
+  pkg.env$alto <- 2.75  ##2.75
+  pkg.env$ancho <- 4
+  options(tikzDocumentDeclaration= "\\documentclass[11pt,twoside]{book}")
+  pkg.env$fontSize = 11
+  pkg.env$color1 <- color1
+  pkg.env$color2 <- color2
+  pkg.env$colorRelleno <- color1
+  pkg.env$colorRelleno2 <- color2
+  pkg.env$modalidad <- "anual"
+  pkg.env$fEscala <- 1.9
+  cambiarGraficas(tamFuente = 28)
+  #pkg.env$fontSize <- 11
+}
+
+
 
 #'Función para poner parametrización del formato de presentaciones
 presentacion <- function(){

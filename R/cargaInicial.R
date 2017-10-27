@@ -56,5 +56,7 @@
   #Verificando si existe el diccionario de palabras
   crearDiccionarioPalabras()
   
+  pkg.env$fuente <- "Open Sans Condensed Light"
+  
   
 }
