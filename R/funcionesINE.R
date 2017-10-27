@@ -651,7 +651,7 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
 
 
   
-  data$etiqueta <- formatC(as.numeric(  formatC(data$y, format = "f",big.mark = ",", digits = pkg.env$precision,  drop0trailing = !pkg.env$botarCeros), cex = pkg.env$fEscala) )
+  data$etiqueta <- formatC( formatC(data$y, format = "f",big.mark = ",", digits = pkg.env$precision,  drop0trailing = !pkg.env$botarCeros), cex = pkg.env$fEscala ) 
 
   
   graph <- graph + ggplot2::geom_text(data = data ,ggplot2::aes(label= etiqueta ,family=pkg.env$fuente),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5)
