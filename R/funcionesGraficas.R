@@ -84,7 +84,7 @@ graficaBar <- function(data, color1=pkg.env$color1, ancho = 0.6, ordenar = TRUE,
     ggplot2::scale_y_continuous(breaks=NULL, expand= c(0.0,0.0))+
     ggplot2::theme(
       axis.line.y = ggplot2::element_line(colour = NA)
-    )+
+    ) +
     ggplot2::coord_flip()
   
 

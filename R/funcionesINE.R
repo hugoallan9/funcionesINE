@@ -636,13 +636,89 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
   }
   print(c("El valor de espacio es: ", espacio))
   longitudIzquierda <- 5
-  max <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[2]
-  min <-ggplot2::ggplot_build(graph)$panel$ranges[[1]]$x.range[1]
-  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala) 
+  max <-max(ggplot2::ggplot_build(graph)$data[[1]]$y)
+  min <-min(ggplot2::ggplot_build(graph)$data[[1]]$y)
+  longitud <- tikzDevice::getLatexStrWidth(formatC(max,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala)
+  print(paste("El valor de longitud antes de conversion es ", longitud, max))
   longitud <- longitud*0.352777778 + 2.3
   longitudInferior <- tikzDevice::getLatexStrWidth(formatC(min,format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala)
   longitudInferior <- longitudInferior*0.352777778 + 2.3
   mIz <- 0 + margenIz
+  print(paste("El valor de longitud es", longitud))
+  if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
+  {
+    pkg.env$botarCeros <- T
+  }
+  else
+  {
+    pkg.env$botarCeros <- F
+  }
+  
+  d <- ggplot2::ggplot_build(graph)$data[[1]]
+  # for(i in 1:length(posiciones)){
+  #   if (cambiarNegativas == T){
+  #     dato <- -1*d$y[[i]]  
+  #   }else{
+  #     dato <- d$y[[i]]
+  #   }
+  #   
+  #   
+  #   d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)
+  # 
+  #   print("#####LAS ETIQUETAS SON ##########" )
+  #   print(d$etiqueta)
+  #   
+  #  
+  #   
+  #   if(posiciones[[i]] == 1)
+  #   {
+  #     graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5)
+  #   }else if(posiciones[[i]] == -1)
+  #   {
+  #     graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0.5)
+  #   }
+  # }
+  
+  datos <-ggplot2::ggplot_build(graph)$data[[1]]
+  
+  datos$etiqueta <- formatC(as.numeric(  formatC(datos$y, format = "f",big.mark = ",", digits = pkg.env$precision), cex = pkg.env$fEscala) )
+  
+  print(datos$y)
+  print(datos)
+  print(d)
+  
+  graph <- graph + ggplot2::geom_text(data = datos ,ggplot2::aes(label= etiqueta ,family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5,  drop0trailing = !pkg.env$botarCeros)
+  
+  
+
+  
+  graph <- graph + ggplot2::theme(plot.margin = grid::unit(c(0,longitud + 2 ,0,0), "mm")
+                                  ,axis.text.y= ggplot2::element_text(margin=ggplot2::margin(0,espacio,0,0, unit = "mm") )                
+                  #,axis.text.y = ggplot2::element_text(margin=ggplot2::margin(0,longitud,1,longitudIzquierda), "mm")
+                  )
+  
+  return(graph)
+} 
+
+
+#' Anota las etiquetas para una grafica de barras
+#' Haciendo pruebas de no medir el largo de las etiquetas con 
+#' TikzDevice y hacerlo puramente con ggplot2
+#' 
+#' @param graph Objeto ggplot2 que se desea anotar
+#' @return Retorna objeto ggplot2 listo para graficar
+#' @return cambiarNegativas parámetro temporal, desaparecerá en futuras versiones.
+etiquetasBarras2 <- function(graph, margenIz = 0, precision = 1, cambiarNegativas = F)
+{
+  pkg.env$precision <- precision
+  posiciones <- NULL
+  
+  posiciones <- posicionesBarras(ggplot2::ggplot_build((graph))$data[[1]]$y)
+  
+  data <- ggplot2::ggplot_build(graph)$data[[1]]
+  print(names(data))
+  print(data)
+  
   if(sonEnteros(ggplot2::ggplot_build(graph)$data[[1]]) == 0)
   {
     pkg.env$botarCeros <- T
@@ -662,30 +738,27 @@ etiquetasBarras <- function(graph, margenIz = 0, precision = 1, cambiarNegativas
     
     
     d$etiqueta <- formatC(as.numeric(completarEtiquetas(dato,i,tam = length(d$x))), format = 'f', big.mark = ',', digits = pkg.env$precision, drop0trailing = !pkg.env$botarCeros)
-
+    
     print("#####LAS ETIQUETAS SON ##########" )
     print(d$etiqueta)
     
-   
+    
     
     if(posiciones[[i]] == 1)
     {
-      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = -0.2, vjust = 0.5)
+      graph <- graph + ggplot2::geom_text(data = d, ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta)  == 'NA' ,"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = "outward", vjust = "outward")
     }else if(posiciones[[i]] == -1)
     {
-      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = 1.2, vjust = 0.5)
+      graph <- graph + ggplot2::geom_text(data = d,ggplot2::aes(label=ifelse(stringr::str_trim(etiqueta) == 'NA',"",etiqueta),family="Open Sans Condensed Light"),size=pkg.env$sizeText,hjust = "outward", vjust = "outward")
     }
   }
   
-
   
-  graph <- graph + ggplot2::theme(plot.margin = grid::unit(c(0,longitud,0,0), "mm")
-                                  ,axis.text.y= ggplot2::element_text(margin=ggplot2::margin(0,espacio,0,0, unit = "mm") )                
-                  #,axis.text.y = ggplot2::element_text(margin=ggplot2::margin(0,longitud,1,longitudIzquierda), "mm")
-                  )
+  
   
   return(graph)
 } 
+
 
 #'Función para calcular vector de posiciones para las etiquetas de Barras
 #'@param x Vector de valores para el eje y.
@@ -854,6 +927,14 @@ exportarLatex <- function(nombre = grafica.tex, graph, preambulo = F)
   dev.off()
 }
 
+
+
+retocarGrafica <- function(graph){
+  temp<- ggplot2::ggplot_gtable(ggplot2::ggplot_build(graph))
+  temp$layout$clip[temp$layout$name=="panel"] <- "off"
+  temp$layout$clip <- "off"
+  grid::grid.draw(temp)
+}
 
 #'Calcula la rampa de colores para usar en las graficas
 #'de anillo, mandando los ignorados hasta el final y haciendo
