@@ -142,7 +142,7 @@ graficaLinea <- function(data, color1 = pkg.env$color1, inicio = -1, ancho = 1.5
   ## Rotanto las etiquetas del eje x cuando la modalidad es trimestral
   
   if(pkg.env$modalidad == "trimestral" || rotar == T){
-    grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
+    grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = pkg.env$fuente,angle = 90, vjust =0.5 , hjust= 1))
   }
   
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
@@ -231,7 +231,7 @@ graficaDobleLinea <- function(data, ruta, preambulo = F, color1 = pkg.env$color1
   
   ## Rotando el eje X si fuera necesario
   if ( ejeX == "v"){
-    grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
+    grafica <- grafica + ggplot2::theme(axis.text.x = ggplot2::element_text(family = pkg.env$fuente,angle = 90, vjust =0.5 , hjust= 1))
   }
   
   
@@ -386,7 +386,7 @@ graficaLineaTrim <- function(data, color1 = color, inicio = 0, ancho = 0.5, prec
   grafica <- ggplot2::ggplot(data, ggplot2::aes(x,y, group = 1))
   grafica <- grafica + ggplot2::geom_line( colour = pkg.env$color1, size = ancho)+
     ggplot2::labs(x=NULL,y=NULL)+
-    ggplot2::theme(axis.text.x = ggplot2::element_text(family = "Open Sans Condensed Light",angle = 90, vjust =0.5 , hjust= 1))
+    ggplot2::theme(axis.text.x = ggplot2::element_text(family = pkg.env$fuente,angle = 90, vjust =0.5 , hjust= 1))
   grafica <-  etiquetasLineas(grafica, calcularPosiciones(grafica), precision = precision)
   minimo <- min(ggplot2::ggplot_build(grafica)$data[[1]]$y)
   maximo <- max(ggplot2::ggplot_build(grafica)$data[[1]]$y)
@@ -489,7 +489,7 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
     ggplot2::labs(x=NULL,y=NULL)+
     ggplot2::scale_y_reverse(breaks=NULL,limits = c(maximo,NA), expand= c(0.0,0.0) )+
     #ggplot2::scale_x_discrete(breaks=NULL)+
-    ggplot2::geom_text(ggplot2::aes(family = "Open Sans Condensed Light",label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
+    ggplot2::geom_text(ggplot2::aes(family = pkg.env$fuente,label= formatC(z,format = "f",big.mark = ",", digits = pkg.env$digitos,drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=1.2, vjust = 0.5)+
     ggplot2::theme(
       #axis.ticks.margin = grid::unit(c(0,longitudy),"mm"),
       #axis.ticks.margin = grid::unit(c(-20, 10),'mm'),
@@ -520,11 +520,11 @@ piramidePoblacional <- function(data,ancho = 0.6 , escala = "normal", color1 = p
     ggplot2::scale_y_continuous(breaks=NULL,  limits = c(NA,maximo ), expand= c(0.0,0.0))+
     ggplot2::scale_x_discrete(breaks=NULL)+
     #ggplot2::geom_abline(intercept = 0, slope = 0, size = 0.1, ggplot2::aes(colour = "gray"))+
-    ggplot2::geom_text(ggplot2::aes(x, y=y, family = "Open Sans Condensed Light",label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
+    ggplot2::geom_text(ggplot2::aes(x, y=y, family = pkg.env$fuente,label= formatC(y,format = "f",big.mark = ",", digits = pkg.env$digitos, drop0trailing = pkg.env$enteros)),size=pkg.env$sizeText, hjust=-0.2, vjust = 0.5)+
     ggplot2::theme(
-      axis.text = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5, margin = grid::unit(c(0,longitudy),"mm")),
+      axis.text = ggplot2::element_text(family = pkg.env$fuente,vjust =0.5 , hjust= 0.5, margin = grid::unit(c(0,longitudy),"mm")),
        axis.ticks.margin=grid::unit(c(-2.5),'mm'),
-       axis.text.y = ggplot2::element_text(family = "Open Sans Condensed Light",vjust =0.5 , hjust= 0.5),
+       axis.text.y = ggplot2::element_text(family = pkg.env$fuente,vjust =0.5 , hjust= 0.5),
       axis.line.y = ggplot2::element_line(colour = NA),
       plot.margin = grid::unit(c(0,longitud,-longitudy,etiquetaMaxima-longitudy-2.9), "mm")
       #plot.margin = grid::unit(c(0,longitud,-longitudy,etiquetaMaxima-longitudy-2.9), "mm")  
