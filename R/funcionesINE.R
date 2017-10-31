@@ -1211,7 +1211,7 @@ web <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.733333333
   pkg.env$colorRelleno <- color1
   pkg.env$colorRelleno2 <- color2
   pkg.env$modalidad <- "anual"
-  pkg.env$fEscala <- 1.9
+  pkg.env$fEscala <- 2.3
   cambiarGraficas(tamFuente = 28)
   #pkg.env$fontSize <- 11
 }
