@@ -808,7 +808,8 @@ etiquetasHorizontales <- function(graph, precision = 1, cambiarNegativas = F)
   
  #axis.ticks.margin = grid::unit(c(espacio,0),"mm"),
   
-  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(margin=ggplot2::margin(0,0,espacio,0,"mm")))
+  graph <- graph + ggplot2::theme(axis.text.x = ggplot2::element_text(margin=ggplot2::margin(0,0,espacio,0,"mm")))+
+    ggplot2::theme(plot.margin = grid::unit(c(7,0,0,0), "mm"))
   
   return(graph)
   
@@ -1202,7 +1203,7 @@ anual <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333
 }
 
 web <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.7333333333333333,1)){
-  pkg.env$alto <- 2.75  ##2.75
+  pkg.env$alto <- 50 ##2.75
   pkg.env$ancho <- 4
   options(tikzDocumentDeclaration= "\\documentclass[11pt,twoside]{book}")
   pkg.env$fontSize = 11
@@ -1212,7 +1213,7 @@ web <- function(color1 = rgb(0,0,1), color2 = rgb(0.6156862745098039,0.733333333
   pkg.env$colorRelleno2 <- color2
   pkg.env$modalidad <- "anual"
   pkg.env$fEscala <- 2.3
-  cambiarGraficas(tamFuente = 28)
+  cambiarGraficas(tamFuente = 20)
   #pkg.env$fontSize <- 11
 }
 
@@ -1442,4 +1443,30 @@ escribirCSV <- function(lista, ruta){
                                          ) ), col.names= pkg.env$quitarNombres, row.names = F, quote = F, sep = ";" )
     contador <- contador +1 
   }
+}
+
+
+
+#' Función para cortar las etiquetas cuando son muy largas para las gráficas
+#'
+#' @param etiquetas Es el vector que contiene las etiquetas del eje x o el eje y según sea el caso
+#'
+#' @return
+#' @export
+#'
+#' @examples
+cortarEtiquetas <- function(etiquetas){
+  temp <- ""
+  print(paste("Las etiquetas son:", etiquetas))
+  etiquetas <- as.character(etiquetas)
+  print(paste("Despues como caracter son:", etiquetas))
+  for( i in 1:length(etiquetas) ){
+    temp <- ""
+    for(x in strwrap(etiquetas[i], width = 15)){
+      temp <- paste( temp, x, sep = "\n" )
+    }
+    etiquetas[i] <- substring(temp, first = 2)
+    print(etiquetas)
+  }
+  return(etiquetas)
 }
